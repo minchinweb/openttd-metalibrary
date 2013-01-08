@@ -415,4 +415,58 @@ function _MinchinWeb_Extras_::MultiMax(i1, i2, i3) {
 function _MinchinWeb_Extras_::MultiMax(i1, i2, i3, i4) {
 	return max(max(max(i1, i2), i3), i4);
 }
+
+function _MinchinWeb_Station_::BuildStreetcarStation(Tile, Loop = true)
+{
+	//	first tries to build a streetcar station with a half-tile loop on each end
+	//	if it works, actually build it
+	//
+	//	if Loop == true, build a loop connecting the two ends
+
+	local TestMode = AITestMode();
+	AIRoad.SetCurrentRoadType(AIRoad.ROADTYPE_TRAM);
+	local FrontTile;
+	local BackTile;
+	local MyDirection;
+
+	if (AIRoad.BuildDriveThroughRoadStation(Tile, _MinchinWeb_SuperLib_.Direction.GetAdjacentTileInDirection(Tile, _MinchinWeb_SuperLib_.Direction.DIR_NE), AIRoad.ROADVEHTYPE_BUS, AIStation.STATION_NEW) {
+		MyDirection = _MinchinWeb_SuperLib_.Direction.DIR_NE;
+	} else if (AIRoad.BuildDriveThroughRoadStation(Tile, _MinchinWeb_SuperLib_.Direction.GetAdjacentTileInDirection(Tile, _MinchinWeb_SuperLib_.Direction.DIR_SE), AIRoad.ROADVEHTYPE_BUS, AIStation.STATION_NEW) {
+		MyDirection = _MinchinWeb_SuperLib_.Direction.DIR_SE;		
+	} else {
+		return false;
+	}
+
+	FrontTile = _MinchinWeb_SuperLib_.Direction.GetAdjacentTileInDirection(Tile, MyDirection);
+	BackTile = _MinchinWeb_SuperLib_.Direction.GetAdjacentTileInDirection(Tile, _MinchinWeb_SuperLib_.Direction.OppositeDir(MyDirection));
+
+	if (AIRoad.BuildRoad(FrontTile, BuildRoad)) {
+		//	we keep doing stuff
+	} else {
+		return false;
+	}
+
+	local ExecMode = AIExecMode();
+	switch (MyDirection) {
+		case _MinchinWeb_SuperLib_.Direction.DIR_NE :
+		case _MinchinWeb_SuperLib_.Direction.DIR_SE :
+			AIRoad.BuildDriveThroughRoadStation(Tile, _MinchinWeb_SuperLib_.Direction.GetAdjacentTileInDirection(Tile, MyDirection), AIRoad.ROADVEHTYPE_BUS, AIStation.STATION_NEW);
+			break;
+		default:
+			// didn't work, should never get here
+	}
+	AIRoad.BuildRoad(FrontTile, BuildRoad);
+
+	if (Loop) {
+		local Pathfinder = _MinchinWeb_RoadPathfinder_();
+		Pathfinder.InitializePath([FrontTile], [BackTile], [Tile]);
+		Pathfinder.PresetStreetcar();
+		Pathfinder.FindPath();
+		_MinchinWeb_SuperLib_.Money.MakeSureToHaveAmount(Pathfinder.GetBuildCost());
+		Pathfinder.BuildPath();
+	}
+
+	return true;
+}
+
 // EOF

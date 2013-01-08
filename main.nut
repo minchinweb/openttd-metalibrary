@@ -1,4 +1,4 @@
-﻿/*	Minchinweb's MetaLibrary v.10 [2025-07-14],
+/*	Minchinweb's MetaLibrary v.10 [2025-07-14],
  *		originally part of, WmDOT v.10
  *	Copyright © 2011-14, 2025 by W. Minchin. For more info,
  *		please visit https://github.com/MinchinWeb/openttd-metalibrary
@@ -17,6 +17,9 @@
 /*	See the README for a list of the functions included in this library.
  */
 
+
+import("util.superlib", "_MinchinWeb_SuperLib_", 40);
+
 require("Pathfinder.Road.nut");
 	//	Requires Graph.AyStar v6 library
 // require("AyStar.WM.nut");
@@ -32,7 +35,7 @@ require("Spiral.Walker.nut");
 require("Atlas.nut");
 require("Marine.nut");
 require("Log.nut");
-require("Dominion.Roads.nut");
+require("Dominion.Roads.nut")
 require("Industry.nut");
 require("Station.nut");
 
@@ -67,11 +70,9 @@ require("Station.nut");
  *	-	`%MinchinWeb.WaterbodyCheck` <- \_MinchinWeb\_WBC\_
  */
 class MinchinWeb {
-	/**	\publicsection
-	 */
-	function GetVersion()       { return 10; }
-	function GetRevision()      { return 250714; }
-	function GetDate()          { return "2025-07-14"; }
+	function GetVersion()       { return 6; }
+	function GetRevision()		{ return 121231; }
+	function GetDate()          { return "2012-12-31"; }
 	function GetName()          { return "MinchinWeb's MetaLibrary"; }
 
 	static RoadPathfinder = _MinchinWeb_RoadPathfinder_;
