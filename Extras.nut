@@ -429,9 +429,9 @@ function _MinchinWeb_Station_::BuildStreetcarStation(Tile, Loop = true)
 	local BackTile;
 	local MyDirection;
 
-	if (AIRoad.BuildDriveThroughRoadStation(Tile, _MinchinWeb_SuperLib_.Direction.GetAdjacentTileInDirection(Tile, _MinchinWeb_SuperLib_.Direction.DIR_NE), AIRoad.ROADVEHTYPE_BUS, AIStation.STATION_NEW) {
+	if (AIRoad.BuildDriveThroughRoadStation(Tile, _MinchinWeb_SuperLib_.Direction.GetAdjacentTileInDirection(Tile, _MinchinWeb_SuperLib_.Direction.DIR_NE), AIRoad.ROADVEHTYPE_BUS, AIStation.STATION_NEW)) {
 		MyDirection = _MinchinWeb_SuperLib_.Direction.DIR_NE;
-	} else if (AIRoad.BuildDriveThroughRoadStation(Tile, _MinchinWeb_SuperLib_.Direction.GetAdjacentTileInDirection(Tile, _MinchinWeb_SuperLib_.Direction.DIR_SE), AIRoad.ROADVEHTYPE_BUS, AIStation.STATION_NEW) {
+	} else if (AIRoad.BuildDriveThroughRoadStation(Tile, _MinchinWeb_SuperLib_.Direction.GetAdjacentTileInDirection(Tile, _MinchinWeb_SuperLib_.Direction.DIR_SE), AIRoad.ROADVEHTYPE_BUS, AIStation.STATION_NEW)) {
 		MyDirection = _MinchinWeb_SuperLib_.Direction.DIR_SE;		
 	} else {
 		return false;
