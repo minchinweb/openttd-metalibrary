@@ -26,7 +26,6 @@ require("Pathfinder.Road.nut");
 require("Array.nut");
 // require("Fibonacci.Heap.WM.nut");
 require("Extras.nut");
-require("Constants.nut");
 require("Waterbody.Check.nut");
 require("Lakes.nut");
 require("Pathfinder.Ship.nut");
@@ -69,6 +68,10 @@ require("Station.nut");
  *	-	`%MinchinWeb.RoadPathfinder` <- \_MinchinWeb\_RoadPathfinder\_
  *	-	`%MinchinWeb.WaterbodyCheck` <- \_MinchinWeb\_WBC\_
  */
+
+import("util.superlib", "_MinchinWeb_SuperLib_", 40);	//	don't think this import statement actually works...
+SuperLib <- _MinchinWeb_SuperLib_;
+
 class MinchinWeb {
 	function GetVersion()       { return 6; }
 	function GetRevision()		{ return 121231; }
