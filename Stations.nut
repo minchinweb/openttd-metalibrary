@@ -1,4 +1,4 @@
-﻿/*	Station functions v.6 [2013-01-21],
+﻿/*	Station functions v.6 [2013-01-22],
  *		split from Extra functions v.5 r.253 [2011-07-01],
  *		part of Minchinweb's MetaLibrary v.7,
  *	Copyright © 2011-13 by W. Minchin. For more info,
@@ -108,31 +108,37 @@ function _MinchinWeb_Station_::BuildStreetcarStation(Tile, Loop = true)
 	FrontTile = SuperLib.Direction.GetAdjacentTileInDirection(Tile, MyDirection);
 	BackTile = SuperLib.Direction.GetAdjacentTileInDirection(Tile, SuperLib.Direction.OppositeDir(MyDirection));
 
+	local ExecMode = AIExecMode();
 	if (AIRoad.BuildRoad(FrontTile, BackTile)) {
 		//	we keep doing stuff
+		
+		// local Result = AIRoad.BuildRoad(FrontTile, BackTile);
+		// Log.Note("Loop Result: " + Result, 7);
+		switch (MyDirection) {
+			case SuperLib.Direction.DIR_NE :
+			case SuperLib.Direction.DIR_SE :
+				AIRoad.BuildDriveThroughRoadStation(Tile, SuperLib.Direction.GetAdjacentTileInDirection(Tile, MyDirection), AIRoad.ROADVEHTYPE_BUS, AIStation.STATION_NEW);
+				break;
+			default:
+				// didn't work, should never get here
+		}
+		
+		if (Loop) {
+			local Pathfinder = _MinchinWeb_RoadPathfinder_();
+			Pathfinder.InitializePath([FrontTile], [BackTile], [Tile]);
+			Pathfinder.PresetStreetcar();
+			if (Pathfinder.FindPath(5000) != null) {
+				SuperLib.Money.MakeSureToHaveAmount(Pathfinder.GetBuildCost());
+				Pathfinder.BuildPath();
+			} else {
+				Log.Note("No loop path." + _MinchinWeb_Array_.ToStringTiles1D([Tile]), 7);
+			}
+		}
+
+		return true;
 	} else {
+		// TO-DO: if road building fails on one direction, try the other
+		Log.Note("Streetcar Stations:" + _MinchinWeb_Array_.ToStringTiles1D([Tile]) + " Our little road building failed... exiting", 7);
 		return false;
 	}
-
-	local ExecMode = AIExecMode();
-	switch (MyDirection) {
-		case SuperLib.Direction.DIR_NE :
-		case SuperLib.Direction.DIR_SE :
-			AIRoad.BuildDriveThroughRoadStation(Tile, SuperLib.Direction.GetAdjacentTileInDirection(Tile, MyDirection), AIRoad.ROADVEHTYPE_BUS, AIStation.STATION_NEW);
-			break;
-		default:
-			// didn't work, should never get here
-	}
-	AIRoad.BuildRoad(FrontTile, BackTile);
-
-	if (Loop) {
-		local Pathfinder = _MinchinWeb_RoadPathfinder_();
-		Pathfinder.InitializePath([FrontTile], [BackTile], [Tile]);
-		Pathfinder.PresetStreetcar();
-		Pathfinder.FindPath(5000);
-		SuperLib.Money.MakeSureToHaveAmount(Pathfinder.GetBuildCost());
-		Pathfinder.BuildPath();
-	}
-
-	return true;
 }
