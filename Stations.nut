@@ -1,4 +1,4 @@
-﻿/*	Station functions v.6 [2013-01-22],
+﻿/*	Station functions v.6 [2013-01-23],
  *		split from Extra functions v.5 r.253 [2011-07-01],
  *		part of Minchinweb's MetaLibrary v.7,
  *	Copyright © 2011-13 by W. Minchin. For more info,
@@ -97,9 +97,9 @@ function _MinchinWeb_Station_::BuildStreetcarStation(Tile, Loop = true)
 	local BackTile;
 	local MyDirection;
 
-	if (AIRoad.BuildDriveThroughRoadStation(Tile, SuperLib.Direction.GetAdjacentTileInDirection(Tile, SuperLib.Direction.DIR_NE), AIRoad.ROADVEHTYPE_BUS, AIStation.STATION_NEW)) {
+	if (AIRoad.BuildDriveThroughRoadStation(Tile, SuperLib.Direction.GetAdjacentTileInDirection(Tile, SuperLib.Direction.DIR_NE), AIRoad.ROADVEHTYPE_BUS, AIStation.STATION_NEW) && AIRoad.BuildRoad(SuperLib.Direction.GetAdjacentTileInDirection(Tile, SuperLib.Direction.DIR_NE), SuperLib.Direction.GetAdjacentTileInDirection(Tile, SuperLib.Direction.DIR_SW))) {
 		MyDirection = SuperLib.Direction.DIR_NE;
-	} else if (AIRoad.BuildDriveThroughRoadStation(Tile, SuperLib.Direction.GetAdjacentTileInDirection(Tile, SuperLib.Direction.DIR_SE), AIRoad.ROADVEHTYPE_BUS, AIStation.STATION_NEW)) {
+	} else if (AIRoad.BuildDriveThroughRoadStation(Tile, SuperLib.Direction.GetAdjacentTileInDirection(Tile, SuperLib.Direction.DIR_SE), AIRoad.ROADVEHTYPE_BUS, AIStation.STATION_NEW) && AIRoad.BuildRoad(SuperLib.Direction.GetAdjacentTileInDirection(Tile, SuperLib.Direction.DIR_SE), SuperLib.Direction.GetAdjacentTileInDirection(Tile, SuperLib.Direction.DIR_NW))) {
 		MyDirection = SuperLib.Direction.DIR_SE;		
 	} else {
 		return false;
