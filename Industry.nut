@@ -3,8 +3,8 @@
  *	Copyright © 2011-14 by W. Minchin. For more info,
  *		please visit https://github.com/MinchinWeb/openttd-metalibrary
  *
- *	Permission is granted to you to use, copy, modify, merge, publish, 
- *	distribute, sublicense, and/or sell this software, and provide these 
+ *	Permission is granted to you to use, copy, modify, merge, publish,
+ *	distribute, sublicense, and/or sell this software, and provide these
  *	rights to others, provided:
  *
  *	+ The above copyright notice and this permission notice shall be included
@@ -13,7 +13,7 @@
  *		contributions.
  *	+ You accept that this software is provided to you "as is", without warranty.
  */
- 
+
 /**	\brief		Industries
  *	\version	v.1 (2012-01-12)
  *	\author		W. Minchin (%MinchinWeb)
@@ -50,7 +50,7 @@ function _MinchinWeb_Industry_::GetIndustryID(Tile) {
 	local StartY = AIMap.GetTileY(Tile);
 	local EndX = AIMap.GetTileX(Tile) + _MinchinWeb_C_.IndustrySize();
 	local EndY = AIMap.GetTileY(Tile) + _MinchinWeb_C_.IndustrySize();
-	
+
 	for (local i = StartX; i < EndX; i++) {
 		for (local j = StartY; j < EndY; j++) {
 			if (AIIndustry.GetIndustryID(AIMap.GetTileIndex(i,j)) != _MinchinWeb_C_.InvalidIndustry()) {
@@ -58,7 +58,7 @@ function _MinchinWeb_Industry_::GetIndustryID(Tile) {
 			}
 		}
 	}
-	
+
 	//	if no valid industry is found...
 	return _MinchinWeb_C_.InvalidIndustry();
 }

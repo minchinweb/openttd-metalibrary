@@ -5,8 +5,8 @@
  *	Copyright © 2011-14 by W. Minchin. For more info,
  *		please visit https://github.com/MinchinWeb/openttd-metalibrary
  *
- *	Permission is granted to you to use, copy, modify, merge, publish, 
- *	distribute, sublicense, and/or sell this software, and provide these 
+ *	Permission is granted to you to use, copy, modify, merge, publish,
+ *	distribute, sublicense, and/or sell this software, and provide these
  *	rights to others, provided:
  *
  *	+ The above copyright notice and this permission notice shall be included
@@ -22,14 +22,14 @@
  *	\since		MetaLibrary v.6
  *
  *	This is a collection of functions to make working with Arrays easier.
- *	\note	While Arrays are powerful, also consider using 
+ *	\note	While Arrays are powerful, also consider using
  *			[AIList](http://noai.openttd.org/api/trunk/classAIList.html)'s.
  */
- 
- 
+
+
 class _MinchinWeb_Array_ {
 	main = null;
-	
+
 	/**	\publicsection
 	 *	\brief	Creates a one dimensional (1-D) array.
 	 *	\param	length	the desired length of the array
@@ -39,7 +39,7 @@ class _MinchinWeb_Array_ {
 	 *	\static
 	 */
 	function Create1D(length) { return array[length]; }
-	
+
 	/**	\brief	Creates a two dimensional (2-D) array.
 	 *	\param	length	the desired length of the array (in the first
 	 *					dimension)
@@ -51,7 +51,7 @@ class _MinchinWeb_Array_ {
 	 *	\static
 	 */
 	function Create2D(length, width);
-	
+
 	/**	\brief	Creates a three dimensional (3-D) array.
 	 *	\param	length	the desired length of the array (in the first
 	 *					dimension)
@@ -65,7 +65,7 @@ class _MinchinWeb_Array_ {
 	 *	\static
 	 */
 	function Create3D(length, width, height);
-	
+
 	/**	\brief	Converts a one dimensional array to a nice string format.
 	 *
 	 *	This function was created to aid in the output of arrays to the AI
@@ -147,7 +147,7 @@ class _MinchinWeb_Array_ {
 	 *	\static
 	 */
 	function ContainedIn3D(InArray, SearchValue);
-	
+
 	/**	\brief	Searches a two dimensional array for a given one dimensional array.
 	 *	\param	InArray		array to search
 	 *						(assumed to be two dimensional (2-D))
@@ -225,7 +225,7 @@ class _MinchinWeb_Array_ {
 
 	/**	\brief	Adds an element from the array.
 	 *
-	 *	Adds `Value` to the `InArray` at the given `Index`. The rest of the 
+	 *	Adds `Value` to the `InArray` at the given `Index`. The rest of the
 	 *	array is shifted one place to the right. The returned array is thus one
 	 *	longer than `InArray`.
 	 *	\param	InArray		the array to add the element to
@@ -256,7 +256,7 @@ class _MinchinWeb_Array_ {
 	 *	\static
 	 */
 	function ToStringTiles1D(InArrayOfTiles, ArrayLength = false);
-	
+
 	/**	\brief	Converts a one dimensional array of tiles to a nice string format.
 	 *
 	 *	This function was created to aid in the output of arrays of tiles to the
@@ -265,7 +265,7 @@ class _MinchinWeb_Array_ {
 	 *	\param	ArrayLength		(`true` or `false`) whether to print the prefix
 	 *							noting the length of the array. Default is
 	 *							`false`.
-	 *	\return	string version of array. e.g. `The array is 2 long.  12,45  
+	 *	\return	string version of array. e.g. `The array is 2 long.  12,45
 	 *			62,52  /  59,10  5,37`.
 	 *	\return	`null` if `InArrayOfTiles` is `null`.
 	 *	\see	ToString2D()
@@ -335,7 +335,7 @@ class _MinchinWeb_Array_ {
 	 *			`MyArray.append(Item)` to append individual items to an array
 	 */
 	function Append(Array1, Array2);
-	
+
 	/**	\brief	Removes duplicates from an array.
 	 *
 	 *	The item is maintain at its first location and removed at all subsequent
@@ -346,7 +346,7 @@ class _MinchinWeb_Array_ {
 	 *	\static
 	 */
 	function RemoveDuplicates(Array);
-	
+
 	/**	\brief	Turns an Array in an AIList
 	 *	\return	An AIList with the contents of the Array
 	 *	\todo	Add error check that an array is provided.
@@ -368,14 +368,14 @@ function _MinchinWeb_Array_::Create2D(length, width) {
 
 function _MinchinWeb_Array_::Create3D(length, width, height) {
 	local ReturnArray = array(length);
-	
+
 	for (local i=0; i < length; i++) {
 		ReturnArray[i] = array(width)
 		for (local j=0; j < width; j++) {
 			ReturnArray[i][j] = array(height);
 		}
 	}
-	
+
 	return ReturnArray;
 }
 
@@ -423,7 +423,7 @@ function _MinchinWeb_Array_::ToString2D(InArray, DisplayLength = true) {
 		if (Temp.len() > 3) {
 			Temp = Temp.slice(0, Temp.len() - 3);
 		}
-		
+
 		if (DisplayLength == true) {
 			Temp = "The array is " + Length + " long.  " + Temp;
 		}
@@ -535,7 +535,7 @@ function _MinchinWeb_Array_::Find3D(InArray, SearchValue) {
 function _MinchinWeb_Array_::RemoveValueAt(InArray, Index) {
 	local i = 0;
 	local Return = [];
-	
+
 	for (i; i < Index; i++) {
 		Return.push(InArray[i]);
 	}
@@ -543,13 +543,13 @@ function _MinchinWeb_Array_::RemoveValueAt(InArray, Index) {
 	for (i; i < InArray.len(); i++) {
 		Return.push(InArray[i]);
 	}
-	return Return;	
+	return Return;
 }
 
 function _MinchinWeb_Array_::InsertValueAt(InArray, Index, Value) {
 	local i = 0;
 	local Return = [];
-	
+
 	for (i; i < Index; i++) {
 		Return.push(InArray[i]);
 	}
@@ -557,7 +557,7 @@ function _MinchinWeb_Array_::InsertValueAt(InArray, Index, Value) {
 	for (i; i < InArray.len(); i++) {
 		Return.push(InArray[i]);
 	}
-	return Return;	
+	return Return;
 }
 
 function _MinchinWeb_Array_::ToStringTiles1D(InArrayOfTiles, ArrayLength = false) {
@@ -598,7 +598,7 @@ function _MinchinWeb_Array_::ToStringTiles2D(InArrayOfTiles, ArrayLength = false
 		if (Temp.len() > 3) {
 			Temp = Temp.slice(0, Temp.len() - 3);
 		}
-		
+
 		if (ArrayLength == true) {
 			Temp = "The array is " + Length + " long.  " + Temp;
 		}
@@ -615,9 +615,9 @@ function _MinchinWeb_Array_::FindPairs(InArray2D, SearchValue1, SearchValue2) {
 		for (local i = 0; i < InArray2D.len(); i++ ) {
 			for (local j=0; j < InArray2D[i].len(); j++ ) {
 				if ((InArray2D[i][j] == SearchValue1) && !Return1) {
-					Return1 = true;	
+					Return1 = true;
 				} else if (InArray2D[i][j] == SearchValue2) {
-					Return2 = true;	
+					Return2 = true;
 				}
 			}
 			if (Return1 && Return2) {
@@ -640,9 +640,9 @@ function _MinchinWeb_Array_::ContainedInPairs(InArray2D, SearchValue1, SearchVal
 		for (local i = 0; i < InArray2D.len(); i++ ) {
 			for (local j=0; j < InArray2D[i].len(); j++ ) {
 				if ((InArray2D[i][j] == SearchValue1) && !Return1) {
-					Return1 = true;	
+					Return1 = true;
 				} else if (InArray2D[i][j] == SearchValue2) {
-					Return2 = true;	
+					Return2 = true;
 				}
 			}
 			if (Return1 && Return2) {
@@ -658,14 +658,14 @@ function _MinchinWeb_Array_::ContainedInPairs(InArray2D, SearchValue1, SearchVal
 
 function _MinchinWeb_Array_::Compare1D(InArray1D, TestArray1D) {
 	if (InArray1D.len() != TestArray1D.len() ) {
-		return false;	
+		return false;
 	}
 	for (local i = 0; i < InArray1D.len(); i++) {
 		if (InArray1D[i] != TestArray1D[i]) {
 			return false;
 		}
 	}
-	
+
 	return true;
 }
 

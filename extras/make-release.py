@@ -1,12 +1,12 @@
 ﻿#! python34
 # -*- coding: utf-8 -*-
 
-#   Minchinweb's MetaLibrary v.9 [2015-01-10],  
+#   Minchinweb's MetaLibrary v.9 [2015-01-10],
 #   Copyright © 2011-15 by W. Minchin. For more info,
 #       please visit https://github.com/MinchinWeb/openttd-metalibrary
 #
-#   Permission is granted to you to use, copy, modify, merge, publish, 
-#   distribute, sublicense, and/or sell this software, and provide these 
+#   Permission is granted to you to use, copy, modify, merge, publish,
+#   distribute, sublicense, and/or sell this software, and provide these
 #   rights to others, provided:
 #
 #   + The above copyright notice and this permission notice shall be included
@@ -19,19 +19,19 @@
 """This script is a Python script to generate a tar file of MetaLibrary for
 upload to BaNaNaS. v2.0.2 [2015-01-10]"""
 
-import os
-from os.path import join
-import tarfile
-import winshell
-import fileinput
-import re
 import codecs
+import fileinput
+import os
+import re
 import shutil
+import tarfile
+from os.path import join
 
+import winshell
 
 SourceDir = join("..")
 OutputDir = join("..", "releases")
-TempDir = join("..", 'temp')
+TempDir = join("..", "temp")
 if not os.path.exists(OutputDir):
     os.makedirs(OutputDir)
 if not os.path.exists(TempDir):
@@ -55,127 +55,137 @@ def multiple_replacer(*key_values):
 def multiple_replace(string, *key_values):
     return multiple_replacer(*key_values)(string)
 
-mdReplacements = ('%MinchinWeb', 'MinchinWeb'), \
-                 ('\_', '_'), \
-                 ('←', '<-')
 
-aimdReplacements = \
-    ('v.3 (`Queue.FibonacciHeap-3.tar`)', 'v.2 (`Queue.FibonacciHeap-2.tar`)'), \
-    (' http://binaries.openttd.org/bananas/ailibrary/Queue.BinaryHeap-1-1.tar.gz', 'http://binaries.openttd.org/bananas/gslibrary/Queue.BinaryHeap-1-2.tar.gz'), \
-    ('http://binaries.openttd.org/bananas/ailibrary/Graph.AyStar-6-1.tar.gz','http://binaries.openttd.org/bananas/gslibrary/Graph.AyStar-6-2.tar.gz'), \
-    ('http://binaries.openttd.org/bananas/ailibrary/Queue.FibonacciHeap-3.tar.gz', 'http://binaries.openttd.org/bananas/gslibrary/Queue.FibonacciHeap-2-2.tar.gz'), \
-    ('`../OpenTTD/ai/library/`'           , '`../OpenTTD/gs/library/`'     )
-                 
-aiReplacements = \
-    ('"queue.fibonacci_heap", "", 3);'    ,'"queue.fibonacci_heap", "", 2);' ), \
-    ('Fibonacci Heap v.3'                 ,'Fibonacci Heap v.2'            ), \
-    ("AIAccounting"                       ,"GSAccounting"                  ), \
-    ("AIAirport"                          ,"GSAirport"                     ), \
-    ("AIBase"                             ,"GSBase"                        ), \
-    ("AIBaseStation"                      ,"GSBaseStation"                 ), \
-    ("AIBridge"                           ,"GSBridge"                      ), \
-    ("AIBridgeList"                       ,"GSBridgeList"                  ), \
-    ("AIBridgeList_Length"                ,"GSBridgeList_Length"           ), \
-    ("AICargo"                            ,"GSCargo"                       ), \
-    ("AICargoList"                        ,"GSCargoList"                   ), \
-    ("AICargoList_IndustryAccepting"      ,"GSCargoList_IndustryAccepting" ), \
-    ("AICargoList_IndustryProducing"      ,"GSCargoList_IndustryProducing" ), \
-    ("AICargoList_StationAccepting"       ,"GSCargoList_StationAccepting"  ), \
-    ("AICompany"                          ,"GSCompany"                     ), \
-    ("AIController"                       ,"GSController"                  ), \
-    ("AIDate"                             ,"GSDate"                        ), \
-    ("AIDepotList"                        ,"GSDepotList"                   ), \
-    ("AIEngine"                           ,"GSEngine"                      ), \
-    ("AIEngineList"                       ,"GSEngineList"                  ), \
-    ("AIError"                            ,"GSError"                       ), \
-    ("AIEvent"                            ,"GSEvent"                       ), \
-    ("AIEventAircraftDestTooFar"          ,"GSEventAircraftDestTooFar"     ), \
-    ("AIEventCompanyAskMerger"            ,"GSEventCompanyAskMerger"       ), \
-    ("AIEventCompanyBankrupt"             ,"GSEventCompanyBankrupt"        ), \
-    ("AIEventCompanyInTrouble"            ,"GSEventCompanyInTrouble"       ), \
-    ("AIEventCompanyMerger"               ,"GSEventCompanyMerger"          ), \
-    ("AIEventCompanyNew"                  ,"GSEventCompanyNew"             ), \
-    ("AIEventCompanyTown"                 ,"GSEventCompanyTown"            ), \
-    ("AIEventController"                  ,"GSEventController"             ), \
-    ("AIEventDisasterZeppelinerCleared"   ,"GSEventDisasterZeppelinerCleared"), \
-    ("AIEventDisasterZeppelinerCrashed"   ,"GSEventDisasterZeppelinerCrashed"), \
-    ("AIEventEngineAvailable"             ,"GSEventEngineAvailable"        ), \
-    ("AIEventEnginePreview"               ,"GSEventEnginePreview"          ), \
-    ("AIEventExclusiveTransportRights"    ,"GSEventExclusiveTransportRights"), \
-    ("AIEventIndustryClose"               ,"GSEventIndustryClose"          ), \
-    ("AIEventIndustryOpen"                ,"GSEventIndustryOpen"           ), \
-    ("AIEventRoadReconstruction"          ,"GSEventRoadReconstruction"     ), \
-    ("AIEventStationFirstVehicle"         ,"GSEventStationFirstVehicle"    ), \
-    ("AIEventSubsidyAwarded"              ,"GSEventSubsidyAwarded"         ), \
-    ("AIEventSubsidyExpired"              ,"GSEventSubsidyExpired"         ), \
-    ("AIEventSubsidyOffer"                ,"GSEventSubsidyOffer"           ), \
-    ("AIEventSubsidyOfferExpired"         ,"GSEventSubsidyOfferExpired"    ), \
-    ("AIEventTownFounded"                 ,"GSEventTownFounded"            ), \
-    ("AIEventVehicleCrashed"              ,"GSEventVehicleCrashed"         ), \
-    ("AIEventVehicleLost"                 ,"GSEventVehicleLost"            ), \
-    ("AIEventVehicleUnprofitable"         ,"GSEventVehicleUnprofitable"    ), \
-    ("AIEventVehicleWaitingInDepot"       ,"GSEventVehicleWaitingInDepot"  ), \
-    ("AIExecMode"                         ,"GSExecMode"                    ), \
-    ("AIGameSettings"                     ,"GSGameSettings"                ), \
-    ("AIGroup"                            ,"GSGroup"                       ), \
-    ("AIGroupList"                        ,"GSGroupList"                   ), \
-    ("AIIndustry"                         ,"GSIndustry"                    ), \
-    ("AIIndustryList"                     ,"GSIndustryList"                ), \
-    ("AIIndustryList_CargoAccepting"      ,"GSIndustryList_CargoAccepting" ), \
-    ("AIIndustryList_CargoProducing"      ,"GSIndustryList_CargoProducing" ), \
-    ("AIIndustryType"                     ,"GSIndustryType"                ), \
-    ("AIIndustryTypeList"                 ,"GSIndustryTypeList"            ), \
-    ("AIInfo"                             ,"GSInfo"                        ), \
-    ("AIInfrastructure"                   ,"GSInfrastructure"              ), \
-    ("AILibrary"                          ,"GSLibrary"                     ), \
-    ("AIList"                             ,"GSList"                        ), \
-    ("AILog"                              ,"GSLog"                         ), \
-    ("AIMap"                              ,"GSMap"                         ), \
-    ("AIMarine"                           ,"GSMarine"                      ), \
-    ("AIOrder"                            ,"GSOrder"                       ), \
-    ("AIRail"                             ,"GSRail"                        ), \
-    ("AIRailTypeList"                     ,"GSRailTypeList"                ), \
-    ("AIRoad"                             ,"GSRoad"                        ), \
-    ("AISign"                             ,"GSSign"                        ), \
-    ("AISignList"                         ,"GSSignList"                    ), \
-    ("AIStation"                          ,"GSStation"                     ), \
-    ("AIStationList"                      ,"GSStationList"                 ), \
-    ("AIStationList_Vehicle"              ,"GSStationList_Vehicle"         ), \
-    ("AISubsidy"                          ,"GSSubsidy"                     ), \
-    ("AISubsidyList"                      ,"GSSubsidyList"                 ), \
-    ("AITestMode"                         ,"GSTestMode"                    ), \
-    ("AITile"                             ,"GSTile"                        ), \
-    ("AITileList"                         ,"GSTileList"                    ), \
-    ("AITileList_IndustryAccepting"       ,"GSTileList_IndustryAccepting"  ), \
-    ("AITileList_IndustryProducing"       ,"GSTileList_IndustryProducing"  ), \
-    ("AITileList_StationType"             ,"GSTileList_StationType"        ), \
-    ("AITown"                             ,"GSTown"                        ), \
-    ("AITownEffectList"                   ,"GSTownEffectList"              ), \
-    ("AITownList"                         ,"GSTownList"                    ), \
-    ("AITunnel"                           ,"GSTunnel"                      ), \
-    ("AIVehicle"                          ,"GSVehicle"                     ), \
-    ("AIVehicleList"                      ,"GSVehicleList"                 ), \
-    ("AIVehicleList_DefaultGroup"         ,"GSVehicleList_DefaultGroup"    ), \
-    ("AIVehicleList_Depot"                ,"GSVehicleList_Depot"           ), \
-    ("AIVehicleList_Group"                ,"GSVehicleList_Group"           ), \
-    ("AIVehicleList_SharedOrders"         ,"GSVehicleList_SharedOrders"    ), \
-    ("AIVehicleList_Station"              ,"GSVehicleList_Station"         ), \
-    ("AIWaypoint"                         ,"GSWaypoint"                    ), \
-    ("AIWaypointList"                     ,"GSWaypointList"                ), \
-    ("AIWaypointList_Vehicle"             ,"GSWaypointList_Vehicle"        )
+mdReplacements = ("%MinchinWeb", "MinchinWeb"), ("\_", "_"), ("←", "<-")
+
+aimdReplacements = (
+    ("v.3 (`Queue.FibonacciHeap-3.tar`)", "v.2 (`Queue.FibonacciHeap-2.tar`)"),
+    (
+        " http://binaries.openttd.org/bananas/ailibrary/Queue.BinaryHeap-1-1.tar.gz",
+        "http://binaries.openttd.org/bananas/gslibrary/Queue.BinaryHeap-1-2.tar.gz",
+    ),
+    (
+        "http://binaries.openttd.org/bananas/ailibrary/Graph.AyStar-6-1.tar.gz",
+        "http://binaries.openttd.org/bananas/gslibrary/Graph.AyStar-6-2.tar.gz",
+    ),
+    (
+        "http://binaries.openttd.org/bananas/ailibrary/Queue.FibonacciHeap-3.tar.gz",
+        "http://binaries.openttd.org/bananas/gslibrary/Queue.FibonacciHeap-2-2.tar.gz",
+    ),
+    ("`../OpenTTD/ai/library/`", "`../OpenTTD/gs/library/`"),
+)
+
+aiReplacements = (
+    ('"queue.fibonacci_heap", "", 3);', '"queue.fibonacci_heap", "", 2);'),
+    ("Fibonacci Heap v.3", "Fibonacci Heap v.2"),
+    ("AIAccounting", "GSAccounting"),
+    ("AIAirport", "GSAirport"),
+    ("AIBase", "GSBase"),
+    ("AIBaseStation", "GSBaseStation"),
+    ("AIBridge", "GSBridge"),
+    ("AIBridgeList", "GSBridgeList"),
+    ("AIBridgeList_Length", "GSBridgeList_Length"),
+    ("AICargo", "GSCargo"),
+    ("AICargoList", "GSCargoList"),
+    ("AICargoList_IndustryAccepting", "GSCargoList_IndustryAccepting"),
+    ("AICargoList_IndustryProducing", "GSCargoList_IndustryProducing"),
+    ("AICargoList_StationAccepting", "GSCargoList_StationAccepting"),
+    ("AICompany", "GSCompany"),
+    ("AIController", "GSController"),
+    ("AIDate", "GSDate"),
+    ("AIDepotList", "GSDepotList"),
+    ("AIEngine", "GSEngine"),
+    ("AIEngineList", "GSEngineList"),
+    ("AIError", "GSError"),
+    ("AIEvent", "GSEvent"),
+    ("AIEventAircraftDestTooFar", "GSEventAircraftDestTooFar"),
+    ("AIEventCompanyAskMerger", "GSEventCompanyAskMerger"),
+    ("AIEventCompanyBankrupt", "GSEventCompanyBankrupt"),
+    ("AIEventCompanyInTrouble", "GSEventCompanyInTrouble"),
+    ("AIEventCompanyMerger", "GSEventCompanyMerger"),
+    ("AIEventCompanyNew", "GSEventCompanyNew"),
+    ("AIEventCompanyTown", "GSEventCompanyTown"),
+    ("AIEventController", "GSEventController"),
+    ("AIEventDisasterZeppelinerCleared", "GSEventDisasterZeppelinerCleared"),
+    ("AIEventDisasterZeppelinerCrashed", "GSEventDisasterZeppelinerCrashed"),
+    ("AIEventEngineAvailable", "GSEventEngineAvailable"),
+    ("AIEventEnginePreview", "GSEventEnginePreview"),
+    ("AIEventExclusiveTransportRights", "GSEventExclusiveTransportRights"),
+    ("AIEventIndustryClose", "GSEventIndustryClose"),
+    ("AIEventIndustryOpen", "GSEventIndustryOpen"),
+    ("AIEventRoadReconstruction", "GSEventRoadReconstruction"),
+    ("AIEventStationFirstVehicle", "GSEventStationFirstVehicle"),
+    ("AIEventSubsidyAwarded", "GSEventSubsidyAwarded"),
+    ("AIEventSubsidyExpired", "GSEventSubsidyExpired"),
+    ("AIEventSubsidyOffer", "GSEventSubsidyOffer"),
+    ("AIEventSubsidyOfferExpired", "GSEventSubsidyOfferExpired"),
+    ("AIEventTownFounded", "GSEventTownFounded"),
+    ("AIEventVehicleCrashed", "GSEventVehicleCrashed"),
+    ("AIEventVehicleLost", "GSEventVehicleLost"),
+    ("AIEventVehicleUnprofitable", "GSEventVehicleUnprofitable"),
+    ("AIEventVehicleWaitingInDepot", "GSEventVehicleWaitingInDepot"),
+    ("AIExecMode", "GSExecMode"),
+    ("AIGameSettings", "GSGameSettings"),
+    ("AIGroup", "GSGroup"),
+    ("AIGroupList", "GSGroupList"),
+    ("AIIndustry", "GSIndustry"),
+    ("AIIndustryList", "GSIndustryList"),
+    ("AIIndustryList_CargoAccepting", "GSIndustryList_CargoAccepting"),
+    ("AIIndustryList_CargoProducing", "GSIndustryList_CargoProducing"),
+    ("AIIndustryType", "GSIndustryType"),
+    ("AIIndustryTypeList", "GSIndustryTypeList"),
+    ("AIInfo", "GSInfo"),
+    ("AIInfrastructure", "GSInfrastructure"),
+    ("AILibrary", "GSLibrary"),
+    ("AIList", "GSList"),
+    ("AILog", "GSLog"),
+    ("AIMap", "GSMap"),
+    ("AIMarine", "GSMarine"),
+    ("AIOrder", "GSOrder"),
+    ("AIRail", "GSRail"),
+    ("AIRailTypeList", "GSRailTypeList"),
+    ("AIRoad", "GSRoad"),
+    ("AISign", "GSSign"),
+    ("AISignList", "GSSignList"),
+    ("AIStation", "GSStation"),
+    ("AIStationList", "GSStationList"),
+    ("AIStationList_Vehicle", "GSStationList_Vehicle"),
+    ("AISubsidy", "GSSubsidy"),
+    ("AISubsidyList", "GSSubsidyList"),
+    ("AITestMode", "GSTestMode"),
+    ("AITile", "GSTile"),
+    ("AITileList", "GSTileList"),
+    ("AITileList_IndustryAccepting", "GSTileList_IndustryAccepting"),
+    ("AITileList_IndustryProducing", "GSTileList_IndustryProducing"),
+    ("AITileList_StationType", "GSTileList_StationType"),
+    ("AITown", "GSTown"),
+    ("AITownEffectList", "GSTownEffectList"),
+    ("AITownList", "GSTownList"),
+    ("AITunnel", "GSTunnel"),
+    ("AIVehicle", "GSVehicle"),
+    ("AIVehicleList", "GSVehicleList"),
+    ("AIVehicleList_DefaultGroup", "GSVehicleList_DefaultGroup"),
+    ("AIVehicleList_Depot", "GSVehicleList_Depot"),
+    ("AIVehicleList_Group", "GSVehicleList_Group"),
+    ("AIVehicleList_SharedOrders", "GSVehicleList_SharedOrders"),
+    ("AIVehicleList_Station", "GSVehicleList_Station"),
+    ("AIWaypoint", "GSWaypoint"),
+    ("AIWaypointList", "GSWaypointList"),
+    ("AIWaypointList_Vehicle", "GSWaypointList_Vehicle"),
+)
 
 
-'find version'
+"find version"
 version = 0
-with open(join(SourceDir, "library.nut"), 'r') as VersionFile:
+with open(join(SourceDir, "library.nut"), "r") as VersionFile:
     for line in VersionFile:
-        if 'GetVersion()' in line:
-            version = line[line.find("return") + 6: line.find(";")].strip()
+        if "GetVersion()" in line:
+            version = line[line.find("return") + 6 : line.find(";")].strip()
 
-'Create AI version'
+"Create AI version"
 MetaLibVersion = "MetaLib-" + version
 TarFileName = join(OutputDir, MetaLibVersion + "-AI.tar")
-with tarfile.open(name=TarFileName, mode='w') as MyTarFile:
+with tarfile.open(name=TarFileName, mode="w") as MyTarFile:
     for File in os.listdir(SourceDir):
         if os.path.isfile(join(SourceDir, File)):
             # print(File)
@@ -184,55 +194,59 @@ with tarfile.open(name=TarFileName, mode='w') as MyTarFile:
             elif File.endswith(".txt"):
                 MyTarFile.add(join(SourceDir, File), join(MetaLibVersion, File))
             elif File.endswith(".md"):
-                File2 = File[:-3] + '.txt'
-                with codecs.open(join(SourceDir, File), 'r', 'utf-8') as FileOpen:
+                File2 = File[:-3] + ".txt"
+                with codecs.open(join(SourceDir, File), "r", "utf-8") as FileOpen:
                     FileData = FileOpen.read()
-                FileDataFixed = ''
-                for line in str(FileData).replace('\r','').split('\n'):
-                    FileDataFixed = FileDataFixed + multiple_replace(line, *mdReplacements) + '\r\n'
-                FileDataFixed = FileDataFixed.encode('utf-8')
-                with codecs.open(join(TempDir, File2), mode='wb') as TempFile:
+                FileDataFixed = ""
+                for line in str(FileData).replace("\r", "").split("\n"):
+                    FileDataFixed = (
+                        FileDataFixed + multiple_replace(line, *mdReplacements) + "\r\n"
+                    )
+                FileDataFixed = FileDataFixed.encode("utf-8")
+                with codecs.open(join(TempDir, File2), mode="wb") as TempFile:
                     TempFile.write(FileDataFixed)
                 MyTarFile.add(join(TempDir, File2), join(MetaLibVersion, File2))
 print("    " + MetaLibVersion + "-AI.tar created!")
 
-'Create GameScript version'
+"Create GameScript version"
 LineCount = 0
 TarFileName = join(OutputDir, MetaLibVersion + "-GS.tar")
-with tarfile.open(name=TarFileName, mode='w') as MyTarFile:
+with tarfile.open(name=TarFileName, mode="w") as MyTarFile:
     for File in os.listdir(SourceDir):
         if os.path.isfile(join(SourceDir, File)):
             if File.endswith(".nut"):
-                with codecs.open(join(SourceDir, File), 'r', 'utf-8') as FileOpen:
+                with codecs.open(join(SourceDir, File), "r", "utf-8") as FileOpen:
                     FileData = FileOpen.read()
-                FileDataFixed = ''
-                for line in str(FileData).replace('\r','').split('\n'):
-                    'replace the AI API with GS API'
-                    FileDataFixed = FileDataFixed + multiple_replace(line, *aiReplacements) + '\r\n'
+                FileDataFixed = ""
+                for line in str(FileData).replace("\r", "").split("\n"):
+                    "replace the AI API with GS API"
+                    FileDataFixed = (
+                        FileDataFixed + multiple_replace(line, *aiReplacements) + "\r\n"
+                    )
                     LineCount += 1
-                FileDataFixed = FileDataFixed.encode('utf-8')
-                with codecs.open(join(TempDir, File), mode='wb') as TempFile:
+                FileDataFixed = FileDataFixed.encode("utf-8")
+                with codecs.open(join(TempDir, File), mode="wb") as TempFile:
                     TempFile.write(FileDataFixed)
                 MyTarFile.add(join(TempDir, File), join(MetaLibVersion, File))
             elif File.endswith(".txt"):
                 MyTarFile.add(join(SourceDir, File), join(MetaLibVersion, File))
             elif File.endswith(".md"):
-                File2 = File[:-3] + '.txt'
-                with codecs.open(join(SourceDir, File), 'r', 'utf-8') as FileOpen:
+                File2 = File[:-3] + ".txt"
+                with codecs.open(join(SourceDir, File), "r", "utf-8") as FileOpen:
                     FileData = FileOpen.read()
-                FileDataFixed = ''
-                for line in str(FileData).replace('\r','').split('\n'):
+                FileDataFixed = ""
+                for line in str(FileData).replace("\r", "").split("\n"):
                     line2 = multiple_replace(line, *mdReplacements)
                     line3 = multiple_replace(line2, *aimdReplacements)
-                    FileDataFixed = FileDataFixed + line3 + '\r\n'
+                    FileDataFixed = FileDataFixed + line3 + "\r\n"
                     LineCount += 1
-                FileDataFixed = FileDataFixed.encode('utf-8')
-                with codecs.open(join(TempDir, File2), mode='wb') as TempFile:
+                FileDataFixed = FileDataFixed.encode("utf-8")
+                with codecs.open(join(TempDir, File2), mode="wb") as TempFile:
                     TempFile.write(FileDataFixed)
                 MyTarFile.add(join(TempDir, File2), join(MetaLibVersion, File2))
 print("    " + MetaLibVersion + "-GS.tar created!")
 
-'delete temp dirctory'
+"delete temp directory"
 shutil.rmtree(TempDir)
 
 print("        " + str(LineCount) + " lines of code")

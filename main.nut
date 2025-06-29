@@ -1,10 +1,10 @@
-﻿/*	Minchinweb's MetaLibrary v.9 [2014-03-10],  
+﻿/*	Minchinweb's MetaLibrary v.9 [2014-03-10],
  *		originally part of, WmDOT v.10
  *	Copyright © 2011-14 by W. Minchin. For more info,
  *		please visit https://github.com/MinchinWeb/openttd-metalibrary
  *
- *	Permission is granted to you to use, copy, modify, merge, publish, 
- *	distribute, sublicense, and/or sell this software, and provide these 
+ *	Permission is granted to you to use, copy, modify, merge, publish,
+ *	distribute, sublicense, and/or sell this software, and provide these
  *	rights to others, provided:
  *
  *	+ The above copyright notice and this permission notice shall be included
@@ -13,10 +13,10 @@
  *		contributions.
  *	+ You accept that this software is provided to you "as is", without warranty.
  */
- 
+
 /*	See the README for a list of the functions included in this library.
  */
- 
+
 require("Pathfinder.Road.nut");
 	//	Requires Graph.AyStar v6 library
 // require("AyStar.WM.nut");
@@ -76,51 +76,49 @@ class MinchinWeb {
 
 	static RoadPathfinder = _MinchinWeb_RoadPathfinder_;
 	///<	\see	\_MinchinWeb\_RoadPathfinder\_
-	
+
 	static ShipPathfinder = _MinchinWeb_ShipPathfinder_;
 	///<	\see	\_MinchinWeb\_ShipPathfinder\_
-	
+
 	static Array = _MinchinWeb_Array_;
 	///<	\see	\_MinchinWeb\_Array\_
-	
+
 	static Extras = _MinchinWeb_Extras_;
 	///<	\see	\_MinchinWeb\_Extras\_
-	
+
 	static WaterbodyCheck = _MinchinWeb_WBC_;
 	///<	\see	\_MinchinWeb\_WBC\_
-	
+
 	static LineWalker = _MinchinWeb_LW_;
 	///<	\see	\_MinchinWeb\_LW\_
-	
+
 	static SpiralWalker = _MinchinWeb_SW_;
 	///<	\see	\_MinchinWeb\_SW\_
-	
+
 	static Constants = _MinchinWeb_C_;
 	///<	\see	\_MinchinWeb\_C\_
 	// in Constants.nut
-	
+
 	static Atlas = _MinchinWeb_Atlas_;
 	///<	\see	\_MinchinWeb\_Atlas\_
-	
+
 	static Marine = _MinchinWeb_Marine_;
 	///<	\see	\_MinchinWeb\_Marine\_
-	
+
 	static Industry = _MinchinWeb_Industry_;
 	///<	\see	\_MinchinWeb\_Industry\_
-	
+
 	static Station = _MinchinWeb_Station_;
 	///<	\see	\_MinchinWeb\_Station\_
-	
+
 	static Log = _MinchinWeb_Log_;
 	///<	\see	\_MinchinWeb\_Log\_
-	
+
 	static DLS = _MinchinWeb_DLS_;
 	///<	\see	\_MinchinWeb\_DLS\_
 	// in Dominion.Roads.nut
-	
+
 	static Lakes = _MinchinWeb_Lakes_;
 	///<	\see	\_MinchinWeb\_Lakes\_
 };
 // EOF
-
- 

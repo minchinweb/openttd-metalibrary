@@ -4,8 +4,8 @@
  *	Copyright © 2011-14 by W. Minchin. For more info,
  *		please visit https://github.com/MinchinWeb/openttd-metalibrary
  *
- *	Permission is granted to you to use, copy, modify, merge, publish, 
- *	distribute, sublicense, and/or sell this software, and provide these 
+ *	Permission is granted to you to use, copy, modify, merge, publish,
+ *	distribute, sublicense, and/or sell this software, and provide these
  *	rights to others, provided:
  *
  *	+ The above copyright notice and this permission notice shall be included
@@ -27,7 +27,7 @@
 		AddSetting({name = "Debug_Level", description = "Debug Level ", min_value = 0, max_value = 8, easy_value = 3, medium_value = 3, hard_value = 3, custom_value = 3, flags = CONFIG_INGAME});
 	}
  * ~~~
- * 
+ *
  * This will add an option to your AI allowing users to control the debug output
  * from your AI. You can allow this setting to be configured in-game, as it is
  * read each time the class is called.
@@ -39,7 +39,7 @@
  *			as Debug Level is determined at each call.
  */
 
- class _MinchinWeb_Log_ {
+class _MinchinWeb_Log_ {
 	/**	\publicsection
 	 *	\fn		GetVersion()
 	 *	\return	current version of the Logging Interface
@@ -106,7 +106,7 @@
 	 *	\param	Message	message to print to AI debug screen
 	 *	\param	Level	required minimum level to print message (default is 3)
 	 *	\static
-	 */ 
+	 */
 	function Note(Message, Level = 3);
 
 	/**	\public
@@ -130,7 +130,7 @@
 	 *	your AI.
 	 *	\param	Message	message to print to AI debug screen
 	 *	\static
-	 */	
+	 */
 	function Error(Message) { AILog.Error(Message); };
 
 	/**	\public
@@ -140,14 +140,14 @@
 	 *	\param	Message	message to print on the sign
 	 *	\param	Level	required minimum level to place tile (default is 5)
 	 *	\static
-	 */	
+	 */
 	function Sign(Tile, Message, Level = 5);
 
 	/**	\public
 	 *	\brief	Prints the current debug level to the AI debug screen.
 	 *	\return	nothing
 	 *	\static
-	 */	
+	 */
 	function PrintDebugLevel();
 
 	/**	\public
@@ -160,7 +160,7 @@
 	 *	\return	current debug level, as per AI setting.
 	 *	\see _DebugLevel
 	 *	\static
-	 */	
+	 */
 	function UpdateDebugLevel() {
 		local DebugLevel = 3;
 		if (AIController.GetSetting("Debug_Level") != -1) {
@@ -195,7 +195,7 @@ function _MinchinWeb_Log_::PrintDebugLevel() {
 	} catch (all) {
 		AILog.Warning("No AI setting 'Debug_Level'");
 	}
-	
+
 }
 
 function _MinchinWeb_Log_::UpdateDebugLevel() {

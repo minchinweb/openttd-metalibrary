@@ -4,8 +4,8 @@
  *	Copyright © 2011-14 by W. Minchin. For more info,
  *		please visit https://github.com/MinchinWeb/openttd-metalibrary
  *
- *	Permission is granted to you to use, copy, modify, merge, publish, 
- *	distribute, sublicense, and/or sell this software, and provide these 
+ *	Permission is granted to you to use, copy, modify, merge, publish,
+ *	distribute, sublicense, and/or sell this software, and provide these
  *	rights to others, provided:
  *
  *	+ The above copyright notice and this permission notice shall be included
@@ -52,7 +52,7 @@
 		AddB -> AddEdgeB -> StillEdges;
 		FoundMatch -> Yes2;
 		StillEdges -> No1 [label="no"];
-		
+
 		Start [shape=box];
 		A [label="Point A"];
 		B [label="Point B"];
@@ -76,7 +76,7 @@
 		AddEdgeA [label="Add new\npast-edges"];
 		AddEdgeB [label="Add new\npast-edges"];
 		FoundMatch [label="Match\nfound!"];
-		
+
 		{ rank=same; A -> B [color=white]; }
 		{ rank=same; StillEdgeA; StillEdgeB; }
 	}
@@ -93,35 +93,35 @@
  *				effectively creating _group_tiles from _map on the fly twice a
  *				loop was deemed too time demanding.
  */
- 
+
 class _MinchinWeb_Lakes_ {
 	_heap_class = import("queue.fibonacci_heap", "", 3);
-	
-	/**	\brief	AIList that tells which group each tile belongs in 
+
+	/**	\brief	AIList that tells which group each tile belongs in
 	 *
 	 *	`item` is TileIndex, `value` is Group. `value == -2` means the value
 	 *	remains unset, `value == -1` means the tile is land.
 	 */
 	_map = null;
-	
-	/**	\brief	Array that shows the connections to each tile group 
+
+	/**	\brief	Array that shows the connections to each tile group
 	 *
 	 *	`index` is TileGroup.
 	 */
 	_connections = null;
-	
+
 	/**	\brief	Array of the defined tile groups
 	 *
 	 *	`index` is TileGroup.
 	 */
 	_areas = null;
-	
+
 	/**	\brief	Array of tiles that are open from each tile group
 	 *
 	 *	`index` is TileGroup; form is [Edge_Tile, Past_Edge_Tile]
 	 */
 	_open_neighbours = null;
-	
+
 	/**	\brief	Array of AIList's of the tiles that are in each group
 	 *
 	 *	`index` is TileGroup
@@ -134,7 +134,7 @@ class _MinchinWeb_Lakes_ {
 	_B = null;					///< array of goal tiles
 
 	_running = null;			///< is Lakes currently running?
-	
+
 	constructor() {
 		this._map = AIList();
 		for (local i = 0; i < AIMap.GetMapSize(); i++) {
@@ -182,7 +182,7 @@ class _MinchinWeb_Lakes_ {
 	 *  which is an indication it is not yet done looking for a route.
 	 */
 	function FindPath(iterations);
-	
+
 	/**	\private
 	 *	\brief	Seeds the grid points to Lakes.
 	 *
@@ -190,12 +190,12 @@ class _MinchinWeb_Lakes_ {
 	 *	\see	PreSeed()
 	 */
 	function _AddGridPoints();
-	
+
 	/**	\public
 	 *	\brief	Seeds a point into Lakes.
 	 *	\param	myTileID	Assumed to be a tile index.
 	 *	\return	Area the tile is in. -1 if the tile is on land.
-	 */	
+	 */
 	function AddPoint(myTileID);
 
 	/** \private
@@ -204,14 +204,14 @@ class _MinchinWeb_Lakes_ {
 	  *	\return	An array listing all the attached tile groups
 	  */
 	function _AllGroups(StartGroupArray);
-	
+
 	/**	\public
 	 *	\brief	Get the minimum distance between the source and destination
 	 *			tiles.
 	 *	\note	Distance is calculated as Manhattan Distance
 	 */
 	function GetPathLength();
-	
+
 	/**	\privatesection
 	 *	\brief	Processes `NextTile`s neighbours
 	 *	\param	NextTile	Tile we consider the neighbours of
@@ -219,7 +219,7 @@ class _MinchinWeb_Lakes_ {
 	 *	\return	An array of the neighbours added otherwise.
 	 */
 	function _AddNeighbour(NextTile);
-	
+
 	/**	\public
 	 *	\brief	Adds 'starter' tile groups across the map.
 	 *
@@ -245,12 +245,12 @@ function _MinchinWeb_Lakes_::FindPath(iterations) {
 			this._running = false;
 			return null;
 		}
-		
+
 		//	Get not only the groups the tiles are in, but all the tile groups
 		//		that are connected
 		local AAllGroups = _AllGroups(this._AGroup);
 		_MinchinWeb_Log_.Note("AGroup: " + _MinchinWeb_Array_.ToString1D(this._AGroup, false) + " All A:" + _MinchinWeb_Array_.ToString1D(AAllGroups, false), 6);
-		
+
 		foreach (Group in AAllGroups) {
 			if (_MinchinWeb_Array_.ContainedIn1D(this._BGroup, Group)) {
 				//	If we have a connection, return 'true'
@@ -259,7 +259,7 @@ function _MinchinWeb_Lakes_::FindPath(iterations) {
 				return true;
 			}
 		}
-		
+
 		//	No match (yet anyway...)
 		//	Get all the open neighbours of A
 		local ANeighbours = array(0);
@@ -267,7 +267,7 @@ function _MinchinWeb_Lakes_::FindPath(iterations) {
 		local BAllGroups = array(0);
 		AAllGroups = _AllGroups(this._AGroup);
 		BAllGroups = _AllGroups(this._BGroup);
-		
+
 		foreach (Group in AAllGroups){
 			ANeighbours = _MinchinWeb_Array_.Append(ANeighbours, this._open_neighbours[Group]);
 		}
@@ -279,9 +279,9 @@ function _MinchinWeb_Lakes_::FindPath(iterations) {
 		AEdge = _MinchinWeb_Array_.RemoveDuplicates(AEdge);
 		_MinchinWeb_Log_.Note("A -- Edge: " + AEdge.len() + "  Neighbours: " + ANeighbours.len(), 6);
 		_MinchinWeb_Log_.Note("A -- Edge: " + _MinchinWeb_Array_.ToStringTiles1D(AEdge), 7);
-		
+
 		if (ANeighbours.len() > 0) {
-			//	Get the tile from AEdge that is closest to B's 
+			//	Get the tile from AEdge that is closest to B's
 			local BTileList = AIList();
 			foreach (group in BAllGroups) {
 				BTileList.AddList(this._group_tiles[group]);
@@ -290,9 +290,9 @@ function _MinchinWeb_Lakes_::FindPath(iterations) {
 			foreach (edge in AEdge) {
 				AEdgeHeap.Insert(edge, _MinchinWeb_Extras_.MinDistance(edge, BTileList));
 			}
-			
+
 			//_MinchinWeb_Log_.Note("    B -- Tiles: " + _MinchinWeb_Array_.ToStringTiles1D(BTileArray), 7);
-			
+
 			//	Process the tile's 4 neighbours x12
 			for (local j=0; j < 12; j++) {
 				if (AEdgeHeap.Count() > 0) {
@@ -310,12 +310,12 @@ function _MinchinWeb_Lakes_::FindPath(iterations) {
 			this._running = false;
 			return null;
 		}
-		
+
 		local BNeighbours = array(0);
 		local BEdge = array(0);
 		AAllGroups = _AllGroups(this._AGroup);
 		BAllGroups = _AllGroups(this._BGroup);
-		
+
 		//	Check to see if we have a connection (and can go home!)
 		_MinchinWeb_Log_.Note("BGroup: " + _MinchinWeb_Array_.ToString1D(this._AGroup, false) + " All B:" + _MinchinWeb_Array_.ToString1D(AAllGroups, false), 6);
 		foreach (Group in BAllGroups) {
@@ -326,7 +326,7 @@ function _MinchinWeb_Lakes_::FindPath(iterations) {
 				return true;
 			}
 		}
-		
+
 		foreach (Group in BAllGroups) {
 			BNeighbours = _MinchinWeb_Array_.Append(BNeighbours, this._open_neighbours[Group]);
 		}
@@ -337,7 +337,7 @@ function _MinchinWeb_Lakes_::FindPath(iterations) {
 		BEdge = _MinchinWeb_Array_.RemoveDuplicates(BEdge);
 		_MinchinWeb_Log_.Note("B -- Edge: " + BEdge.len() + "  Neighbours: " + BNeighbours.len(), 6);
 		_MinchinWeb_Log_.Note("B -- Edge: " + _MinchinWeb_Array_.ToStringTiles1D(BEdge), 7);
-		
+
 		if (BNeighbours.len() > 0) {
 			//	Get the tile from AEdge that is closest to BEdge
 			local ATileList = AIList();
@@ -350,7 +350,7 @@ function _MinchinWeb_Lakes_::FindPath(iterations) {
 			}
 
 			//_MinchinWeb_Log_.Note("    A -- Tiles: " + _MinchinWeb_Array_.ToStringTiles1D(ATileArray), 7);
-			
+
 			//	Process the tile's 4 neighbours x12
 			for (local j=0; j < 12; j++) {
 				if (BEdgeHeap.Count() > 0) {
@@ -370,10 +370,10 @@ function _MinchinWeb_Lakes_::FindPath(iterations) {
 		}
 		_MinchinWeb_Log_.Note("B -- " + (AIController.GetTick() - tick) + " ticks.", 8);
 	}
-	
+
 	//	ran out of loops, we're still running
 	return false;
-	
+
 }
 
 function _MinchinWeb_Lakes_::GetPathLength() {
@@ -388,7 +388,7 @@ function _MinchinWeb_Lakes_::GetPathLength() {
 function _MinchinWeb_Lakes_::_AddGridPoints() {
 	local myDLS = _MinchinWeb_DLS_();
 	local Grid = myDLS.AllGridPoints()
-	
+
 	foreach (point in Grid) {
 		AddPoint(point)
 	}
@@ -396,7 +396,7 @@ function _MinchinWeb_Lakes_::_AddGridPoints() {
 
 function _MinchinWeb_Lakes_::AddPoint(myTileID) {
 	// _MinchinWeb_Log_.Note("Tile Area " + this._map.GetValue(myTileID) + " : " + this._map.Count() + " / " + this._areas.len(), 6);
-	
+
 	switch (this._map.GetValue(myTileID)) {
 		case -2:
 			//	tile is unset (i.e. in no group)
@@ -409,9 +409,9 @@ function _MinchinWeb_Lakes_::AddPoint(myTileID) {
 				this._map.SetValue(myTileID, myArea);
 				this._group_tiles.append(AIList());
 				this._group_tiles[myArea].AddItem(myTileID, myTileID);
-				
+
 				local offsets = [AIMap.GetTileIndex(0, 1), AIMap.GetTileIndex(0, -1),
-							 AIMap.GetTileIndex(1, 0), AIMap.GetTileIndex(-1, 0)];
+							 	 AIMap.GetTileIndex(1, 0), AIMap.GetTileIndex(-1, 0)];
 
 				foreach (offset in offsets) {
 					local next_tile = myTileID + offset;
@@ -428,9 +428,9 @@ function _MinchinWeb_Lakes_::AddPoint(myTileID) {
 
 							this._connections[myArea].append(ConnectedArea);
 							this._connections[ConnectedArea].append(myArea);
-						
+
 							local AllConnectedAreas = _AllGroups([ConnectedArea]);
-							
+
 							//	remove open neighbour from AllConnectedAreas to next_tile
 							foreach (ThisArea in AllConnectedAreas) {
 								for (local i=0; i < this._open_neighbours[ThisArea].len(); i++) {
@@ -480,7 +480,7 @@ function _MinchinWeb_Lakes_::_AllGroups(StartGroupArray) {
 	local ReturnGroup = StartGroupArray;
 	local NextStartIndex = 0;
 	local MoreAdded = true;
-	
+
 	do {
 		//_MinchinWeb_Log_.Note("In AllGroups(), loop " + loops + ". start: " + StartIndex + " // " + _MinchinWeb_Array_.ToString1D(ReturnGroup, false), 6);
 		MoreAdded = false;
@@ -495,7 +495,7 @@ function _MinchinWeb_Lakes_::_AllGroups(StartGroupArray) {
 		StartIndex = NextStartIndex;
 		loops++;
 	} while (MoreAdded == true)
-	
+
 	return ReturnGroup;
 }
 
@@ -525,10 +525,10 @@ function _MinchinWeb_Lakes_::_AddNeighbour(NextTile) {
 				i--;
 			}
 		}
-	
+
 	}
 	_MinchinWeb_Log_.Note("NextTile: " + _MinchinWeb_Array_.ToStringTiles1D([NextTile]) + "  //  Onward Tiles: " + _MinchinWeb_Array_.ToStringTiles1D(OnwardTiles), 8);
-	
+
 	if (OnwardTiles.len() == 0) {
 		//	if something broke, spit out useful debug information
 		_MinchinWeb_Log_.Note("     MinchinWeb.Lakes._AddNeighbour(): No source for " + _MinchinWeb_Array_.ToStringTiles1D([NextTile]), 8);
@@ -542,7 +542,7 @@ function _MinchinWeb_Lakes_::_AddNeighbour(NextTile) {
 		local FromGroup = this._map.GetValue(NextTile);
 		local offsets = [AIMap.GetTileIndex(0, 1), AIMap.GetTileIndex(0, -1),
 						 AIMap.GetTileIndex(1, 0), AIMap.GetTileIndex(-1, 0)];
-		
+
 		//	Check that each neighbour is still attached by water to our from tile,
 		//		and then add it to the FromGroup
 		//		Then add possible neighbours to the open_neighbours list
@@ -558,8 +558,8 @@ function _MinchinWeb_Lakes_::_AddNeighbour(NextTile) {
 						this._open_neighbours[FromGroup].append([OnwardTile, next_tile]);
 					}
 				}
-			}	
-		
+			}
+
 			//	If more than one groups list this tile as an open neighbour,
 			//		register the two groups are now linked
 			for (local i = 0; i < this._open_neighbours.len(); i++) {
@@ -570,7 +570,7 @@ function _MinchinWeb_Lakes_::_AddNeighbour(NextTile) {
 						this._connections[ActiveFromGroup].append(FromGroup);
 						this._open_neighbours[i] = _MinchinWeb_Array_.RemoveValueAt(this._open_neighbours[i], j);
 						j--;
-						
+
 						//	remove duplicates
 						local oldActiveFromGroup = this._connections[ActiveFromGroup];
 						local oldFromGroup = this._connections[FromGroup];

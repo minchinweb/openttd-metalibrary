@@ -3,8 +3,8 @@
  *	Copyright © 2011-14 by W. Minchin. For more info,
  *		please visit https://github.com/MinchinWeb/openttd-metalibrary
  *
- *	Permission is granted to you to use, copy, modify, merge, publish, 
- *	distribute, sublicense, and/or sell this software, and provide these 
+ *	Permission is granted to you to use, copy, modify, merge, publish,
+ *	distribute, sublicense, and/or sell this software, and provide these
  *	rights to others, provided:
  *
  *	+ The above copyright notice and this permission notice shall be included
@@ -13,9 +13,9 @@
  *		contributions.
  *	+ You accept that this software is provided to you "as is", without warranty.
  */
- 
+
 // TO-DO:	Break this into Math, Geometry, and Extras
- 
+
 /*	These are 'random' functions that didn't seem to fit well elsewhere.
  *
  *	Comparison functions will return the first value if the two are equal
@@ -30,12 +30,12 @@
  *	Many of them are math helper functions. Many others are helpful in dealing
  *	geometry.
  */
- 
+
 class _MinchinWeb_Extras_ {
 	_infinity = null;	///< pointer to \_MinchinWeb\_C\_::Infinity()
-	
+
 	constructor() {
-		this._infinity = _MinchinWeb_C_.Infinity();	
+		this._infinity = _MinchinWeb_C_.Infinity();
 	}
 
 	/**	\publicsection
@@ -189,7 +189,7 @@ class _MinchinWeb_Extras_ {
 	 *	\static
 	 */
 	function GetOpenTTDRevision();
-	
+
 	/**	\brief	Get the minimum distance between TileID and any of the tiles
 	 *			in TargetArray
 	 *	\note	This is designed such that it can be run as a validator on an
@@ -241,7 +241,7 @@ function _MinchinWeb_Extras_::Perpendicular(SlopeIn) {
 function _MinchinWeb_Extras_::Slope(TileA, TileB) {
 	local dx = AIMap.GetTileX(TileB) - AIMap.GetTileX(TileA);
 	local dy = AIMap.GetTileY(TileB) - AIMap.GetTileY(TileA);
-	
+
 	//	Zero check
 	if (dx == 0) {
 		return _MinchinWeb_C_.Infinity() * _MinchinWeb_Extras_.Sign(dy);
@@ -251,12 +251,11 @@ function _MinchinWeb_Extras_::Slope(TileA, TileB) {
 		dx = dx.tofloat();
 		dy = dy.tofloat();
 
-		return (dy / dx);	
+		return (dy / dx);
 	}
 }
 
-function _MinchinWeb_Extras_::Within(Bound1, Bound2, Value)
-{
+function _MinchinWeb_Extras_::Within(Bound1, Bound2, Value) {
 	local UpperBound = max(Bound1, Bound2);
 	local LowerBound = min(Bound1, Bound2);
 
@@ -267,7 +266,7 @@ function _MinchinWeb_Extras_::WithinFloat(Bound1, Bound2, Value) {
 	local UpperBound = _MinchinWeb_Extras_.MaxFloat(Bound1, Bound2) + _MinchinWeb_C_.FloatOffset();
 	local LowerBound = _MinchinWeb_Extras_.MinFloat(Bound1, Bound2) - _MinchinWeb_C_.FloatOffset();
 	local Value = Value.tofloat();
-	
+
 //	_MinchinWeb_Log_.Note("          Extras.WithinFloat: Val=" + Value + " B1=" + Bound1 + " B2=" + Bound2 + " : UB=" + UpperBound + " LB=" + LowerBound + " is " + (Value <= UpperBound) + " " + (Value >= LowerBound) + " : " + ((Value <= UpperBound) && (Value >= LowerBound)) + " : above " + (Value - UpperBound) + " below " + (LowerBound - Value) + " : " + _MinchinWeb_C_.FloatOffset() , 7);
 
 	return ((Value <= UpperBound) && (Value >= LowerBound));
@@ -293,8 +292,7 @@ function _MinchinWeb_Extras_::MaxAbsFloat(Value1, Value2) {
 	}
 }
 
-function _MinchinWeb_Extras_::AbsFloat(Value)
-{
+function _MinchinWeb_Extras_::AbsFloat(Value) {
 	if (Value >= 0) {
 		return Value;
 	} else {
@@ -354,13 +352,13 @@ function _MinchinWeb_Extras_::NextCardinalTile(StartTile, TowardsTile) {
 	local Tiles = AITileList();
 	local offsets = [AIMap.GetTileIndex(0, 1), AIMap.GetTileIndex(0, -1),
 						AIMap.GetTileIndex(1, 0), AIMap.GetTileIndex(-1, 0)];
-				 
+
 	foreach (offset in offsets) {
 		Tiles.AddItem(StartTile + offset, AIMap.DistanceSquare(StartTile + offset, TowardsTile));
 	}
-	
+
 	Tiles.Sort(AIList.SORT_BY_VALUE, AIList.SORT_ASCENDING);
-	
+
 	return Tiles.Begin();
 }
 

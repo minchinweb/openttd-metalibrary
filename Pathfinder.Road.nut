@@ -6,7 +6,7 @@
  */
 
 /* $Id: main.nut 15101 2009-01-16 00:05:26Z truebrain $ */
- 
+
 /**	\note	This file is licensed under the original license -- **LGPL v2.1** --
  *			and is based on the NoAI Team's Road Pathfinder v3.
  *
@@ -37,12 +37,12 @@
 /*	This file provides functions:
 		MinchinWeb.RoadPathfinder.InitializePath(sources, goals)
 				Set up the pathfinder
-		MinchinWeb.RoadPathfinder.FindPath(iterations)	
+		MinchinWeb.RoadPathfinder.FindPath(iterations)
 				Run the pathfinder; returns false if it isn't finished the path
-					 if it has finished, and null if it can't find a path
+					if it has finished, and null if it can't find a path
 		MinchinWeb.RoadPathfinder.cost.[xx]
 				Allows you to set or find out the pathfinder costs directly.
-					 See the function below for valid entries
+					See the function below for valid entries
 		MinchinWeb.RoadPathfinder.Info.GetVersion()
 									.GetMinorVersion()
 									.GetRevision()
@@ -50,11 +50,11 @@
 									.GetName()
 				Useful for check provided version or debugging screen output
 		MinchinWeb.RoadPathfinder.PresetOriginal()
-							  .PresetPerfectPath()
-							  .PresetQuickAndDirty()
-							  .PresetCheckExisting()
-							  .PresetMode6()
-							  .PresetStreetcar() 
+							.PresetPerfectPath()
+							.PresetQuickAndDirty()
+							.PresetCheckExisting()
+							.PresetMode6()
+							.PresetStreetcar()
 				Presets for the pathfinder parameters
 		MinchinWeb.RoadPathfinder.GetBuildCost()					//	How much would it be to build the path?
 		MinchinWeb.RoadPathfinder.BuildPath()						//	Build the path
@@ -62,11 +62,11 @@
 		MinchinWeb.RoadPathfinder.LoadPath(Path)					//	Provide your own path
 		MinchinWeb.RoadPathfinder.GetPath()							//	Returns the path as stored by the pathfinder
 		MinchinWeb.RoadPathfinder.InitializePathOnTowns(StartTown, EndTown)
-				Initializes the pathfinder using the seed tiles to the given towns	
+				Initializes the pathfinder using the seed tiles to the given towns
 		MinchinWeb.RoadPathfinder.PathToTilePairs()
 				Returns a 2D array that has each pair of tiles that path joins
 		MinchinWeb.RoadPathfinder.TilesPairsToBuild()
-				Similar to PathToTilePairs(), but only returns those pairs 
+				Similar to PathToTilePairs(), but only returns those pairs
 				where there isn't a current road connection
  */
 /**	\todo	upgrade slow bridges along path
@@ -99,7 +99,7 @@ class _MinchinWeb_RoadPathfinder_ {
 	_distance_penalty = null;		///< Penalty to use to speed up pathfinder, 1 is no penalty
 	_road_type = null;
 	cost = null;                   ///< Used to change the costs.
-	_mypath = null;					///< Used to store the path after it's been found for Building functions
+	_my_path = null;					///< Used to store the path after it's been found for Building functions
 	_running = null;
 	info = null;
 //	presets = null;
@@ -121,7 +121,7 @@ class _MinchinWeb_RoadPathfinder_ {
 		this._pathfinder = this._aystar_class(this, this._Cost, this._Estimate, this._Neighbours, this._CheckDirection);
 		this._distance_penalty = 1;
 		this._road_type = AIRoad.ROADTYPE_ROAD;
-		this._mypath = null;
+		this._my_path = null;
 
 		this.cost = this.Cost(this);
 		this.info = this.Info(this);
@@ -138,13 +138,13 @@ class _MinchinWeb_RoadPathfinder_ {
 	 *	\see	InitializePathOnTowns()
 	 */
 	function InitializePath(sources, goals) {
-		local nsources = [];
+		local n_sources = [];
 
 		foreach (node in sources) {
-			nsources.push([node, 0xFF]);
+			n_sources.push([node, 0xFF]);
 		}
-		this._pathfinder.InitializePath(nsources, goals);
-		this._mypath = null;
+		this._pathfinder.InitializePath(n_sources, goals);
+		this._my_path = null;
 	}
 
 	/**
@@ -229,7 +229,7 @@ class _MinchinWeb_RoadPathfinder_ {
 	 *	\see	LoadPath()
 	 */
 	function GetPathLength();
-	
+
 	/**	\brief	Initializes the pathfinder using two towns.
 	 *	\note	Assumes that the town centres are road tiles. If this is not the
 	 *			case, the pathfinder will still run, but it will take a long
@@ -239,20 +239,20 @@ class _MinchinWeb_RoadPathfinder_ {
 	 *	\see	InitializePath()
 	 */
 	function InitializePathOnTowns();
-	
+
 	/**	\brief	Get the found path as tile pairs.
 	 *	\return	2D array that has each pair of tiles that path joins.
 	 *	\see 	TilePairsToBuild()
 	 *	\see	PathToTiles()
 	 */
 	function PathToTilePairs();
-	
+
 	/**	\brief	Get a list of all the tiles in the path.
 	 *	\return	1D array that has each pair of tiles that path covers.
 	 *	\see	PathToTilePairs()
 	 */
 	function PathToTiles();
-	
+
 	/**	\brief	Tiles in the path that need to be built.
 	 *
 	 *	Similar to PathToTilePairs(), but only returns those pairs where there
@@ -262,7 +262,7 @@ class _MinchinWeb_RoadPathfinder_ {
 	 *	\see	BuildPath()
 	 */
 	function TilePairsToBuild();
-	
+
 	/**	\privatesection
 	 */
 	function _GetBridgeNumSlopes(end_a, end_b);
@@ -323,8 +323,7 @@ class _MinchinWeb_RoadPathfinder_.Cost {
 		}
 	}
 
-	constructor(main)
-	{
+	constructor(main) {
 		this._main = main;
 	}
 };
@@ -333,7 +332,7 @@ function _MinchinWeb_RoadPathfinder_::FindPath(iterations) {
 	local test_mode = AITestMode();
 	local ret = this._pathfinder.FindPath(iterations);
 	this._running = (ret == false) ? true : false;
-	if (this._running == false) { this._mypath = ret; }
+	if (this._running == false) { this._my_path = ret; }
 	return ret;
 }
 
@@ -363,7 +362,7 @@ function _MinchinWeb_RoadPathfinder_::_Cost(self, path, new_tile, new_direction)
 
 	local prev_tile = path.GetTile();
 
-	/* If the new tile is (already) a bridge / tunnel tile, check whether we 
+	/* If the new tile is (already) a bridge / tunnel tile, check whether we
 	 * came from the other end of the bridge / tunnel or if we just entered the
 	 * bridge / tunnel. */
 	if (AIBridge.IsBridgeTile(new_tile)) {
@@ -378,7 +377,7 @@ function _MinchinWeb_RoadPathfinder_::_Cost(self, path, new_tile, new_direction)
 		return path.GetCost() + AIMap.DistanceManhattan(new_tile, prev_tile) * self._cost_tile;
 	}
 
-	/* If the two tiles are more then 1 tile apart, the pathfinder wants a 
+	/* If the two tiles are more then 1 tile apart, the pathfinder wants a
 	 * bridge or tunnel to be build. It isn't an existing bridge / tunnel, as
 	 * that case is already handled. */
 	if (AIMap.DistanceManhattan(new_tile, prev_tile) > 1) {
@@ -415,17 +414,17 @@ function _MinchinWeb_RoadPathfinder_::_Cost(self, path, new_tile, new_direction)
 	if (!AIRoad.AreRoadTilesConnected(prev_tile, new_tile)) {
 		cost += self._cost_no_existing_road;
 	}
-	
+
 	/* Add a penalty for road/rail level crossings.  */
 	if(AITile.HasTransportType(new_tile, AITile.TRANSPORT_RAIL)) {
 		cost += self._cost_level_crossing;
 	}
-	
+
 	/* Add a penalty for exisiting drive thru road stations  */
 	if(AIRoad.IsDriveThroughRoadStationTile(new_tile)) {
-		cost += self._cost_drivethru_station; 
+		cost += self._cost_drivethru_station;
 	}
-	
+
 	return path.GetCost() + cost;
 }
 
@@ -480,7 +479,7 @@ function _MinchinWeb_RoadPathfinder_::_Neighbours(self, path, cur_node) {
 			} else if ((self._cost_only_existing_roads != true) && self._CheckTunnelBridge(cur_node, next_tile)) {
 				tiles.push([next_tile, self._GetDirection(cur_node, next_tile, false)]);
 			}
-			
+
 			//	Test for water (i.e. rivers or canals or rails to bridge over them
 			local iTile = cur_node + offset;
 			local BridgeLength = 2;
@@ -488,10 +487,10 @@ function _MinchinWeb_RoadPathfinder_::_Neighbours(self, path, cur_node) {
 				iTile += offset;
 				BridgeLength++;
 			}
-			
+
 			//	test to see if we could actually build said bridge
 			//	TO-DO: Check to see if this test is done elsewhere...
-			
+
 			if (BridgeLength > 2) {
 			//	TO-DO: test for map wraparound... _SuperLib_Tile::IsStraight(tile1, tile2)
 				local BridgeList = AIBridgeList_Length(BridgeLength);
@@ -502,7 +501,7 @@ function _MinchinWeb_RoadPathfinder_::_Neighbours(self, path, cur_node) {
 					tiles.push([iTile, self._GetDirection(iTile, cur_node, true) << 4]);
 				}
 			}
-			
+
 		}
 		if (path.GetParent() != null) {
 			local bridges = self._GetTunnelsBridges(path.GetParent().GetTile(), cur_node, self._GetDirection(path.GetParent().GetTile(), cur_node, true) << 4);
@@ -635,18 +634,17 @@ function _MinchinWeb_RoadPathfinder_::_CheckTunnelBridge(current_tile, new_tile)
  *		If you would like a preset added here, I would be happy to include it
  *			in future versions!
  */
- 
 
-class _MinchinWeb_RoadPathfinder_.Info
-{
+
+class _MinchinWeb_RoadPathfinder_.Info {
 	_main = null;
-	
+
 	function GetVersion()       { return 9; }
 //	function GetMinorVersion()	{ return 0; }
 	function GetRevision()		{ return 121228; }
 	function GetDate()          { return "2012-12-28"; }
 	function GetName()          { return "Road Pathfinder (Wm)"; }
-	
+
 	constructor(main)
 	{
 		this._main = main;
@@ -715,7 +713,7 @@ function _MinchinWeb_RoadPathfinder_::PresetQuickAndDirty() {
 	//	new for WmDOT v8
 	this._cost_level_crossing = 700;
 	this._cost_drivethru_station = 100;
-	return;	
+	return;
 }
 
 function _MinchinWeb_RoadPathfinder_::PresetCheckExisting() {
@@ -754,14 +752,14 @@ function _MinchinWeb_RoadPathfinder_::GetBuildCost() {
 		AILog.Warning("You can't find the build costs while there's a running pathfinder.");
 		return false;
 	}
-	if (this._mypath == null) {
+	if (this._my_path == null) {
 		AILog.Warning("You have tried to get the build costs of a 'null' path.");
 		return false;
 	}
-	
+
 	local BeanCounter = AIAccounting();
 	local TestMode = AITestMode();
-	local Path = this._mypath;
+	local Path = this._my_path;
 
 	AIRoad.SetCurrentRoadType(this._road_type);
 	while (Path != null) {
@@ -794,11 +792,11 @@ function _MinchinWeb_RoadPathfinder_::GetBuildCost() {
 					}
 					if (AITunnel.GetOtherTunnelEnd(Path.GetTile()) == SubPath.GetTile()) {
 						if (!AITunnel.BuildTunnel(AIVehicle.VT_ROAD, Path.GetTile())) {
-							//	At this point, an error has occurred while 
+							//	At this point, an error has occurred while
 							//		building the tunnel.
 							//	Fail the pathfinder
 							//	return null;
-						AILog.Warning("MinchinWeb.RoadPathfinder.GetBuildCost can't build a tunnel from " + AIMap.GetTileX(Path.GetTile()) + "," + AIMap.GetTileY(Path.GetTile()) + " to " + AIMap.GetTileX(SubPath.GetTile()) + "," + AIMap.GetTileY(SubPath.GetTile()) + "!!" );
+							AILog.Warning("MinchinWeb.RoadPathfinder.GetBuildCost can't build a tunnel from " + AIMap.GetTileX(Path.GetTile()) + "," + AIMap.GetTileY(Path.GetTile()) + " to " + AIMap.GetTileX(SubPath.GetTile()) + "," + AIMap.GetTileY(SubPath.GetTile()) + "!!" );
 						}
 					} else {
 						//	if not a tunnel, we assume we're building a bridge
@@ -810,7 +808,7 @@ function _MinchinWeb_RoadPathfinder_::GetBuildCost() {
 							//		building the bridge.
 							//	Fail the pathfinder
 							//	return null;
-						AILog.Warning("MinchinWeb.RoadPathfinder.GetBuildCost can't build a bridge from " + AIMap.GetTileX(Path.GetTile()) + "," + AIMap.GetTileY(Path.GetTile()) + " to " + AIMap.GetTileX(SubPath.GetTile()) + "," + AIMap.GetTileY(SubPath.GetTile()) + "!!" );
+							AILog.Warning("MinchinWeb.RoadPathfinder.GetBuildCost can't build a bridge from " + AIMap.GetTileX(Path.GetTile()) + "," + AIMap.GetTileY(Path.GetTile()) + " to " + AIMap.GetTileX(SubPath.GetTile()) + "," + AIMap.GetTileY(SubPath.GetTile()) + "!!" );
 						}
 					}
 				}
@@ -818,7 +816,7 @@ function _MinchinWeb_RoadPathfinder_::GetBuildCost() {
 		}
 	Path = SubPath;
 	}
-	
+
 	//	End build sequence
 	return BeanCounter.GetCosts();
 }
@@ -828,13 +826,13 @@ function _MinchinWeb_RoadPathfinder_::BuildPath() {
 		AILog.Warning("You can't build a path while there's a running pathfinder.");
 		return false;
 	}
-	if (this._mypath == null) {
+	if (this._my_path == null) {
 		AILog.Warning("You have tried to build a 'null' path.");
 		return false;
 	}
-	
+
 	local TestMode = AIExecMode();	//	We're really doing this!
-	local Path = this._mypath;
+	local Path = this._my_path;
 
 	AIRoad.SetCurrentRoadType(this._road_type);
 	while (Path != null) {
@@ -870,13 +868,13 @@ function _MinchinWeb_RoadPathfinder_::BuildPath() {
 						//		from when the pathfinder was run and when we try
 						//		to build the path. If the tunnel building fails,
 						//		we get the 'can't build tunnel' message, but if
-						//		the land has changed such that the tunnel end is 
+						//		the land has changed such that the tunnel end is
 						//		at a different spot than is was when the
-						//		pathfinder ran, we skip tunnel building and try 
+						//		pathfinder ran, we skip tunnel building and try
 						//		and build a bridge instead, which will fail
 						//		because the slopes are wrong...
 						if (!AITunnel.BuildTunnel(AIVehicle.VT_ROAD, Path.GetTile())) {
-							//	At this point, an error has occurred while 
+							//	At this point, an error has occurred while
 							//		building the tunnel.
 							//	Fail the pathfinder
 							//	return null;
@@ -888,7 +886,7 @@ function _MinchinWeb_RoadPathfinder_::BuildPath() {
 						BridgeList.Valuate(AIBridge.GetMaxSpeed);
 						BridgeList.Sort(AIList.SORT_BY_VALUE, false);
 						if (!AIBridge.BuildBridge(AIVehicle.VT_ROAD, BridgeList.Begin(), Path.GetTile(), SubPath.GetTile())) {
-							//	At this point, an error has occurred while 
+							//	At this point, an error has occurred while
 							//		building the bridge.
 							//	Fail the pathfinder
 							//	return null;
@@ -900,7 +898,7 @@ function _MinchinWeb_RoadPathfinder_::BuildPath() {
 		}
 	Path = SubPath;
 	}
-	
+
 	//	End build sequence
 	return true;
 }
@@ -912,7 +910,7 @@ function _MinchinWeb_RoadPathfinder_::LoadPath (Path) {
 		AILog.Warning("You can't load a path while there's a running pathfinder.");
 		return false;
 	}
-	this._mypath = Path;
+	this._my_path = Path;
 }
 
 function _MinchinWeb_RoadPathfinder_::GetPath() {
@@ -921,7 +919,7 @@ function _MinchinWeb_RoadPathfinder_::GetPath() {
 		AILog.Warning("You can't get the path while there's a running pathfinder.");
 		return false;
 	}
-	return this._mypath;
+	return this._my_path;
 }
 
 function _MinchinWeb_RoadPathfinder_::GetPathLength() {
@@ -930,18 +928,18 @@ function _MinchinWeb_RoadPathfinder_::GetPathLength() {
 		AILog.Warning("You can't get the path length while there's a running pathfinder.");
 		return false;
 	}
-	if (this._mypath == null) {
+	if (this._my_path == null) {
 		AILog.Warning("You have tried to get the length of a 'null' path.");
 		return false;
 	}
-	
-	return this._mypath.GetLength();
+
+	return this._my_path.GetLength();
 }
 
 function _MinchinWeb_RoadPathfinder_::InitializePathOnTowns(StartTown, EndTown) {
 	//	Initializes the pathfinder using two towns
 	//	Assumes that the town centres are road tiles (if this is not the case,
-	//		the pathfinder will still run, but it will take a long time and 
+	//		the pathfinder will still run, but it will take a long time and
 	//		eventually fail to return a path)
 	return this.InitializePath([AITown.GetLocation(StartTown)], [AITown.GetLocation(EndTown)]);
 }
@@ -952,22 +950,22 @@ function _MinchinWeb_RoadPathfinder_::PathToTilePairs() {
 		AILog.Warning("You can't convert a path while there's a running pathfinder.");
 		return false;
 	}
-	if (this._mypath == null) {
+	if (this._my_path == null) {
 		AILog.Warning("You have tried to convert a 'null' path.");
 		return false;
 	}
-	
-	local Path = this._mypath;
+
+	local Path = this._my_path;
 	local TilePairs = [];
 
 	while (Path != null) {
 		local SubPath = Path.GetParent();
 		if (SubPath != null) {
-			TilePairs.push([Path.GetTile(), SubPath.GetTile()]);	
+			TilePairs.push([Path.GetTile(), SubPath.GetTile()]);
 		}
 	Path = SubPath;
 	}
-	
+
 	//	End build sequence
 	return TilePairs;
 }
@@ -978,12 +976,12 @@ function _MinchinWeb_RoadPathfinder_::PathToTiles() {
 		AILog.Warning("You can't convert a path while there's a running pathfinder.");
 		return false;
 	}
-	if (this._mypath == null) {
+	if (this._my_path == null) {
 		AILog.Warning("You have tried to convert a 'null' path.");
 		return false;
 	}
-	
-	local Path = this._mypath;
+
+	local Path = this._my_path;
 	local Tiles = [];
 
 	while (Path != null) {
@@ -1002,12 +1000,12 @@ function _MinchinWeb_RoadPathfinder_::TilePairsToBuild() {
 		AILog.Warning("You can't convert a (partial) path while there's a running pathfinder.");
 		return false;
 	}
-	if (this._mypath == null) {
+	if (this._my_path == null) {
 		AILog.Warning("You have tried to convert a (partial) 'null' path.");
 		return false;
 	}
-	
-	local Path = this._mypath;
+
+	local Path = this._my_path;
 	local TilePairs = [];
 
 	while (Path != null) {
@@ -1027,7 +1025,7 @@ function _MinchinWeb_RoadPathfinder_::TilePairsToBuild() {
 		}
 		Path = SubPath;
 	}
-	
+
 	//	End build sequence
 	return TilePairs;
 }

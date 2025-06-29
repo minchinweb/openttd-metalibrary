@@ -110,10 +110,12 @@ FAQ                                                                      {#faq}
 
 **A:**  Import the main library, and then create global points to the
         sub-libaries you want to use. Eg:
-~~~ 
+
+~~~
         Import("util.MinchinWeb", "MinchinWeb", 9);
         Arrays <- MinchinWeb.Arrays;
 ~~~
+
 *Info:* See the sub-library files for the functions available and their
             implementation.
 
@@ -156,8 +158,8 @@ Copyright © 2011-15 by W. Minchin.
 For more info,
     please visit <https://github.com/MinchinWeb/openttd-metalibrary>
 
-Permission is granted to you to use, copy, modify, merge, publish, 
-distribute, sublicense, and/or sell this software, and provide these 
+Permission is granted to you to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell this software, and provide these
 rights to others, provided:
 
 - The above copyright notice and this permission notice shall be included
@@ -171,11 +173,11 @@ rights to others, provided:
 
 Links                                                                  {#links}
 ===============================================================================
--   Discussion thread for MetaLibarary on TT-Forums -- 
+-   Discussion thread for MetaLibarary on TT-Forums --
     <http://www.tt-forums.net/viewtopic.php?f=65&t=57903>
--   MetaLibrary code, hosted on GitHub -- 
+-   MetaLibrary code, hosted on GitHub --
     <https://github.com/MinchinWeb/openttd-metalibrary/>
--   MetaLibrary documentation -- 
+-   MetaLibrary documentation --
     <http://minchin.ca/openttd-metalibrary/>
 
 Notes To Me                                                            {#notes}
@@ -183,6 +185,6 @@ Notes To Me                                                            {#notes}
 \todo       Notes about static classes, what they are, and which classes
             are 'static'  
 \todo       Consider Fibonacci Heap version in NoCAB  
-\todo       Add picture of in game downloader  
+\todo       Add picture of the in-game downloader  
 \todo       Look into theming dOxygen output  
 \todo       Add 'News' tab pointing back to my Blog updates on MetaLibrary  

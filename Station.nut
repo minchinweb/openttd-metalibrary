@@ -3,8 +3,8 @@
  *	Copyright © 2011-14 by W. Minchin. For more info,
  *		please visit https://github.com/MinchinWeb/openttd-metalibrary
  *
- *	Permission is granted to you to use, copy, modify, merge, publish, 
- *	distribute, sublicense, and/or sell this software, and provide these 
+ *	Permission is granted to you to use, copy, modify, merge, publish,
+ *	distribute, sublicense, and/or sell this software, and provide these
  *	rights to others, provided:
  *
  *	+ The above copyright notice and this permission notice shall be included
@@ -13,7 +13,7 @@
  *		contributions.
  *	+ You accept that this software is provided to you "as is", without warranty.
  */
- 
+
 /*	Functions provided:
  *		MinchinWeb.Station.IsCargoAccepted(StationID, CargoID)
  *								- Checks whether a certain Station accepts a given cargo
@@ -26,7 +26,7 @@
  *								- Returns the distance between a given vehicle and a given station
  *								- Designed to be usable as a Valuator on a list of vehicles
  */
- 
+
 /**	\brief		Station
  *	\version	v.3 (2011-07-21)
  *	\author		W. Minchin (%MinchinWeb)
@@ -89,20 +89,20 @@ function _MinchinWeb_Station_::IsCargoAccepted(StationID, CargoID) {
 function _MinchinWeb_Station_::IsNextToDock(TileID) {
 	local offsets = [0, AIMap.GetTileIndex(0, 1), AIMap.GetTileIndex(0, -1),
 						AIMap.GetTileIndex(1, 0), AIMap.GetTileIndex(-1, 0)];
-				 
+
 	foreach (offset in offsets) {
 		if (AIMarine.IsDockTile(TileID + offset)) {
 			return true;
 		}
 	}
-	
+
 	return false;
 }
 
 function _MinchinWeb_Station_::DistanceFromStation(VehicleID, StationID) {
 	local VehicleTile = AIVehicle.GetLocation(VehicleID);
 	local StationTile = AIBaseStation.GetLocation(StationID);
-	
+
 	return AITile.GetDistanceManhattanToTile(VehicleTile, StationTile);
 }
 // EOF

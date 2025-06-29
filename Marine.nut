@@ -4,8 +4,8 @@
  *	Copyright © 2011-12 by W. Minchin. For more info,
  *		please visit https://github.com/MinchinWeb/openttd-metalibrary
  *
- *	Permission is granted to you to use, copy, modify, merge, publish, 
- *	distribute, sublicense, and/or sell this software, and provide these 
+ *	Permission is granted to you to use, copy, modify, merge, publish,
+ *	distribute, sublicense, and/or sell this software, and provide these
  *	rights to others, provided:
  *
  *	+ The above copyright notice and this permission notice shall be included
@@ -21,8 +21,8 @@
  *	\since		MetaLibrary v.2
  *	\see		\_MinchinWeb\_ShipPathfinder\_
  */
- 
-/* 
+
+/*
  *		MinchinWeb.Marine.DistanceShip(TileA, TileB)
  *							- Assuming open ocean, ship in OpenTTD will travel
  *								45° angle where possible, and then finish up the
@@ -48,17 +48,17 @@
  *								existing buoy, and makes sure there's nothing
  *								but water between the two. If no existing buoy
  *								is found, one is built.
- *							- Returns the location of the existing or built bouy.
+ *							- Returns the location of the existing or built buoy.
  *							- This will fail if the Tile given is a dock (or
  *								any tile that is not a water tile)
  *						.BuildDepot(DockTile, Front)
- *							- Attempts to build a (water) depot, but first checks 
+ *							- Attempts to build a (water) depot, but first checks
  *								the box within Constants.WaterDepotOffset() for
- *								an existing depot, and makes sure there's nothing 
- *								but water between the depot and dock. If no 
+ *								an existing depot, and makes sure there's nothing
+ *								but water between the depot and dock. If no
  *								existing depot is found, one is built.
  *							- Returns the location of the existing or built depot.
- *							- This will fail if the DockTile given is a dock (or 
+ *							- This will fail if the DockTile given is a dock (or
  *								any tile that is not a water tile)
  *						.RateShips(EngineID, Life, Cargo)
  *							- Designed to Run as a validator
@@ -72,8 +72,8 @@
  *
  *		See also MinchinWeb.ShipPathfinder
  */
- 
- 
+
+
 class _MinchinWeb_Marine_ {
 	main = null;
 
@@ -169,7 +169,7 @@ class _MinchinWeb_Marine_ {
 };
 
 //	== Function definitions ================================================
- 
+
 function _MinchinWeb_Marine_::DistanceShip(TileA, TileB) {
 //	Assuming open ocean, ship in OpenTTD will travel 45° angle where possible,
 //		and then finish up the trip by going along a cardinal direction
@@ -194,7 +194,7 @@ function _MinchinWeb_Marine_::GetPossibleDockTiles(IndustryID) {
 			local ex = AITestMode();
 			local Walker = _MinchinWeb_SW_();	//	Spiral Walker
 			Walker.Start(AIIndustry.GetLocation(IndustryID));
-			
+
 			while (Walker.GetStage() <= ((_MinchinWeb_C_.IndustrySize() + AIStation.GetCoverageRadius(AIStation.STATION_DOCK)) * 4)) {
 				if (AIMarine.BuildDock(Walker.Walk(), AIStation.STATION_NEW) == true) {
 					Tiles.push(Walker.GetTile());
@@ -226,8 +226,8 @@ function _MinchinWeb_Marine_::GetDockFrontTiles(Tile) {
 	local offsets = [AIMap.GetTileIndex(0, 1), AIMap.GetTileIndex(0, -1),
 					 AIMap.GetTileIndex(1, 0), AIMap.GetTileIndex(-1, 0)];
 	local next_tile;
-	
-	if (AIMap.IsValidTile(Tile)) {		
+
+	if (AIMap.IsValidTile(Tile)) {
 		if (AITile.IsWaterTile(Tile)) {
 			// water tile
 			DockEnd = Tile;
@@ -242,7 +242,7 @@ function _MinchinWeb_Marine_::GetDockFrontTiles(Tile) {
 					break;
 				case 3:
 					offset = AIMap.GetTileIndex(-1, 0);
-					break;	
+					break;
 				case 6:
 					offset = AIMap.GetTileIndex(0, -1);
 					break;
@@ -253,10 +253,10 @@ function _MinchinWeb_Marine_::GetDockFrontTiles(Tile) {
 					offset = AIMap.GetTileIndex(1, 0);
 					break;
 			}
-			
+
 			DockEnd = Tile + offset;
 		}
-		
+
 		if (DockEnd != null) {
 			/* Check all tiles adjacent to the current tile. */
 			foreach (offset in offsets) {
@@ -269,31 +269,31 @@ function _MinchinWeb_Marine_::GetDockFrontTiles(Tile) {
 	} else {
 		AILog.Warning("MinchinWeb.Marine.GetDockFrontTiles() was supplied with an invalid TileIndex. Was supplied " + Tile + ".");
 	}
-	
+
 	return ReturnTiles;
 }
 
 function _MinchinWeb_Marine_::BuildBuoy(Tile) {
-//	Attempts to build a buoy, but first checks the box within
-//		MinchinWeb.Constants.BuoyOffset() for an existing buoy, and makes sure
-//		there's nothing but water between the two. If no existing buoy is found,
-//		one is built.
+	//	Attempts to build a buoy, but first checks the box within
+	//		MinchinWeb.Constants.BuoyOffset() for an existing buoy, and makes sure
+	//		there's nothing but water between the two. If no existing buoy is found,
+	//		one is built.
 
-//	Returns the location of the existing or built buoy.
+	//	Returns the location of the existing or built buoy.
 
 	local Existing = AITileList();
 	local UseExistingAt = null;
-	
+
 	local Walker = _MinchinWeb_SW_();	//	Spiral Walker
 	Walker.Start(Tile);
-	
+
 	while (Walker.GetStage() <= (_MinchinWeb_C_.BuoyOffset() * 4)) {
 		if (AIMarine.IsBuoyTile(Walker.Walk())) {
 			Existing.AddItem(Walker.GetTile(), AIMap.DistanceManhattan(Tile, Walker.GetTile()));
 			_MinchinWeb_Log_.Note("BuildBuoy() : Insert Existing at" + _MinchinWeb_Array_.ToStringTiles1D([Walker.GetTile()]), 7);
 		}
 	}
-	
+
 	if (Existing.Count() > 0) {
 		Existing.Sort(AIList.SORT_BY_VALUE, AIList.SORT_ASCENDING);
 		local TestBuoy = Existing.Begin();
@@ -316,35 +316,35 @@ function _MinchinWeb_Marine_::BuildBuoy(Tile) {
 			}
 		}
 	}
-		
+
 	if (UseExistingAt == null) {
 		AIMarine.BuildBuoy(Tile);
-		return Tile;	
+		return Tile;
 	} else {
 		return UseExistingAt;
 	}
 }
 
 function _MinchinWeb_Marine_::BuildDepot(DockTile, Front, NotNextToDock=true) {
-//	Attempts to build a (water) depot, but first checks the box within
-//		MinchinWeb.Constants.WaterDepotOffset() for an existing depot, and makes
-//		sure there's nothing but water between the depot and dock. If no
-//		existing depot is found, one is built.
+	//	Attempts to build a (water) depot, but first checks the box within
+	//		MinchinWeb.Constants.WaterDepotOffset() for an existing depot, and makes
+	//		sure there's nothing but water between the depot and dock. If no
+	//		existing depot is found, one is built.
 
-//	Returns the location of the existing or built depot.
-//	This will fail if the DockTile given is a dock (or any tile that is not a water tile)
+	//	Returns the location of the existing or built depot.
+	//	This will fail if the DockTile given is a dock (or any tile that is not a water tile)
 
-//	'NotNextToDock,' when set, will keep the dock from being built next to an
-//		existing dock
+	//	'NotNextToDock,' when set, will keep the dock from being built next to an
+	//		existing dock
 
 	local StartX = AIMap.GetTileX(DockTile) - _MinchinWeb_C_.WaterDepotOffset();
 	local StartY = AIMap.GetTileY(DockTile) - _MinchinWeb_C_.WaterDepotOffset();
 	local EndX = AIMap.GetTileX(DockTile) + _MinchinWeb_C_.WaterDepotOffset();
 	local EndY = AIMap.GetTileY(DockTile) + _MinchinWeb_C_.WaterDepotOffset();
-	
+
 	local Existing = AITileList();
 	local UseExistingAt = null;
-	
+
 	for (local i = StartX; i < EndX; i++) {
 		for (local j = StartY; j < EndY; j++) {
 			if (AIMarine.IsWaterDepotTile(AIMap.GetTileIndex(i,j))) {
@@ -353,7 +353,7 @@ function _MinchinWeb_Marine_::BuildDepot(DockTile, Front, NotNextToDock=true) {
 			}
 		}
 	}
-	
+
 	if (Existing.Count() > 0) {
 		Existing.Sort(AIList.SORT_BY_VALUE, AIList.SORT_ASCENDING);
 		local TestDepot = Existing.Begin();
@@ -376,13 +376,13 @@ function _MinchinWeb_Marine_::BuildDepot(DockTile, Front, NotNextToDock=true) {
 			}
 		}
 	}
-		
-	if (UseExistingAt == null) {	
+
+	if (UseExistingAt == null) {
 		if(AIMarine.BuildWaterDepot(DockTile, Front)) {
-		// try and build right at the given spot
-			UseExistingAt = DockTile;	
+			// try and build right at the given spot
+			UseExistingAt = DockTile;
 		} else {
-		//	if that doesn't work, build it close by
+			//	if that doesn't work, build it close by
 			//	Generate a list of water tiles, and pick one at random
 			Existing.Clear();
 			for (local i = StartX; i < EndX; i++) {
@@ -393,7 +393,7 @@ function _MinchinWeb_Marine_::BuildDepot(DockTile, Front, NotNextToDock=true) {
 					}
 				}
 			}
-			
+
 			Existing.Sort(AIList.SORT_BY_VALUE, AIList.SORT_ASCENDING);
 			local TestDepot = Existing.Begin();
 			local KeepTrying = true;
@@ -426,7 +426,7 @@ function _MinchinWeb_Marine_::BuildDepot(DockTile, Front, NotNextToDock=true) {
 					}
 				}
 			}
-		
+
 		}
 	}
 
@@ -434,13 +434,13 @@ function _MinchinWeb_Marine_::BuildDepot(DockTile, Front, NotNextToDock=true) {
 }
 
 function _MinchinWeb_Marine_::RateShips(EngineID, Life, Cargo) {
-//	Designed to Run as a validator
-//	Given the EngineID, it will score them; higher is better
-//	   Score = [(Capacity in Cargo)*Reliability*Speed] / 
-//                      [ (Purchase Price over Life) + (Running Costs)*Life ]
-//
-//	Life is assumed to be in years
-//  Note: Cargo doesn't work yet. Capacity is measured in the default cargo.
+	//	Designed to Run as a validator
+	//	Given the EngineID, it will score them; higher is better
+	//	   Score = [(Capacity in Cargo) * Reliability * Speed] /
+	//                      [ (Purchase Price over Life) + (Running Costs) * Life ]
+	//
+	//	Life is assumed to be in years
+	//  Note: Cargo doesn't work yet. Capacity is measured in the default cargo.
 
 	local Score = 0;
 	local Age = AIEngine.GetMaxAge(EngineID);
@@ -453,7 +453,7 @@ function _MinchinWeb_Marine_::RateShips(EngineID, Life, Cargo) {
 	} else {
 		Score = (Return * 1000 / Cost).tointeger();
 	}
-	
+
 	_MinchinWeb_Log_.Note("Rate Ship : " + Score + " : " +AIEngine.GetName(EngineID) + " : " + AIEngine.GetCapacity(EngineID) + " * " + AIEngine.GetReliability(EngineID) + " * " + AIEngine.GetMaxSpeed(EngineID) + " / " + BuyTimes + " * " + AIEngine.GetPrice(EngineID) + " + " + Life + " * " + AIEngine.GetRunningCost(EngineID), 7);
 	return Score;
 }

@@ -4,8 +4,8 @@
  *	Copyright © 2011-14 by W. Minchin. For more info,
  *		please visit https://github.com/MinchinWeb/openttd-metalibrary
  *
- *	Permission is granted to you to use, copy, modify, merge, publish, 
- *	distribute, sublicense, and/or sell this software, and provide these 
+ *	Permission is granted to you to use, copy, modify, merge, publish,
+ *	distribute, sublicense, and/or sell this software, and provide these
  *	rights to others, provided:
  *
  *	+ The above copyright notice and this permission notice shall be included
@@ -37,11 +37,11 @@
  *	\todo		Add a cost for turns that then this would function as a 'real'
  *				pathfinder (maybe...)
  */
- 
+
 /*	This file provides functions:
  *		MinchinWeb.WaterbodyCheck.InitializePath(sources, goals)
  *									- Set up the pathfinder
- *								 .FindPath(iterations)	
+ *								 .FindPath(iterations)
  *									- Run the pathfinder; returns false if it
  *										isn't finished the path if it has
  *										finished, and null if it can't find a path
@@ -65,13 +65,13 @@ class _MinchinWeb_WBC_ {
 	_pathfinder = null;
 	cost = null;				///< Used to change the costs.
 	_running = null;			///< Is it running?
-	_mypath = null;
-	
+	_my_path = null;
+
 	constructor() {
 		this._max_cost = 16000;
 		this._cost_per_tile = 1;
 		this._distance_penalty = 1;
-		
+
 		this._pathfinder = this._aystar_class(this, this._Cost, this._Estimate, this._Neighbours, this._CheckDirection);
 		this.cost = this.Cost(this);
 		this._running = false;
@@ -84,13 +84,13 @@ class _MinchinWeb_WBC_ {
 	 * @see AyStar::InitializePath()
 	 */
 	function InitializePath(sources, goals) {
-		local nsources = [];
+		local n_sources = [];
 
 		foreach (node in sources) {
-			nsources.push([node, 0xFF]);
+			n_sources.push([node, 0xFF]);
 		}
-		this._pathfinder.InitializePath(nsources, goals);
-		this._mypath = null;
+		this._pathfinder.InitializePath(n_sources, goals);
+		this._my_path = null;
 	}
 
 	/**
@@ -100,22 +100,22 @@ class _MinchinWeb_WBC_ {
 	 *  aborts immediately and will never find a path.
 	 * @return A route if one was found, or `false` if the amount of iterations
 	 *  was reached, or `null` if no path was found.
-	 * @return You can call this function over and over as long as it returns 
+	 * @return You can call this function over and over as long as it returns
 	 *  `false`, which is an indication it is not yet done looking for a route.
 	 * @see AyStar::FindPath()
 	 */
 	function FindPath(iterations);
-	
+
 	/**	\brief	How long is the (found) path?
 	 *	\return	Path length in tiles
 	 */
 	function GetPathLength();
-	
+
 	/**	\brief	Caps the pathfinder as twice the Manhattan distance between the
 	 *			two tiles
 	 */
 	function PresetSafety(Start, End);
-	
+
 	/**	\privatesection
 	 */
 	function _Cost(self, path, new_tile, new_direction);
@@ -165,7 +165,7 @@ class _MinchinWeb_WBC_.Cost {
 function _MinchinWeb_WBC_::FindPath(iterations) {
 	local ret = this._pathfinder.FindPath(iterations);
 	this._running = (ret == false) ? true : false;
-	if (this._running == false) { this._mypath = ret; }
+	if (this._running == false) { this._my_path = ret; }
 	return ret;
 }
 
@@ -177,7 +177,7 @@ function _MinchinWeb_WBC_::_Cost(self, path, new_tile, new_direction) {
 //	local prev_tile = path.GetTile();
 
 //	local cost = self._cost_per_tile;
-	
+
 //	if (AIMarine.AreWaterTilesConnected(new_tile, prev_tile) != true) {
 //		cost = self._max_cost * 10;	//	Basically, way over the top
 //	}
@@ -211,10 +211,10 @@ function _MinchinWeb_WBC_::_Neighbours(self, path, cur_node) {
 			tiles.push([next_tile, self._GetDirection(cur_node, next_tile)]);
 		}
 	}
-	
+
 	/**	\todo	Add diagonals to possible neighbours
 	 */
-	
+
 	return tiles;
 }
 
@@ -230,23 +230,21 @@ function _MinchinWeb_WBC_::_GetDirection(from, to) {
 	if (from - to == -AIMap.GetMapSizeX()) return 8;
 }
 
-function _MinchinWeb_WBC_::GetPathLength()
-{
-//  Runs over the path to determine its length
+function _MinchinWeb_WBC_::GetPathLength() {
+	//  Runs over the path to determine its length
     if (this._running) {
         AILog.Warning("You can't get the path length while there's a running pathfinder.");
         return false;
     }
-    if (this._mypath == null) {
+    if (this._my_path == null) {
         AILog.Warning("You have tried to get the length of a 'null' path.");
         return false;
     }
-    
-    return _mypath.GetLength();
+
+    return _my_path.GetLength();
 }
 
-function _MinchinWeb_WBC_::PresetSafety(Start, End)
-{
-//	Caps the pathfinder as twice the Manhattan distance between the two tiles
+function _MinchinWeb_WBC_::PresetSafety(Start, End) {
+	//	Caps the pathfinder as twice the Manhattan distance between the two tiles
 	this._max_cost = this._cost_per_tile * AIMap.DistanceManhattan(Start, End) * 2;
 }

@@ -4,8 +4,8 @@
  *	Copyright © 2011-12 by W. Minchin. For more info,
  *		please visit https://github.com/MinchinWeb/openttd-metalibrary
  *
- *	Permission is granted to you to use, copy, modify, merge, publish, 
- *	distribute, sublicense, and/or sell this software, and provide these 
+ *	Permission is granted to you to use, copy, modify, merge, publish,
+ *	distribute, sublicense, and/or sell this software, and provide these
  *	rights to others, provided:
  *
  *	+ The above copyright notice and this permission notice shall be included
@@ -21,7 +21,7 @@
  *	\since		MetaLibrary v.4
  *
  *	The SpiralWalker class allows you to define a starting point, and then
- *		'walk' all the tiles in a spiral outward. It was originally used to 
+ *		'walk' all the tiles in a spiral outward. It was originally used to
  *		find a build-able spot for my HQ in WmDOT, but is useful for many other
  *		things as well.
  *
@@ -29,7 +29,7 @@
  *	\see	\_MinchinWeb\_LW\_
  *	\todo	add image showing the walk out pattern
  */
- 
+
 /*	Functions provided:
  *		MetaLib.SpiralWalker()
  *		MetaLib.SpiralWalker.Start(Tile)
@@ -38,13 +38,13 @@
  *							.Walk()
  *							.GetStart()
  *							.GetStage()
- *							.GetStep() 
+ *							.GetStep()
  */
- 
+
 class _MinchinWeb_SW_ {
 	_start = null;				///<	start tile
-	_startx = null;				///<	x value of start tile
-	_starty = null;				///<	y value of start tile
+	_start_x = null;			///<	x value of start tile
+	_start_y = null;			///<	y value of start tile
 	_x = null;					///<	x value of current tile
 	_y = null;					///<	y value of current tile
 	_current_tile = null;		///<	current tile
@@ -54,7 +54,7 @@ class _MinchinWeb_SW_ {
 	_Stage = null;				///< see GetStage()
 	_StageMax = null;
 	_StageSteps = null;
-	
+
 	constructor() {
 		this._dx = -1;
 		this._dy =  0;
@@ -122,12 +122,12 @@ class _MinchinWeb_SW_ {
 //	== Function definition ==================================================
 function _MinchinWeb_SW_::Start(Tile) {
 	this._start = Tile;
-	this._startx = AIMap.GetTileX(Tile);
-	this._starty = AIMap.GetTileY(Tile);
-	this._x = this._startx;
-	this._y = this._starty;
+	this._start_x = AIMap.GetTileX(Tile);
+	this._start_y = AIMap.GetTileY(Tile);
+	this._x = this._start_x;
+	this._y = this._start_y;
 	this._current_tile = this._start;
-	
+
 	this._dx = -1;
 	this._dy =  0;
 	this._Steps = 0;
@@ -139,18 +139,18 @@ function _MinchinWeb_SW_::Start(Tile) {
 
 function _MinchinWeb_SW_::Reset() {
 	this._start = null;
-	this._startx = null;
-	this._starty = null;
+	this._start_x = null;
+	this._start_y = null;
 	this._x = null;
 	this._y = null;
 	this._current_tile = null;
 }
 
 function _MinchinWeb_SW_::Restart() {
-	this._x = this._startx;
-	this._y = this._starty;
+	this._x = this._start_x;
+	this._y = this._start_y;
 	this._current_tile = this._start;
-	
+
 	this._dx = -1;
 	this._dy =  0;
 	this._Steps = 0;
@@ -163,12 +163,12 @@ function _MinchinWeb_SW_::Walk() {
 	if (this._Steps == 0) {
 		this._Steps++;
 	} else {
-	
+
 		this._x += this._dx;
 		this._y += this._dy;
 		this._StageSteps ++;
 		this._Steps ++;
-		
+
 		// Check if it's time to turn
 		if (this._StageSteps == this._StageMax) {
 			this._StageSteps = 0;
@@ -176,7 +176,7 @@ function _MinchinWeb_SW_::Walk() {
 				this._StageMax++;
 			}
 			this._Stage ++;
-			
+
 			// Turn Clockwise
 			switch (this._dx) {
 				case 0:

@@ -4,8 +4,8 @@
  *	Copyright © 2011-12 by W. Minchin. For more info,
  *		please visit https://github.com/MinchinWeb/openttd-metalibrary
  *
- *	Permission is granted to you to use, copy, modify, merge, publish, 
- *	distribute, sublicense, and/or sell this software, and provide these 
+ *	Permission is granted to you to use, copy, modify, merge, publish,
+ *	distribute, sublicense, and/or sell this software, and provide these
  *	rights to others, provided:
  *
  *	+ The above copyright notice and this permission notice shall be included
@@ -25,7 +25,7 @@
  *		starting point and a slope. It was originally part of my Ship
  *		Pathfinder, also part of Minchinweb's MetaLibrary.
  */
- 
+
 /*	Functions provided:
  *		MetaLib.LineWalker()
  *		MetaLib.LineWalker.Start(Tile)
@@ -38,7 +38,7 @@
  *						  .GetStart()
  *						  .GetEnd()
  */
- 
+
 /**	\note	Plane geometry does funky things when you don't have an infinity, or
  *			by extension, zero (the inverse of infinity) for slopes. To get
  *			around the fact integer conversions drop everything past the decimal
@@ -49,21 +49,21 @@
  *	\note	`LineWalker` is designed to be a persistent class.
  *	\see	\_MinchinWeb\_SW\_
  */
- 
+
 class _MinchinWeb_LW_ {
 	_start = null;				///<	start tile
 	_end = null;				///<	end tile
 	_slope = null;				///<	line slope
-	_startx = null;				///<	x value of start tile
-	_starty = null;				///<	y value of start tile
-	_endx = null;				///<	x value of end tile
-	_endy = null;				///<	y value of end tile
+	_start_x = null;				///<	x value of start tile
+	_start_y = null;				///<	y value of start tile
+	_end_x = null;				///<	x value of end tile
+	_end_y = null;				///<	y value of end tile
 	_past_end = null;
 	_x = null;					///<	x value of current tile
 	_y = null;					///<	y value of current tile
-	_dirx = null;
+	_dir_x = null;
 	_current_tile = null;		///<	current tile
-	
+
 	constructor() {
 		this._past_end = true;
 //		this._infinity = _MinchinWeb_C_.Infinity();	//	close enough to infinity :P
@@ -147,74 +147,74 @@ class _MinchinWeb_LW_ {
 
 function _MinchinWeb_LW_::Start(Tile) {
 	this._start = Tile;
-	this._startx = AIMap.GetTileX(Tile);
-	this._starty = AIMap.GetTileY(Tile);
-	this._x = this._startx;
-	this._y = this._starty;	
+	this._start_x = AIMap.GetTileX(Tile);
+	this._start_y = AIMap.GetTileY(Tile);
+	this._x = this._start_x;
+	this._y = this._start_y;
 	this._past_end = false;
 	this._current_tile = AIMap.GetTileIndex(this._x, this._y);
 	this._x = this._x.tofloat();
 	this._y = this._y.tofloat();
-	
+
 	if (this._end != null) {
 		if (this._slope == null) {
 			this._slope = _MinchinWeb_Extras_.Slope(this._start, this._end);
 		}
-		
-		if (this._startx < this._endx) {
-			this._dirx = 1;
-		} else if (this._startx > this._endx) {
-			this._dirx = -1;
+
+		if (this._start_x < this._end_x) {
+			this._dir_x = 1;
+		} else if (this._start_x > this._end_x) {
+			this._dir_x = -1;
 		} else {
 		//	startX == EndX
-			if (this._starty < this._endy) {
-				this._dirx = 1;
+			if (this._start_y < this._end_y) {
+				this._dir_x = 1;
 
 			} else {
-				this._dirx = 1;
+				this._dir_x = 1;
 			}
-			this._endx = this._endx.tofloat() + (1.0 - (1.0 / _MinchinWeb_C_.Infinity()));			
+			this._end_x = this._end_x.tofloat() + (1.0 - (1.0 / _MinchinWeb_C_.Infinity()));
 		}
-		
-		if (this._starty == this._endy) {
-			this._endy = this._endy.tofloat() + (1.0 - (1.0 / _MinchinWeb_C_.Infinity()));
+
+		if (this._start_y == this._end_y) {
+			this._end_y = this._end_y.tofloat() + (1.0 - (1.0 / _MinchinWeb_C_.Infinity()));
 		}
 	}
-	
-//	_MinchinWeb_Log_.Note("    LineWalker.Start out: " + this._startx + " " + this._starty + " m" + this._slope + " ± " + this._dirx, 6);
+
+//	_MinchinWeb_Log_.Note("    LineWalker.Start out: " + this._start_x + " " + this._start_y + " m" + this._slope + " ± " + this._dir_x, 6);
 }
 
 function _MinchinWeb_LW_::End(Tile) {
 	this._end = Tile;
-	this._endx = AIMap.GetTileX(Tile);
-	this._endy = AIMap.GetTileY(Tile);
-	
+	this._end_x = AIMap.GetTileX(Tile);
+	this._end_y = AIMap.GetTileY(Tile);
+
 	if (this._start != null) {
 		if (this._slope == null) {
 			this._slope = _MinchinWeb_Extras_.Slope(this._start, this._end);
 		}
-		
-		if (this._startx < this._endx) {
-			this._dirx = 1;
-		} else if (this._startx > this._endx) {
-			this._dirx = -1;
+
+		if (this._start_x < this._end_x) {
+			this._dir_x = 1;
+		} else if (this._start_x > this._end_x) {
+			this._dir_x = -1;
 		} else {
 		//	startX == EndX
-			if (this._starty < this._endy) {
-				this._dirx = 1;
+			if (this._start_y < this._end_y) {
+				this._dir_x = 1;
 
 			} else {
-				this._dirx = 1;
+				this._dir_x = 1;
 			}
-			this._endx = this._endx.tofloat() + (1.0 - (1.0 / _MinchinWeb_C_.Infinity()));			
+			this._end_x = this._end_x.tofloat() + (1.0 - (1.0 / _MinchinWeb_C_.Infinity()));
 		}
-		
-		if (this._starty == this._endy) {
-			this._endy = this._endy.tofloat() + (1.0 - (1.0 / _MinchinWeb_C_.Infinity()));
+
+		if (this._start_y == this._end_y) {
+			this._end_y = this._end_y.tofloat() + (1.0 - (1.0 / _MinchinWeb_C_.Infinity()));
 		}
 	}
-	
-//	_MinchinWeb_Log_.Note("    LineWalker.End out: " + this._endx + " " + this._endy + " m" + this._slope + " ± " + this._dirx + " mult=" + _MinchinWeb_Extras_.MinAbsFloat(1.0, (1.0 / this._slope) ), 6);
+
+//	_MinchinWeb_Log_.Note("    LineWalker.End out: " + this._end_x + " " + this._end_y + " m" + this._slope + " ± " + this._dir_x + " mult=" + _MinchinWeb_Extras_.MinAbsFloat(1.0, (1.0 / this._slope) ), 6);
 }
 
 function _MinchinWeb_LW_::Slope(Slope, ThirdQuadrant = false) {
@@ -227,54 +227,54 @@ function _MinchinWeb_LW_::Slope(Slope, ThirdQuadrant = false) {
 	} else {
 		this._slope = Slope;
 	}
-	
+
 	if (ThirdQuadrant == false) {
-		this._dirx = 1;
-		this._endx = AIMap.GetMapSizeX();
-		
-		if (this._slope > 0.0) {
-			this._endy = AIMap.GetMapSizeY();
-		} else {
-			this._endy = 0;
-		}	
-		
-	} else {
-		this._dirx = -1;
-//		this._x += (1.0 - (1.0 / _MinchinWeb_C_.Infinity()));
-//		this._endx = -1 * this._infinity;
-//		this._endy = -1 * this._endy;
-		this._endx = 0;
+		this._dir_x = 1;
+		this._end_x = AIMap.GetMapSizeX();
 
 		if (this._slope > 0.0) {
-	//		this._endy = AIMap.GetMapSizeY();
-			this._endy = 0;
+			this._end_y = AIMap.GetMapSizeY();
 		} else {
-	//		this._endy = 0;
-			this._endy = AIMap.GetMapSizeY();
+			this._end_y = 0;
+		}
+
+	} else {
+		this._dir_x = -1;
+//		this._x += (1.0 - (1.0 / _MinchinWeb_C_.Infinity()));
+//		this._end_x = -1 * this._infinity;
+//		this._end_y = -1 * this._end_y;
+		this._end_x = 0;
+
+		if (this._slope > 0.0) {
+	//		this._end_y = AIMap.GetMapSizeY();
+			this._end_y = 0;
+		} else {
+	//		this._end_y = 0;
+			this._end_y = AIMap.GetMapSizeY();
 		}
 	}
-	
-//	_MinchinWeb_Log_.Note("   LineWalker.Slope out: " + Slope + " " + ThirdQuadrant + " : " + this._endx + " " + this._endy + " " + this._slope + " ± " + this._dirx, 6);
+
+//	_MinchinWeb_Log_.Note("   LineWalker.Slope out: " + Slope + " " + ThirdQuadrant + " : " + this._end_x + " " + this._end_y + " " + this._slope + " ± " + this._dir_x, 6);
 }
 
 function _MinchinWeb_LW_::Reset() {
 	this._start = null;
 	this._end = null;
 	this._slope = null;
-	this._startx = null;
-	this._starty = null;
-	this._endx = null;
-	this._endy = null;
+	this._start_x = null;
+	this._start_y = null;
+	this._end_x = null;
+	this._end_y = null;
 	this._past_end = true;
 	this._x = null;
 	this._y = null;
 	this._current_tile = null;
-	this._dirx = null;
+	this._dir_x = null;
 }
 
 function _MinchinWeb_LW_::Restart() {
-	this._x = this._startx.tofloat();
-	this._y = this._starty.tofloat();
+	this._x = this._start_x.tofloat();
+	this._y = this._start_y.tofloat();
 	this._past_end = false;
 	this._current_tile = AIMap.GetTileIndex(this._x.tointeger(), this._y.tointeger());
 }
@@ -285,40 +285,40 @@ function _MinchinWeb_LW_::Walk() {
 	if (this._past_end == true) {
 		return this._current_tile;
 	}
-	
-	if ((AIMap.DistanceManhattan(this._current_tile, AIMap.GetTileIndex(this._x.tointeger(), this._y.tointeger())) == 1 ) && _MinchinWeb_Extras_.WithinFloat(this._startx.tofloat(), this._endx.tofloat(), this._x.tointeger()) &&_MinchinWeb_Extras_.WithinFloat(this._starty.tofloat(), this._endy.tofloat(), this._y.tointeger())) {
+
+	if ((AIMap.DistanceManhattan(this._current_tile, AIMap.GetTileIndex(this._x.tointeger(), this._y.tointeger())) == 1 ) && _MinchinWeb_Extras_.WithinFloat(this._start_x.tofloat(), this._end_x.tofloat(), this._x.tointeger()) &&_MinchinWeb_Extras_.WithinFloat(this._start_y.tofloat(), this._end_y.tofloat(), this._y.tointeger())) {
 		this._current_tile = AIMap.GetTileIndex(this._x.tointeger(), this._y.tointeger());
 //		_MinchinWeb_Log_.Note("Linewalker output " + AIMap.GetTileX(this._current_tile) + "," + AIMap.GetTileY(this._current_tile) + " from " + this._x + "," + this._y, 7);
 		return this._current_tile;
 	}
-	
+
 	//	Infinity assumed to be 10,000
 	local multiplier = 0.0;
 
 	//	We need to find the value, such that MAX(ABS(∆x, m∆x)) == 1
 	//		Therefore, our multiplier is MIN(ABS(1, 1/m))
 	multiplier = _MinchinWeb_Extras_.MinAbsFloat(1.0, (1.0 / this._slope) );
-	
+
 	local NewX = 0.0;
 	local NewY = 0.0;
-	NewX = this._x + multiplier * this._dirx;
-	NewY = this._y + this._slope * multiplier * this._dirx;
+	NewX = this._x + multiplier * this._dir_x;
+	NewY = this._y + this._slope * multiplier * this._dir_x;
 //	_MinchinWeb_Log_.Note("Linewalker new : " + NewX + "," + NewY, 7);
-	
+
 	if (AIMap.DistanceManhattan(this._current_tile, AIMap.GetTileIndex(NewX.tointeger(), NewY.tointeger())) == 1 ) {
 		this._current_tile = AIMap.GetTileIndex(NewX.tointeger(), NewY.tointeger());
 	} else if (AIMap.DistanceManhattan(this._current_tile, AIMap.GetTileIndex(NewX.tointeger(), this._y.tointeger())) == 1 ) {
 		this._current_tile = AIMap.GetTileIndex(NewX.tointeger(), this._y.tointeger());
 	}
-	
+
 	this._x = NewX;
 	this._y = NewY;
-	
+
 	//	Check that we're still within our bounding box
-//	_MinchinWeb_Log_.Note("    " + this._startx + " , " + this._endx + " , " + this._x.tointeger() + " , " + this._starty + " , " + this._endy + " , " + this._y.tointeger(), 7);
-	
-	if (!_MinchinWeb_Extras_.WithinFloat(this._startx.tofloat(), this._endx.tofloat(), this._x) || !_MinchinWeb_Extras_.WithinFloat(this._starty.tofloat(), this._endy.tofloat(), this._y)) {
-//		_MinchinWeb_Log_.Note("Linewalker outside box " + this._startx + " " + this._endx + " " + this._x + " " + _MinchinWeb_Extras_.WithinFloat(this._startx.tofloat(), this._endx.tofloat(), this._x) + " : " + this._starty + " " + this._endy + " " + this._y + " " + (_MinchinWeb_Extras_.WithinFloat(this._starty.tofloat(), this._endy.tofloat(), this._y)), 6);
+//	_MinchinWeb_Log_.Note("    " + this._start_x + " , " + this._end_x + " , " + this._x.tointeger() + " , " + this._start_y + " , " + this._end_y + " , " + this._y.tointeger(), 7);
+
+	if (!_MinchinWeb_Extras_.WithinFloat(this._start_x.tofloat(), this._end_x.tofloat(), this._x) || !_MinchinWeb_Extras_.WithinFloat(this._start_y.tofloat(), this._end_y.tofloat(), this._y)) {
+//		_MinchinWeb_Log_.Note("Linewalker outside box " + this._start_x + " " + this._end_x + " " + this._x + " " + _MinchinWeb_Extras_.WithinFloat(this._start_x.tofloat(), this._end_x.tofloat(), this._x) + " : " + this._start_y + " " + this._end_y + " " + this._y + " " + (_MinchinWeb_Extras_.WithinFloat(this._start_y.tofloat(), this._end_y.tofloat(), this._y)), 6);
 		this._past_end = true;
 		return this._current_tile;
 	} else {
