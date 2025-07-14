@@ -1,4 +1,4 @@
-/*	Minchinweb's MetaLibrary v.10 [2025-07-14],
+/*	Minchinweb's MetaLibrary v.10.1 [2025-07-14],
  *		originally part of, WmDOT v.10
  *	Copyright © 2011-14, 2025 by W. Minchin. For more info,
  *		please visit https://github.com/MinchinWeb/openttd-metalibrary
@@ -19,6 +19,7 @@
 
 
 import("util.superlib", "_MinchinWeb_SuperLib_", 40);
+SuperLib <- _MinchinWeb_SuperLib_;
 
 require("Pathfinder.Road.nut");
 	//	Requires Graph.AyStar v6 library
@@ -26,6 +27,7 @@ require("Pathfinder.Road.nut");
 require("Array.nut");
 // require("Fibonacci.Heap.WM.nut");
 require("Extras.nut");
+require("Constants.nut");
 require("Waterbody.Check.nut");
 require("Lakes.nut");
 require("Pathfinder.Ship.nut");
@@ -69,13 +71,11 @@ require("Station.nut");
  *	-	`%MinchinWeb.WaterbodyCheck` <- \_MinchinWeb\_WBC\_
  */
 
-import("util.superlib", "_MinchinWeb_SuperLib_", 40);	//	don't think this import statement actually works...
-SuperLib <- _MinchinWeb_SuperLib_;
 
 class MinchinWeb {
-	function GetVersion()       { return 6; }
-	function GetRevision()		{ return 121231; }
-	function GetDate()          { return "2012-12-31"; }
+	function GetVersion()       { return 10.1; }
+	function GetRevision()		{ return 250715; }
+	function GetDate()          { return "2025-07-14"; }
 	function GetName()          { return "MinchinWeb's MetaLibrary"; }
 
 	static RoadPathfinder = _MinchinWeb_RoadPathfinder_;
@@ -125,4 +125,5 @@ class MinchinWeb {
 	static Lakes = _MinchinWeb_Lakes_;
 	///<	\see	\_MinchinWeb\_Lakes\_
 };
+
 // EOF

@@ -143,8 +143,8 @@ class _MinchinWeb_RoadPathfinder_ {
 		foreach (node in sources) {
 			n_sources.push([node, 0xFF]);
 		}
-		this._pathfinder.InitializePath(nsources, goals);
-		this._mypath = null;
+		this._pathfinder.InitializePath(n_sources, goals);
+		this._my_path = null;
 	}
 
 	/**
@@ -295,8 +295,8 @@ class _MinchinWeb_RoadPathfinder_.Cost {
 			case "max_bridge_length": this._main._max_bridge_length = val; break;
 			case "max_tunnel_length": this._main._max_tunnel_length = val; break;
 			case "only_existing_roads":	this._main._cost_only_existing_roads = val; break;
-			case "drivethru_station":  this._main._cost_drivethru_station = val; break;
-			case "distance_penalty":	this._main._distance_penalty = val; break;
+			case "drivethru_station": this._main._cost_drivethru_station = val; break;
+			case "distance_penalty":  this._main._distance_penalty = val; break;
 			default: throw("the index '" + idx + "' does not exist");
 		}
 
@@ -318,7 +318,7 @@ class _MinchinWeb_RoadPathfinder_.Cost {
 			case "max_tunnel_length": return this._main._max_tunnel_length;
 			case "only_existing_roads":	return this._main._cost_only_existing_roads;
 			case "drivethru_station": return this._main._cost_drivethru_station;
-			case "distance_penalty":	return this._main._distance_penalty;
+			case "distance_penalty":  return this._main._distance_penalty;
 			default: throw("the index '" + idx + "' does not exist");
 		}
 	}
@@ -638,7 +638,7 @@ function _MinchinWeb_RoadPathfinder_::_CheckTunnelBridge(current_tile, new_tile)
 
 class _MinchinWeb_RoadPathfinder_.Info {
 	_main = null;
-	
+
 	function GetVersion()       { return 9; }
 //	function GetMinorVersion()	{ return 0; }
 	function GetRevision()		{ return 130101; }

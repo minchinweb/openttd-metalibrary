@@ -1,4 +1,4 @@
-﻿/*	Station functions v.3 r.253 [2011-07-01],
+﻿/*	Station functions v.3 r.253 [2011-07-21],
  *		part of Minchinweb's MetaLibrary v.6,
  *	Copyright © 2011-14 by W. Minchin. For more info,
  *		please visit https://github.com/MinchinWeb/openttd-metalibrary
@@ -67,6 +67,18 @@ class _MinchinWeb_Station_ {
 	 *	\static
 	 */
 	function DistanceFromStation(VehicleID, StationID);
+
+	/** \brief Build a streetcar station
+	 *
+	 *  First tries to build a streetcar station with a half-tile loop on each
+	 *	end; if that works, actually build it.
+	 *
+	 *  \param  Tile
+	 *  \param  Loop    If `true`, build a loop connecting the two ends
+	 *  \return `true` or `false` depending on if the building the station was
+	 *			successful
+	 */
+	function BuildStreetcarStation(Tile, Loop = true);
 };
 
 //	== Function definitions ==================================================
@@ -104,5 +116,58 @@ function _MinchinWeb_Station_::DistanceFromStation(VehicleID, StationID) {
 	local StationTile = AIBaseStation.GetLocation(StationID);
 
 	return AITile.GetDistanceManhattanToTile(VehicleTile, StationTile);
+}
+
+function _MinchinWeb_Station_::BuildStreetcarStation(Tile, Loop = true) {
+	local TestMode = AITestMode();
+	AIRoad.SetCurrentRoadType(AIRoad.ROADTYPE_TRAM);
+	local FrontTile;
+	local BackTile;
+	local MyDirection;
+
+	if (AIRoad.BuildDriveThroughRoadStation(Tile, SuperLib.Direction.GetAdjacentTileInDirection(Tile, SuperLib.Direction.DIR_NE), AIRoad.ROADVEHTYPE_BUS, AIStation.STATION_NEW) && AIRoad.BuildRoad(SuperLib.Direction.GetAdjacentTileInDirection(Tile, SuperLib.Direction.DIR_NE), SuperLib.Direction.GetAdjacentTileInDirection(Tile, SuperLib.Direction.DIR_SW))) {
+		MyDirection = SuperLib.Direction.DIR_NE;
+	} else if (AIRoad.BuildDriveThroughRoadStation(Tile, SuperLib.Direction.GetAdjacentTileInDirection(Tile, SuperLib.Direction.DIR_SE), AIRoad.ROADVEHTYPE_BUS, AIStation.STATION_NEW) && AIRoad.BuildRoad(SuperLib.Direction.GetAdjacentTileInDirection(Tile, SuperLib.Direction.DIR_SE), SuperLib.Direction.GetAdjacentTileInDirection(Tile, SuperLib.Direction.DIR_NW))) {
+		MyDirection = SuperLib.Direction.DIR_SE;
+	} else {
+		return false;
+	}
+
+	FrontTile = SuperLib.Direction.GetAdjacentTileInDirection(Tile, MyDirection);
+	BackTile = SuperLib.Direction.GetAdjacentTileInDirection(Tile, SuperLib.Direction.OppositeDir(MyDirection));
+
+	local ExecMode = AIExecMode();
+	if (AIRoad.BuildRoad(FrontTile, BackTile)) {
+		//	we keep doing stuff
+
+		// local Result = AIRoad.BuildRoad(FrontTile, BackTile);
+		// Log.Note("Loop Result: " + Result, 7);
+		switch (MyDirection) {
+			case SuperLib.Direction.DIR_NE :
+			case SuperLib.Direction.DIR_SE :
+				AIRoad.BuildDriveThroughRoadStation(Tile, SuperLib.Direction.GetAdjacentTileInDirection(Tile, MyDirection), AIRoad.ROADVEHTYPE_BUS, AIStation.STATION_NEW);
+				break;
+			default:
+				// didn't work, should never get here
+		}
+
+		if (Loop) {
+			local Pathfinder = _MinchinWeb_RoadPathfinder_();
+			Pathfinder.InitializePath([FrontTile], [BackTile], [Tile]);
+			Pathfinder.PresetStreetcar();
+			if (Pathfinder.FindPath(5000) != null) {
+				SuperLib.Money.MakeSureToHaveAmount(Pathfinder.GetBuildCost());
+				Pathfinder.BuildPath();
+			} else {
+				Log.Note("No loop path." + _MinchinWeb_Array_.ToStringTiles1D([Tile]), 7);
+			}
+		}
+
+		return true;
+	} else {
+		// TODO: if road building fails on one direction, try the other
+		Log.Note("Streetcar Stations:" + _MinchinWeb_Array_.ToStringTiles1D([Tile]) + " Our little road building failed... exiting", 7);
+		return false;
+	}
 }
 // EOF
