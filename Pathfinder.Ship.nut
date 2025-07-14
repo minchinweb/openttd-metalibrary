@@ -605,6 +605,7 @@ function _MinchinWeb_ShipPathfinder_::CountPathBuoys() {
 
 	if (this._my_path == null) {
 		AILog.Warning("MinchinWeb.ShipPathfinder.CountBuoys() must be supplied with a valid path.");
+		return 0;
 	} else {
 		//	basic direction changes (minus the two ends)
 		local Buoys = this._my_path.len() - 2;
