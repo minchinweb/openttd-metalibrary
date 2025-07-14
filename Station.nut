@@ -125,31 +125,39 @@ function _MinchinWeb_Station_::BuildStreetcarStation(Tile, Loop = true) {
 	local BackTile;
 	local MyDirection;
 
-	if (AIRoad.BuildDriveThroughRoadStation(Tile, SuperLib.Direction.GetAdjacentTileInDirection(Tile, SuperLib.Direction.DIR_NE), AIRoad.ROADVEHTYPE_BUS, AIStation.STATION_NEW) && AIRoad.BuildRoad(SuperLib.Direction.GetAdjacentTileInDirection(Tile, SuperLib.Direction.DIR_NE), SuperLib.Direction.GetAdjacentTileInDirection(Tile, SuperLib.Direction.DIR_SW))) {
+	// determine our road directions
+	if (AIRoad.BuildDriveThroughRoadStation(
+			Tile,
+			SuperLib.Direction.GetAdjacentTileInDirection(Tile, SuperLib.Direction.DIR_NE),
+			AIRoad.ROADVEHTYPE_BUS,
+			AIStation.STATION_NEW
+		) && AIRoad.BuildRoad(
+			SuperLib.Direction.GetAdjacentTileInDirection(Tile, SuperLib.Direction.DIR_NE),
+			SuperLib.Direction.GetAdjacentTileInDirection(Tile, SuperLib.Direction.DIR_SW))
+		) {
 		MyDirection = SuperLib.Direction.DIR_NE;
-	} else if (AIRoad.BuildDriveThroughRoadStation(Tile, SuperLib.Direction.GetAdjacentTileInDirection(Tile, SuperLib.Direction.DIR_SE), AIRoad.ROADVEHTYPE_BUS, AIStation.STATION_NEW) && AIRoad.BuildRoad(SuperLib.Direction.GetAdjacentTileInDirection(Tile, SuperLib.Direction.DIR_SE), SuperLib.Direction.GetAdjacentTileInDirection(Tile, SuperLib.Direction.DIR_NW))) {
+	} else if (AIRoad.BuildDriveThroughRoadStation(
+			Tile,
+			SuperLib.Direction.GetAdjacentTileInDirection(Tile, SuperLib.Direction.DIR_SE),
+			AIRoad.ROADVEHTYPE_BUS,
+			AIStation.STATION_NEW
+		) && AIRoad.BuildRoad(
+			SuperLib.Direction.GetAdjacentTileInDirection(Tile, SuperLib.Direction.DIR_SE),
+			SuperLib.Direction.GetAdjacentTileInDirection(Tile, SuperLib.Direction.DIR_NW))
+		) {
 		MyDirection = SuperLib.Direction.DIR_SE;
 	} else {
 		return false;
 	}
 
+	// get the tiles in front and behind our proposed station
 	FrontTile = SuperLib.Direction.GetAdjacentTileInDirection(Tile, MyDirection);
 	BackTile = SuperLib.Direction.GetAdjacentTileInDirection(Tile, SuperLib.Direction.OppositeDir(MyDirection));
 
 	local ExecMode = AIExecMode();
 	if (AIRoad.BuildRoad(FrontTile, BackTile)) {
 		//	we keep doing stuff
-
-		// local Result = AIRoad.BuildRoad(FrontTile, BackTile);
-		// Log.Note("Loop Result: " + Result, 7);
-		switch (MyDirection) {
-			case SuperLib.Direction.DIR_NE :
-			case SuperLib.Direction.DIR_SE :
-				AIRoad.BuildDriveThroughRoadStation(Tile, SuperLib.Direction.GetAdjacentTileInDirection(Tile, MyDirection), AIRoad.ROADVEHTYPE_BUS, AIStation.STATION_NEW);
-				break;
-			default:
-				// didn't work, should never get here
-		}
+		AIRoad.BuildDriveThroughRoadStation(Tile, SuperLib.Direction.GetAdjacentTileInDirection(Tile, MyDirection), AIRoad.ROADVEHTYPE_BUS, AIStation.STATION_NEW);
 
 		if (Loop) {
 			local Pathfinder = _MinchinWeb_RoadPathfinder_();
