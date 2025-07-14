@@ -441,10 +441,11 @@ function _MinchinWeb_Marine_::RateShips(EngineID, Life, Cargo) {
 	//
 	//	Life is assumed to be in years
 	//  Note: Cargo doesn't work yet. Capacity is measured in the default cargo.
+	//	TODO: Downrate excessively large vassals (compared to monthly production)
 
 	local Score = 0;
 	local Age = AIEngine.GetMaxAge(EngineID);
-	local BuyTimes = (Life / Age/366).tointeger() + 1;;
+	local BuyTimes = (Life / Age/366).tointeger() + 1;
 		// GetMaxAge is given in days
 	local Cost = (BuyTimes * AIEngine.GetPrice(EngineID)) + (Life * AIEngine.GetRunningCost(EngineID)) + 0.001;
 	local Return = (AIEngine.GetCapacity(EngineID) * AIEngine.GetReliability(EngineID) * AIEngine.GetMaxSpeed(EngineID)) + 0.001;
@@ -454,7 +455,7 @@ function _MinchinWeb_Marine_::RateShips(EngineID, Life, Cargo) {
 		Score = (Return * 1000 / Cost).tointeger();
 	}
 
-	_MinchinWeb_Log_.Note("Rate Ship : " + Score + " : " +AIEngine.GetName(EngineID) + " : " + AIEngine.GetCapacity(EngineID) + " * " + AIEngine.GetReliability(EngineID) + " * " + AIEngine.GetMaxSpeed(EngineID) + " / " + BuyTimes + " * " + AIEngine.GetPrice(EngineID) + " + " + Life + " * " + AIEngine.GetRunningCost(EngineID), 7);
+	_MinchinWeb_Log_.Note("Rate Ship : " + Score + " : " + AIEngine.GetName(EngineID) + " : " + AIEngine.GetCapacity(EngineID) + " * " + AIEngine.GetReliability(EngineID) + " * " + AIEngine.GetMaxSpeed(EngineID) + " / " + BuyTimes + " * " + AIEngine.GetPrice(EngineID) + " + " + Life + " * " + AIEngine.GetRunningCost(EngineID), 7);
 	return Score;
 }
 

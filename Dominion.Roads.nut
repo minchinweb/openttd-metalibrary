@@ -15,7 +15,7 @@
  */
 
 /**	\brief		Dominion Land System (Road Pathfinder)
- *	\version	v.1 (2013-01-01)
+ *	\version	v.1.1 (2013-01-01)
  *	\author		W. Minchin (%MinchinWeb)
  *	\since		MetaLibrary v.6
  *
@@ -107,7 +107,7 @@ class _MinchinWeb_DLS_ {
     /**	\brief	Get all the grid points between two tiles
      *	\param	End1	expected to be a TileIndex
      *	\param	End2	expected to be a TileIndex
-     *	\return	An array of TileIndexs that are 'grid points' or where roads
+     *	\return	An array of TileIndexes that are 'grid points' or where roads
      *			will have intersections.
      *	\note	`End1` and `End2` will **NOT** be included in the return array.
      */
@@ -254,7 +254,7 @@ class _MinchinWeb_DLS_.Info {
 
 function _MinchinWeb_DLS_::SetDatum(NewDatum) {
     this._datum = NewDatum;
-//	_MinchinWeb_Log_.Note("Base Datum: x " + AIMap.GetTileX(this._datum) + "%" + this._grid_x + "=" + AIMap.GetTileX(this._datum)%this._grid_x + ", y:" + AIMap.GetTileY(this._datum) + "%" + this._grid_y + "=" + AIMap.GetTileX(this._datum)%this._grid_y, 6);
+	// _MinchinWeb_Log_.Note("Base Datum: x " + AIMap.GetTileX(this._datum) + "%" + this._grid_x + "=" + AIMap.GetTileX(this._datum)%this._grid_x + ", y:" + AIMap.GetTileY(this._datum) + "%" + this._grid_y + "=" + AIMap.GetTileX(this._datum)%this._grid_y, 6);
     this._base_datum = AIMap.GetTileIndex(AIMap.GetTileX(this._datum)%this._grid_x, AIMap.GetTileY(this._datum)%this._grid_y);
 
     _MinchinWeb_Log_.Note("Datum set to " + AIMap.GetTileX(this._datum) + ", " + AIMap.GetTileY(this._datum) + "; BaseDatum set to " + AIMap.GetTileX(this._base_datum) + ", " + AIMap.GetTileY(this._base_datum), 5);
@@ -270,11 +270,11 @@ function _MinchinWeb_DLS_::IsGridPoint(Point) {
 }
 
 function _MinchinWeb_DLS_::GridPoints(End1, End2) {
-//	## GridPoints
-//	Returns an array of TileIndexs that are 'grid points' or where roads will
-//	have intersections.
-//	*End1* and *End2* are expected to be TileIndex'es
-//	End1 and End2 will not be included in the return array
+    //	## GridPoints
+    //	Returns an array of TileIndexes that are 'grid points' or where roads
+    //	will have intersections.
+    //	*End1* and *End2* are expected to be TileIndex'es
+    //	End1 and End2 will not be included in the return array
 
     local x1 = AIMap.GetTileX(End1);
     local y1 = AIMap.GetTileY(End1);
@@ -328,14 +328,14 @@ function _MinchinWeb_DLS_::GridPoints(End1, End2) {
 }
 
 function _MinchinWeb_DLS_::AllGridPoints() {
-//	Returns an array of all the 'grid points' on the map
+    //	Returns an array of all the 'grid points' on the map
     return _MinchinWeb_DLS_.GridPoints(AIMap.GetTileIndex(1,1), AIMap.GetTileIndex(AIMap.GetMapSizeX() - 2, AIMap.GetMapSizeY() - 2));
 }
 
 function _MinchinWeb_DLS_::FindPath(cycles = 10000) {
-//	runs the pathfinder
-//	add all grid points between the StartTile and EndTile as intermediate end points
-//	if the pathfinder ends on an intermediate point, make that the new start point and run the pathfinder again
+    //	runs the pathfinder
+    //	add all grid points between the StartTile and EndTile as intermediate end points
+    //	if the pathfinder ends on an intermediate point, make that the new start point and run the pathfinder again
     local AllTiles = [];		// we use this to return an array of tiles
     local LastTile = this._start_tile;
     cycles = 10000;
@@ -375,7 +375,7 @@ function _MinchinWeb_DLS_::FindPath(cycles = 10000) {
         _MinchinWeb_Log_.Note("LastTile " + _MinchinWeb_Array_.ToStringTiles1D([LastTile]), 5);
 
         WhileLoopCounter++;
-//	} while ((LastTile != this._end_tile) && (this._running == true));
+	// } while ((LastTile != this._end_tile) && (this._running == true));
     } while (LastTile != this._end_tile)
 
     if (LastTile == this._end_tile) {
@@ -389,7 +389,7 @@ function _MinchinWeb_DLS_::FindPath(cycles = 10000) {
 }
 
 function _MinchinWeb_DLS_::InitializePath(StartArray, EndArray) {
-//	Assumed only the first tile of the start and end array are the ones we care about
+    //	Assumed only the first tile of the start and end array are the ones we care about
     this._start_tile = StartArray[0];
     this._end_tile = EndArray[0];
     this._path = null;
@@ -411,27 +411,25 @@ function _MinchinWeb_DLS_::BuildPath() {
     AIRoad.SetCurrentRoadType(this._road_type);
     for (local i=0; i < this._path.len() - 2; i++) {
         if (AIMap.DistanceManhattan(this._path[i], this._path[i+1]) == 1) {
-        //	MD == 1 == road joining the two tiles
+            //	MD == 1 == road joining the two tiles
             if (!AIRoad.BuildRoad(this._path[i], this._path[i+1])) {
-            //	If we get here, then the road building has failed
-            //	Possible that the road already exists
-            //	TO-DO:
-            //	- fail the road builder if the road cannot be built and
-            //		does not already exist
-            //	return null;
+                //	If we get here, then the road building has failed
+                //	Possible that the road already exists
+                //	TODO: fail the road builder if the road cannot be built and does not already exist
+                // return null;
             }
         } else {
-        //	Implies that we're building either a tunnel or a bridge
+            //	Implies that we're building either a tunnel or a bridge
             if (!AIBridge.IsBridgeTile(this._path[i]) && !AITunnel.IsTunnelTile(this._path[i])) {
                 if (AIRoad.IsRoadTile(this._path[i])) {
-                //	Original example demolishes tile if it's already a road
-                //		tile to get around expanded roadbits.
-                //	I don't like this approach as it could destroy Railway
-                //		tracks/tram tracks/station
-                //	TO-DO:
-                //	- figure out a way to do this while keeping the other
-                //		things I've built on the tile
-                //	(can I just remove the road?)
+                    //	Original example demolishes tile if it's already a road
+                    //		tile to get around expanded roadbits.
+                    //	I don't like this approach as it could destroy Railway
+                    //		tracks/tram tracks/station
+                    //	TO-DO:
+                    //	- figure out a way to do this while keeping the other
+                    //		things I've built on the tile
+                    //	(can I just remove the road?)
                     AITile.DemolishTile(this._path[i]);
                 }
                 if (AITunnel.GetOtherTunnelEnd(this._path[i]) == this._path[i+1]) {
@@ -455,10 +453,10 @@ function _MinchinWeb_DLS_::BuildPath() {
                     BridgeList.Valuate(AIBridge.GetMaxSpeed);
                     BridgeList.Sort(AIList.SORT_BY_VALUE, false);
                     if (!AIBridge.BuildBridge(AIVehicle.VT_ROAD, BridgeList.Begin(), this._path[i], this._path[i+1])) {
-                    //	At this point, an error has occurred while building the bridge.
-                    //	Fail the pathfiner
-                    //	return null;
-                    AILog.Warning("MinchinWeb.DLS.BuildPath can't build a bridge from " + AIMap.GetTileX(this._path[i]) + "," + AIMap.GetTileY(this._path[i]) + " to " + AIMap.GetTileX(this._path[i+1]) + "," + AIMap.GetTileY(this._path[i+1]) + "!! (or the tunnel end moved...)" );
+                        //	At this point, an error has occurred while building the bridge.
+                        //	Fail the pathfiner
+                        //	return null;
+                        AILog.Warning("MinchinWeb.DLS.BuildPath can't build a bridge from " + AIMap.GetTileX(this._path[i]) + "," + AIMap.GetTileY(this._path[i]) + " to " + AIMap.GetTileX(this._path[i+1]) + "," + AIMap.GetTileY(this._path[i+1]) + "!! (or the tunnel end moved...)" );
                     }
                 }
             }

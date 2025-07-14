@@ -56,7 +56,7 @@ class _MinchinWeb_ShipPathfinder_
 {
 	_heap_class = import("queue.fibonacci_heap", "", 3);
 	_WBC_class = _MinchinWeb_Lakes_;		///< Class used to check if the two points are within the same waterbody
-	_WBC = null;					///< actual instance of class used to check if the points are within the same waterbody
+	_WBC = null;                   ///< actual instance of class used to check if the points are within the same waterbody
 	_max_cost = null;              ///< The maximum (pathfinder) cost for a route.
 	_cost_tile = null;             ///< The (pathfinder) cost for a single tile.
 	_cost_turn = null;             ///< The (pathfinder) cost that is added to _cost_tile if the direction changes.
@@ -64,7 +64,7 @@ class _MinchinWeb_ShipPathfinder_
 
 	_max_buoy_spacing = null;	   ///< The maximum spacing between buoys
 
-//	_infinity = null;
+	// _infinity = null;
 	_first_run = null;
 	_first_run2 = null;
 	_waterbody_check = null;
@@ -78,15 +78,14 @@ class _MinchinWeb_ShipPathfinder_
 	_running = null;				///< Is the pathfinder running?
 	info = null;
 
-	constructor()
-	{
+	constructor() {
 		this._max_cost = 10000;
 		this._cost_tile = 1;
 		this._cost_turn = 1;
 		this._max_buoy_spacing = 50;
 
-//		this._infinity = _MinchinWeb_C_Infinity();
-//		this._infinity = 10;	//	For Testing
+		// this._infinity = _MinchinWeb_C_Infinity();
+		// this._infinity = 10;	//	For Testing
 		this._points = [];
 		this._paths = [];
 		this._clearedpaths = [];
@@ -179,6 +178,8 @@ class _MinchinWeb_ShipPathfinder_
 	function GetPathLength();
 
 	/**	\brief	Returns the number of potential buoys that may need to be built.
+	 * \return The number of buoys needed to be built. Will return `0` if an
+	 * 			invalid (or undetermined) path is provided.
 	 */
 	function CountPathBuoys();
 
@@ -234,13 +235,12 @@ class _MinchinWeb_ShipPathfinder_.Info {
 	_main = null;
 
 	function GetVersion()       { return 5; }
-//	function GetMinorVersion()	{ return 0; }
+	// function GetMinorVersion()	{ return 0; }
 	function GetRevision()		{ return 140228; }
 	function GetDate()          { return "2014-02-28"; }
 	function GetName()          { return "Ship Pathfinder (Wm)"; }
 
-	constructor(main)
-	{
+	constructor(main) {
 		this._main = main;
 	}
 };
@@ -316,7 +316,7 @@ function _MinchinWeb_ShipPathfinder_::FindPath(iterations) {
 			if (_MinchinWeb_Array_.ContainedInPairs(this._clearedpaths, this._points[this._paths[WorkingPath][i]], this._points[this._paths[WorkingPath][i+1]]) != true) {
 				//	This means we haven't already cleared the path...
 				local Land = LandHo(this._points[this._paths[WorkingPath][i]], this._points[this._paths[WorkingPath][i+1]]);
-//				_MinchinWeb_Log_.Note("Land : " + _MinchinWeb_Array_.ToString1D(Land) + " : " + _MinchinWeb_Array_.ToStringTiles1D(Land), 7);
+				// _MinchinWeb_Log_.Note("Land : " + _MinchinWeb_Array_.ToString1D(Land) + " : " + _MinchinWeb_Array_.ToStringTiles1D(Land), 7);
 				_MinchinWeb_Log_.Note("Land : " + _MinchinWeb_Array_.ToString1D(Land), 7);
 				if ((Land[0] == -1) && (Land[1] == -1)) {
 					//	All water
@@ -433,9 +433,9 @@ function _MinchinWeb_ShipPathfinder_::FindPath(iterations) {
 					}	// End  of if MidPoint is on Water
 					i = this._paths[WorkingPath].len();	//	Exits us from the for... loop
 				}
-//				i = this._paths[WorkingPath].len();	//	Exits us from the for... loop
+				// i = this._paths[WorkingPath].len();	//	Exits us from the for... loop
 			} else if (i == (this._paths[WorkingPath].len() - 2)){
-			//	If we don't hit land, add the path to the FinishedPaths heap
+				//	If we don't hit land, add the path to the FinishedPaths heap
 				_MinchinWeb_Log_.Note("Inserting Finished Path " + WorkingPath + " l=" + _PathLength(WorkingPath), 5);
 				this._FinishedPaths.Insert(WorkingPath, _PathLength(WorkingPath));
 			}
@@ -448,7 +448,7 @@ function _MinchinWeb_ShipPathfinder_::FindPath(iterations) {
 		}
 
 		if (this._UnfinishedPaths.Count() == 0) {
-			_MinchinWeb_Log_.Note("Unfinsihed count: " + this._UnfinishedPaths.Count() + " finished: " + this._FinishedPaths.Count(), 6);
+			_MinchinWeb_Log_.Note("Unfinished count: " + this._UnfinishedPaths.Count() + " finished: " + this._FinishedPaths.Count(), 6);
 			if (this._FinishedPaths.Count() !=0) {
 				this._running = false;
 				this._my_path = _PathToTilesArray(this._FinishedPaths.Peek());
@@ -463,7 +463,7 @@ function _MinchinWeb_ShipPathfinder_::FindPath(iterations) {
 			if (this._FinishedPaths.Count() !=0) {
 				//	If the Finished heap contains a path that is shorter than
 				//		any of the unfinished paths, return the finished path
-
+				//
 				//	Actually, if the shortest finished path is within 10% of
 				//		shortest unfinished path, call it good enough!!
 				local finished = this._PathLength(this._FinishedPaths.Peek());
@@ -474,7 +474,7 @@ function _MinchinWeb_ShipPathfinder_::FindPath(iterations) {
 					_MinchinWeb_Log_.Note("My Path is " + _MinchinWeb_Array_.ToString1D(this._my_path), 5);
 					return this._my_path;
 				}
-				_MinchinWeb_Log_.Note("          Finished =" + finished + " ; Unfinsihed = " + unfinished, 5);
+				_MinchinWeb_Log_.Note("          Finished =" + finished + " ; Unfinished = " + unfinished, 5);
 			}
 		}
 	}
@@ -589,7 +589,7 @@ function _MinchinWeb_ShipPathfinder_::_InsertPoint(TileIndex) {
 	//	Inserts a point into point list. Does a check to insure that the same
 	//		point does not show up twice at different indexes.
 	//	Returns the index of the point
-	local Index =  _MinchinWeb_Array_.Find1D(this._points, TileIndex);
+	local Index = _MinchinWeb_Array_.Find1D(this._points, TileIndex);
 	if (Index == false) {
 		this._points.push(TileIndex);
 		return (this._points.len() - 1);
