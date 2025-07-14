@@ -205,6 +205,16 @@ class _MinchinWeb_Extras_ {
 	 *	\todo	Remove invalid tiles from the TargetArray
 	 */
 	function MinDistance(TileID, TargetArray);
+
+	/**	\brief	Get the maximum when provided with more than two inputs (up to
+	 * 			four)
+	 *	\param	i1...		input values
+	 *	\return	the maximum value
+	 */
+	function MultiMax(i1);
+	function MultiMax(i1, i2);
+	function MultiMax(i1, i2, i3);
+	function MultiMax(i1, i2, i3, i4);
 };
 
 //	== Function definitions =================================================
@@ -375,5 +385,18 @@ function _MinchinWeb_Extras_::MinDistance(TileID, TargetArray) {
 		MinDist = min(MinDist, AITile.GetDistanceManhattanToTile(TileID, Target));
 	}
 	return MinDist;
+}
+
+function _MinchinWeb_Extras_::MultiMax(i1) {
+	return i1;
+}
+function _MinchinWeb_Extras_::MultiMax(i1, i2) {
+	return max(i1, i2);
+}
+function _MinchinWeb_Extras_::MultiMax(i1, i2, i3) {
+	return max(max(i1, i2), i3);
+}
+function _MinchinWeb_Extras_::MultiMax(i1, i2, i3, i4) {
+	return max(max(max(i1, i2), i3), i4);
 }
 // EOF
