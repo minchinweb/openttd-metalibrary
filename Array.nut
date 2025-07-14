@@ -70,10 +70,13 @@ class _MinchinWeb_Array_ {
 	 *
 	 *	This function was created to aid in the output of arrays to the AI
 	 *	debug screen.
-	 *	\param	InArray		one dimensional (1-D) array
+	 *	\param	InArray			one dimensional (1-D) array
 	 *	\param	DisplayLength	whether to prefix the output with the length
 	 *							of the array
-	 *	\param	replaceNull		whether the replace `null` values with '-'
+	 *  \param  replaceNull (`true` or `false`) whether to replace `null`
+	 *   						values with "-". Default is `false`. Note that
+	 *							the function will raise an error if set to
+	 *							`false` and a `null` value is encountered.
 	 *	\return	string version of array. e.g. `The array is 3 long.  3  4  5`.
 	 *	\return	`null` if `InArray` is `null`.
 	 *	\see	ToString2D()
@@ -83,13 +86,18 @@ class _MinchinWeb_Array_ {
 	 */
 	function ToString1D(InArray, DisplayLength = true, replaceNull = false);
 
-	/**	\brief	Converts a one dimensional array to a nice string format.
+	/**	\brief	Converts a two dimensional array to a nice string format.
 	 *
 	 *	This function was created to aid in the output of arrays to the AI
 	 *	debug screen.
+	 *
 	 *	\param	InArray			two dimensional (2-D) array
 	 *	\param	DisplayLength	whether to prefix the output with the length
 	 *							of the array
+	 *  \param  replaceNull (`true` or `false`) whether to replace `null`
+	 *							values with "-". Default is `false`. Note that
+	 *							the function will raise an error if set to
+	 *							`false` and a `null` value is encountered.
 	 *	\return	string version of array.
 	 *			e.g. `The array is 2 long.  3  4  /  5  6`.
 	 *	\return	`null` if `InArray`
@@ -99,10 +107,9 @@ class _MinchinWeb_Array_ {
 	 *	\todo	Add error check that a 2D array is provided
 	 *	\static
 	 */
-	function ToString2D(InArray, DisplayLength = true);
+	function ToString2D(InArray, DisplayLength = true, replaceNull = false);
 
 	/**	\brief	Searches an array for a given value.
-	 *
 	 *	\param	InArray		array to search
 	 *						(assumed to be one dimensional (1-D))
 	 *	\param	SearchValue	what is searched for
@@ -246,6 +253,10 @@ class _MinchinWeb_Array_ {
 	 *	\param	InArrayOfTiles		one dimensional (1-D) array of Tiles
 	 *	\param	ArrayLength	(`true` or `false`) whether to print the prefix
 	 *						noting the length of the array. Default is `false`.
+	 *  \param  replaceNull (`true` or `false`) whether to replace `null`
+	 *   					values with "---". Default is `false`. Note that
+	 *						the function will raise an error if set to
+	 *						`false` and a `null` value is encountered.
 	 *	\return	string version of array. e.g. `The array is 3 long.  12,45
 	 *			62,52  59,10`.
 	 *	\return	`null` if `InArrayOfTiles` is `null`.
@@ -255,7 +266,7 @@ class _MinchinWeb_Array_ {
 	 *	\todo	Add a better error message if you try and feed it not a 1-D array
 	 *	\static
 	 */
-	function ToStringTiles1D(InArrayOfTiles, ArrayLength = false);
+	function ToStringTiles1D(InArrayOfTiles, ArrayLength = false, replaceNull = false);
 
 	/**	\brief	Converts a one dimensional array of tiles to a nice string format.
 	 *
@@ -265,6 +276,10 @@ class _MinchinWeb_Array_ {
 	 *	\param	ArrayLength		(`true` or `false`) whether to print the prefix
 	 *							noting the length of the array. Default is
 	 *							`false`.
+	 *  \param  replaceNull (`true` or `false`) whether to replace `null`
+	 *   					values with "---". Default is `false`. Note that
+	 *						the function will raise an error if set to
+	 *						`false` and a `null` value is encountered.
 	 *	\return	string version of array. e.g. `The array is 2 long.  12,45
 	 *			62,52  /  59,10  5,37`.
 	 *	\return	`null` if `InArrayOfTiles` is `null`.
@@ -274,7 +289,7 @@ class _MinchinWeb_Array_ {
 	 *	\todo	Add a better error message if you try and feed it not a 2-D array
 	 *	\static
 	 */
-	function ToStringTiles2D(InArrayOfTiles, ArrayLength = false);
+	function ToStringTiles2D(InArrayOfTiles, ArrayLength = false, replaceNull = false);
 
 	/**	\brief	Searches an array for a given pair of values.
 	 *
@@ -401,7 +416,7 @@ function _MinchinWeb_Array_::ToString1D(InArray, DisplayLength = true, replaceNu
 	}
 }
 
-function _MinchinWeb_Array_::ToString2D(InArray, DisplayLength = true) {
+function _MinchinWeb_Array_::ToString2D(InArray, DisplayLength = true, replaceNull = false) {
 	if (InArray == null) {
 		return null;
 	} else {
@@ -413,7 +428,11 @@ function _MinchinWeb_Array_::ToString2D(InArray, DisplayLength = true) {
 			InnerArray = InArray[i];
 			local j = 0;
 			while (j < InnerArray.len() ) {
-				Temp = Temp + InnerArray[j] + "  ";
+				if ((replaceNull == true) && (InnerArray[j] == null)) {
+					Temp = Temp + "-" + "  ";
+				} else {
+					Temp = Temp + InnerArray[j] + "  ";
+				}
 				j++;
 			}
 			Temp = Temp + "/  ";
@@ -465,10 +484,11 @@ function _MinchinWeb_Array_::ContainedIn3D(InArray, SearchValue) {
 	} else {
 		for (local i = 0; i < InArray.len(); i++ ) {
 			for (local j=0; j < InArray[i].len(); j++ ) {
-				for (local k=0; k < InArray[i].len(); k++)
+				for (local k=0; k < InArray[i].len(); k++) {
 					if (InArray[i][j][k] == SearchValue) {
 						return true;
 					}
+				}
 			}
 		}
 		return false;
@@ -522,10 +542,11 @@ function _MinchinWeb_Array_::Find3D(InArray, SearchValue) {
 	} else {
 		for (local i = 0; i < InArray.len(); i++ ) {
 			for (local j=0; j < InArray[i].len(); j++ ) {
-				for (local k=0; k < InArray[i].len(); k++)
+				for (local k=0; k < InArray[i].len(); k++) {
 					if (InArray[i][j][k] == SearchValue) {
 						return [i,j,k];
 					}
+				}
 			}
 		}
 		return false;
@@ -560,14 +581,18 @@ function _MinchinWeb_Array_::InsertValueAt(InArray, Index, Value) {
 	return Return;
 }
 
-function _MinchinWeb_Array_::ToStringTiles1D(InArrayOfTiles, ArrayLength = false) {
+function _MinchinWeb_Array_::ToStringTiles1D(InArrayOfTiles, ArrayLength = false, replaceNull = false) {
 	if (InArrayOfTiles == null) {
 		return null;
 	} else {
 		local Length = InArrayOfTiles.len();
 		local Temp = "";
 		foreach (Tile in InArrayOfTiles) {
-			Temp = Temp + "  " + AIMap.GetTileX(Tile) + "," + AIMap.GetTileY(Tile);
+			if ((replaceNull == true) && (Tile == null)) {
+				Temp = Temp + "  ---";
+			} else {
+				Temp = Temp + "  " + AIMap.GetTileX(Tile) + "," + AIMap.GetTileY(Tile);
+			}
 		}
 		if (ArrayLength == true) {
 			Temp = "The array is " + Length + " long.  " + Temp;
@@ -576,7 +601,7 @@ function _MinchinWeb_Array_::ToStringTiles1D(InArrayOfTiles, ArrayLength = false
 	}
 }
 
-function _MinchinWeb_Array_::ToStringTiles2D(InArrayOfTiles, ArrayLength = false) {
+function _MinchinWeb_Array_::ToStringTiles2D(InArrayOfTiles, ArrayLength = false, replaceNull = false) {
 	if (InArrayOfTiles == null) {
 		return null;
 	} else {
@@ -588,7 +613,11 @@ function _MinchinWeb_Array_::ToStringTiles2D(InArrayOfTiles, ArrayLength = false
 			InnerArray = InArrayOfTiles[i];
 			local j = 0;
 			while (j < InnerArray.len() ) {
-				Temp = Temp + AIMap.GetTileX(InnerArray[j]) + "," + AIMap.GetTileY(InnerArray[j]) + "  ";
+				if ((replaceNull == true) && (InnerArray[j] == null)) {
+					Temp = Temp + "---  ";
+				} else {
+					Temp = Temp + AIMap.GetTileX(InnerArray[j]) + "," + AIMap.GetTileY(InnerArray[j]) + "  ";
+				}
 				j++;
 			}
 			Temp = Temp + "/  ";
