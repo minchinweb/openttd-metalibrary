@@ -20,14 +20,11 @@
 upload to BaNaNaS. v2.0.2 [2015-01-10]"""
 
 import codecs
-import fileinput
 import os
 import re
 import shutil
 import tarfile
 from os.path import join
-
-import winshell
 
 SourceDir = join("..")
 OutputDir = join("..", "releases")
@@ -56,21 +53,21 @@ def multiple_replace(string, *key_values):
     return multiple_replacer(*key_values)(string)
 
 
-mdReplacements = ("%MinchinWeb", "MinchinWeb"), ("\_", "_"), ("←", "<-")
+mdReplacements = ("%MinchinWeb", "MinchinWeb"), ("\\_", "_"), ("←", "<-")
 
 aimdReplacements = (
     ("v.3 (`Queue.FibonacciHeap-3.tar`)", "v.2 (`Queue.FibonacciHeap-2.tar`)"),
     (
-        " http://binaries.openttd.org/bananas/ailibrary/Queue.BinaryHeap-1-1.tar.gz",
-        "http://binaries.openttd.org/bananas/gslibrary/Queue.BinaryHeap-1-2.tar.gz",
+        "https://bananas.openttd.org/package/ai-library/51554248",
+        "https://bananas.openttd.org/package/game-script-library/47514248",
     ),
     (
-        "http://binaries.openttd.org/bananas/ailibrary/Graph.AyStar-6-1.tar.gz",
-        "http://binaries.openttd.org/bananas/gslibrary/Graph.AyStar-6-2.tar.gz",
+        "https://bananas.openttd.org/package/ai-library/4752412a",
+        "https://bananas.openttd.org/package/game-script-library/4747412a",
     ),
     (
-        "http://binaries.openttd.org/bananas/ailibrary/Queue.FibonacciHeap-3.tar.gz",
-        "http://binaries.openttd.org/bananas/gslibrary/Queue.FibonacciHeap-2-2.tar.gz",
+        "https://bananas.openttd.org/package/ai-library/51554648",
+        "https://bananas.openttd.org/package/game-script-library/47514648",
     ),
     ("`../OpenTTD/ai/library/`", "`../OpenTTD/gs/library/`"),
 )

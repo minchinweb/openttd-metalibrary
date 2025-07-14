@@ -1,6 +1,6 @@
-﻿/*	Extra functions v.6 [2014-02-26],
- *		part of Minchinweb's MetaLibrary v.7
- *	Copyright © 2011-14 by W. Minchin. For more info,
+﻿/*	Extra functions v.7 [2025-07-14],
+ *		part of Minchinweb's MetaLibrary v.10
+ *	Copyright © 2011-14, 2025 by W. Minchin. For more info,
  *		please visit https://github.com/MinchinWeb/openttd-metalibrary
  *
  *	Permission is granted to you to use, copy, modify, merge, publish,
@@ -22,7 +22,7 @@
  */
 
 /**	\brief		Extra functions
- *	\version	v.5 (2012-07-01)
+ *	\version	v.7 (2025-07-14)
  *	\author		W. Minchin (%MinchinWeb)
  *	\since		MetaLibrary v.1
  *
@@ -210,11 +210,27 @@ class _MinchinWeb_Extras_ {
 	 * 			four)
 	 *	\param	i1...		input values
 	 *	\return	the maximum value
+	 *	\static
 	 */
 	function MultiMax(i1);
 	function MultiMax(i1, i2);
 	function MultiMax(i1, i2, i3);
 	function MultiMax(i1, i2, i3, i4);
+};
+
+
+class _MinchinWeb_Extras_.Info {
+	_main = null;
+
+	function GetVersion()       { return 7; }
+	// function GetMinorVersion()	{ return 0; }
+	function GetRevision()		{ return 250714; }
+	function GetDate()          { return "2025-07-14"; }
+	function GetName()          { return "Extras"; }
+
+	constructor(main) {
+		this._main = main;
+	}
 };
 
 //	== Function definitions =================================================

@@ -1,6 +1,18 @@
 Changelog
 ===============================================================================
 
+Version 10                                                               {#v10}
+===============================================================================
+Released 2025-07-14
+
+- allow option to replace null values (rather than crash) when converting
+  Arrays (and Arrays of Tiles) to strings (see [WmDOT Issue
+  18](https://github.com/minchinweb/openttd-wmdot/issues/18))
+- return a buoy count of zero on an unfinished ship path (see [WmDOT Issues
+  15](https://github.com/minchinweb/openttd-wmdot/issues/15) and
+  [17](https://github.com/minchinweb/openttd-wmdot/issues/17))
+- add `Extras.MultiMax()` function
+
 Version 9                                                                 {#v9}
 ===============================================================================
 Released 2015-01-10

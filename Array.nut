@@ -1,8 +1,8 @@
-﻿/*	Array SubLibrary, v.6 [2014-03-03],
- *		part of Minchinweb's MetaLibrary v.8,
+﻿/*	Array SubLibrary, v.7 [2025-07-14],
+ *		part of Minchinweb's MetaLibrary v.10,
  *		originally part of WmDOT v.5  r.53d	[2011-04-09]
  *			and WmArray library v.1  r.1 [2011-02-13].
- *	Copyright © 2011-14 by W. Minchin. For more info,
+ *	Copyright © 2011-14, 2025 by W. Minchin. For more info,
  *		please visit https://github.com/MinchinWeb/openttd-metalibrary
  *
  *	Permission is granted to you to use, copy, modify, merge, publish,
@@ -17,7 +17,7 @@
  */
 
 /**	\brief		Array
- *	\version	v.5 (2014-02-28)
+ *	\version	v.7 (2025-07-14)
  *	\author		W. Minchin (%MinchinWeb)
  *	\since		MetaLibrary v.6
  *

@@ -63,12 +63,14 @@ Sub-Libraries Available                                         {#sublibraries}
 
 Changelog
 ===============================================================================
-### Version 9
+### Version 10
 
-Released 2015-01-10
+Released 2025-07-14
 
-- bug fix to Python build script (specifically, fix NoGo library version)
-- update build script to work with Python 3000
+- allow option to replace null values (rather than crash) when converting
+  Arrays (and Arrays of Tiles) to strings
+- return a buoy count of zero on an unfinished ship path
+- add `Extras.MultiMax()` function
 
 Read the complete [Changelog](md_openttd-metalibrary_changelog.html).
 
@@ -152,9 +154,9 @@ A grand 'Thank You' to Zuu for his SuperLib that provided a very useful
 License                                                              {#license}
 ===============================================================================
 
-**Minchinweb's MetaLibrary** v.9 [2015-01-10]
+**Minchinweb's MetaLibrary** v.10 [2025-07-14]
 
-Copyright © 2011-15 by W. Minchin.
+Copyright © 2011-15, 2025 by Wm. Minchin.
 For more info,
     please visit <https://github.com/MinchinWeb/openttd-metalibrary>
 

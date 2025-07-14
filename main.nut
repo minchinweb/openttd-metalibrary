@@ -1,6 +1,6 @@
-﻿/*	Minchinweb's MetaLibrary v.9 [2014-03-10],
+﻿/*	Minchinweb's MetaLibrary v.10 [2025-07-14],
  *		originally part of, WmDOT v.10
- *	Copyright © 2011-14 by W. Minchin. For more info,
+ *	Copyright © 2011-14, 2025 by W. Minchin. For more info,
  *		please visit https://github.com/MinchinWeb/openttd-metalibrary
  *
  *	Permission is granted to you to use, copy, modify, merge, publish,
@@ -69,9 +69,9 @@ require("Station.nut");
 class MinchinWeb {
 	/**	\publicsection
 	 */
-	function GetVersion()       { return 9; }
-	function GetRevision(       { return 140228; }
-	function GetDate()          { return "2014-02-28"; }
+	function GetVersion()       { return 10; }
+	function GetRevision()      { return 250714; }
+	function GetDate()          { return "2025-07-14"; }
 	function GetName()          { return "MinchinWeb's MetaLibrary"; }
 
 	static RoadPathfinder = _MinchinWeb_RoadPathfinder_;

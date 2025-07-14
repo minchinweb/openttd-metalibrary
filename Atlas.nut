@@ -249,7 +249,7 @@ class _MinchinWeb_Atlas_ {
 //	== Function definition ==================================================
 
 function _MinchinWeb_Atlas_::Reset() {
-//	Resets the Atlas
+	//	Resets the Atlas
 	this._pairs = this._heap_class();
 	this._model = ModelType.DISTANCE_MANHATTAN;
 	this._ignorepairs = [[-1,-1]];
@@ -261,13 +261,13 @@ function _MinchinWeb_Atlas_::Reset() {
 }
 
 function _MinchinWeb_Atlas_::AddBoth(AddedTile, Priority) {
-//	Adds a tile to the BOTH the sources list and the attractions list with the (same) given priority
+	//	Adds a tile to the BOTH the sources list and the attractions list with the (same) given priority
 	this._sources.push([AddedTile, Priority]);
 	this._attractions.push([AddedTile, Priority]);
 }
 
 function _MinchinWeb_Atlas_::RunModel() {
-//	Takes the provided sources and destinations and runs the selected traffic model, populating the 'pairs' heap
+	//	Takes the provided sources and destinations and runs the selected traffic model, populating the 'pairs' heap
 	this._pairs = this._heap_class();
 	for (local i = 0; i < this._sources.len(); i++) {
 		_MinchinWeb_Log_.Note("          i = " + i, 7);
@@ -284,9 +284,9 @@ function _MinchinWeb_Atlas_::RunModel() {
 }
 
 function _MinchinWeb_Atlas_::Pop() {
-//	Returns the top rated pair as an array and removes the pair from the model
+	//	Returns the top rated pair as an array and removes the pair from the model
 
-//	If the two tiles returned are equal, pop another one
+	//	If the two tiles returned are equal, pop another one
 	local KeepTrying = true;
 	local Test;
 	while (KeepTrying == true) {
@@ -299,7 +299,7 @@ function _MinchinWeb_Atlas_::Pop() {
 }
 
 function _MinchinWeb_Atlas_::SetModel(newmodel) {
-//	Sets the model type to the provided type
+	//	Sets the model type to the provided type
 	if ((newmodel == ModelType.ONE_D) || (newmodel == ModelType.DISTANCE_MANHATTAN) || (newmodel == ModelType.DISTANCE_SHIP) ||
 			(newmodel == ModelType.DISTANCE_AIR) || (newmodel == ModelType.DISTANCE_NONE) || (newmodel == ModelType.ONE_OVER_T_SQUARED)) {
 		this._model = newmodel;
@@ -309,7 +309,7 @@ function _MinchinWeb_Atlas_::SetModel(newmodel) {
 }
 
 function _MinchinWeb_Atlas_::PrintModelType(ToPrint) {
-//	given a ModelType, returns the string equivalent
+	//	given a ModelType, returns the string equivalent
 
 	switch (ToPrint) {
 		case ModelType.ONE_D :
@@ -338,9 +338,9 @@ function _MinchinWeb_Atlas_::PrintModelType(ToPrint) {
 
 
 function _MinchinWeb_Atlas_::ApplyTrafficModel(StartTile, StartPriority, EndTile, EndPriority, Model) {
-//	Given the start and end points, applies the traffic model and returns the
-//		weighting
-//	Smaller weightings are considered better
+	//	Given the start and end points, applies the traffic model and returns
+	//		the weighting
+	//	Smaller weightings are considered better
 
 	switch (Model) {
 		case ModelType.ONE_D :
@@ -368,8 +368,9 @@ function _MinchinWeb_Atlas_::ApplyTrafficModel(StartTile, StartPriority, EndTile
 }
 
 function _MinchinWeb_Atlas_::SetMaxDistance(distance = -1) {
-//	Sets the maximum distance between sources and attractions to be included in the model
-//		Negative values remove the limit
+	// Sets the maximum distance between sources and attractions to be
+	// included in the model.
+	// Negative values remove the limit
 	if (distance < 0) {
 		this._maxdistance = -1;
 	} else {
@@ -378,11 +379,11 @@ function _MinchinWeb_Atlas_::SetMaxDistance(distance = -1) {
 }
 
 function _MinchinWeb_Atlas_::SetMaxDistanceModel(newmodel) {
-//	Sets the model type to the provided type
-//		Used to calculate the distance between the source and attraction for applying maxdistance
+	//	Sets the model type to the provided type
+	//		Used to calculate the distance between the source and attraction for applying maxdistance
 
-//	DISTANCE_NONE is invalid. Use MinchinWeb.Atlas.SetMaxDistance(-1) instead.
-//	ONE_OVER_T_SQUARED is invalid.
+	//	DISTANCE_NONE is invalid. Use MinchinWeb.Atlas.SetMaxDistance(-1) instead.
+	//	ONE_OVER_T_SQUARED is invalid.
 
 	if ((newmodel == ModelType.ONE_D) || (newmodel == ModelType.DISTANCE_MANHATTAN) || (newmodel == ModelType.DISTANCE_SHIP) ||
 			(newmodel == ModelType.DISTANCE_AIR)) {
