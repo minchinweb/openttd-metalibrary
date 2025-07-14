@@ -22,15 +22,15 @@
  *  `roadpf.cost.turn = 30`. Note that it's not allowed to change the cost
  *  between consecutive calls to FindPath. You can change the cost before
  *  the first call to FindPath and after FindPath has returned an actual
- *  route. To use only existing roads, set `roadpf.cost.only_existing_road =
- *  True`.
+ *  route. To use only existing roads, set
+ * `roadpf.cost.only_existing_road = True`.
  *
  *	The pathfinder has been extended to provide 'presets' for configuration,
  *	store the found path, and build the found path.
  *
  *	\requires	Graph.AyStar v6
- *	\see		\\_MinchinWeb\\_DLS\\_
- *	\see		\\_MinchinWeb\\_ShipPathfinder\\_
+ *	\see		\_MinchinWeb\_DLS\_
+ *	\see		\_MinchinWeb\_ShipPathfinder\_
  */
 
 

@@ -23,7 +23,7 @@
  *
  *	This is a collection of functions to make working with Arrays easier.
  *	\note	While Arrays are powerful, also consider using
- *			[AIList](http://noai.openttd.org/api/trunk/classAIList.html)'s.
+ *			[AIList](https://docs.openttd.org/ai-api/classAIList)'s.
  */
 
 

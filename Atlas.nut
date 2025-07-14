@@ -100,7 +100,7 @@ class _MinchinWeb_Atlas_ {
 	/**	\publicsection
 	 */
 	function GetVersion()       { return 1; }
-	function GetRevision()		{ return 187; }
+	function GetRevision()      { return 187; }
 	function GetDate()          { return "2012-01-04"; }
 	function GetName()          { return "Atlas Library"; }
 

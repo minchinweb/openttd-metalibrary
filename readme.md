@@ -84,7 +84,7 @@ If you want to manually install it, download the folder and place it in your
 For you to use the library in your AI's you'll need to import it. Somewhere
 outside of any other class or function, add an import statement like:
 
-    Import("util.MinchinWeb", "MinchinWeb", 9);
+    Import("util.MinchinWeb", "MinchinWeb", 10);
 
 Requirements                                                    {#requirements}
 ===============================================================================
@@ -97,9 +97,9 @@ following libraries:
 - [Fibonacci Heap], v.3 (`Queue.FibonacciHeap-3.tar`)
 - [Graph.AyStar], v.6   (`Graph.AyStar-6.tar`)
 
-[Binary Heap]: http://binaries.openttd.org/bananas/ailibrary/Queue.BinaryHeap-1-1.tar.gz
-[Graph.AyStar]: http://binaries.openttd.org/bananas/ailibrary/Graph.AyStar-6-1.tar.gz
-[Fibonacci Heap]: http://binaries.openttd.org/bananas/ailibrary/Queue.FibonacciHeap-3.tar.gz
+[Binary Heap]: https://bananas.openttd.org/package/ai-library/51554248
+[Graph.AyStar]: https://bananas.openttd.org/package/ai-library/4752412a
+[Fibonacci Heap]: https://bananas.openttd.org/package/ai-library/51554648
 
 OpenTTD is able to read uncompressed `tar` files without any problem.
 

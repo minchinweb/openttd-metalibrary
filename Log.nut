@@ -72,7 +72,7 @@ class _MinchinWeb_Log_ {
 	 *
 	 *	The debug level is not designed to be set directly by the AI.
 	 *
-	 *	This is how I have 'translated' the various levels 1 through 7 on the
+	 *	This is how I have 'translated' the various levels 1 through 8 on the
 	 *	AI settings to what I would expect to see on the debug screen.
 	 *
 	 *	- AI's
