@@ -1,4 +1,4 @@
-﻿/*	Array SubLibrary, v.7 [2025-07-14],
+﻿/*	Array SubLibrary, v.7.1 [2025-07-15],
  *		part of Minchinweb's MetaLibrary v.10,
  *		originally part of WmDOT v.5  r.53d	[2011-04-09]
  *			and WmArray library v.1  r.1 [2011-02-13].
@@ -17,7 +17,7 @@
  */
 
 /**	\brief		Array
- *	\version	v.7 (2025-07-14)
+ *	\version	v.7.1 (2025-07-15)
  *	\author		W. Minchin (%MinchinWeb)
  *	\since		MetaLibrary v.6
  *
@@ -590,6 +590,9 @@ function _MinchinWeb_Array_::ToStringTiles1D(InArrayOfTiles, ArrayLength = false
 		foreach (Tile in InArrayOfTiles) {
 			if ((replaceNull == true) && (Tile == null)) {
 				Temp = Temp + "  ---";
+			} else if (Tile <= 256) {
+				// the first tile on the board is 0x0101, or 257 in decimal
+				Temp = Temp + "  " + Tile;
 			} else {
 				Temp = Temp + "  " + AIMap.GetTileX(Tile) + "," + AIMap.GetTileY(Tile);
 			}
@@ -615,6 +618,9 @@ function _MinchinWeb_Array_::ToStringTiles2D(InArrayOfTiles, ArrayLength = false
 			while (j < InnerArray.len() ) {
 				if ((replaceNull == true) && (InnerArray[j] == null)) {
 					Temp = Temp + "---  ";
+				} else if (InnerArray[j] <= 256) {
+					// the first tile on the board is 0x0101, or 257 in decimal
+					Temp = Temp + "  " + InnerArray[j];
 				} else {
 					Temp = Temp + AIMap.GetTileX(InnerArray[j]) + "," + AIMap.GetTileY(InnerArray[j]) + "  ";
 				}
