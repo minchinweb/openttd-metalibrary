@@ -71,7 +71,7 @@ class _MinchinWeb_Station_ {
 	/** \brief Build a streetcar station
 	 *
 	 *  First tries to build a streetcar station with a half-tile loop on each
-	 *	end; if that works, actually build it.
+	 *  end; if that works, actually build it.
 	 *
 	 *  \param  Tile
 	 *  \param  Loop    If `true`, build a loop connecting the two ends
@@ -154,21 +154,26 @@ function _MinchinWeb_Station_::BuildStreetcarStation(Tile, Loop = true) {
 	FrontTile = SuperLib.Direction.GetAdjacentTileInDirection(Tile, MyDirection);
 	BackTile = SuperLib.Direction.GetAdjacentTileInDirection(Tile, SuperLib.Direction.OppositeDir(MyDirection));
 
+	local Pathfinder = _MinchinWeb_RoadPathfinder_();
+	if (Loop) {
+		Pathfinder.InitializePath([FrontTile], [BackTile], [Tile]);
+		Pathfinder.PresetStreetcar();
+		if (Pathfinder.FindPath(50000) != null) {
+			// pass
+		} else {
+			Log.Note("No loop path." + _MinchinWeb_Array_.ToStringTiles1D([Tile]), 7);
+			return false;
+		}
+	}
+
+	// Build for real!
 	local ExecMode = AIExecMode();
 	if (AIRoad.BuildRoad(FrontTile, BackTile)) {
 		//	we keep doing stuff
 		AIRoad.BuildDriveThroughRoadStation(Tile, SuperLib.Direction.GetAdjacentTileInDirection(Tile, MyDirection), AIRoad.ROADVEHTYPE_BUS, AIStation.STATION_NEW);
-
 		if (Loop) {
-			local Pathfinder = _MinchinWeb_RoadPathfinder_();
-			Pathfinder.InitializePath([FrontTile], [BackTile], [Tile]);
-			Pathfinder.PresetStreetcar();
-			if (Pathfinder.FindPath(5000) != null) {
-				SuperLib.Money.MakeSureToHaveAmount(Pathfinder.GetBuildCost());
-				Pathfinder.BuildPath();
-			} else {
-				Log.Note("No loop path." + _MinchinWeb_Array_.ToStringTiles1D([Tile]), 7);
-			}
+			SuperLib.Money.MakeSureToHaveAmount(Pathfinder.GetBuildCost());
+			Pathfinder.BuildPath();
 		}
 
 		return true;
