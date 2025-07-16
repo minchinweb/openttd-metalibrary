@@ -79,6 +79,17 @@ class _MinchinWeb_Station_ {
 	 *			successful
 	 */
 	function BuildStreetcarStation(Tile, Loop = true);
+
+	/**	\brief	Get a station's name
+	 *	\param	Tile		Tile assumed to be part of the station.
+	 *  \param  StationType One of AIStation: AIStation.STATION_TRAIN,
+	 * 						AIStation.STATION_TRUCK_STOP,
+	 * 						AIStation.STATION_BUS_STOP,
+	 * 						AIStation.STATION_AIRPORT, AIStation.STATION_DOCK,
+	 * 						or AIStation.STATION_ANY.
+	 *	\return	string of station name
+	 */
+	function GetName(Tile, StationType = AIStation.STATION_ANY);
 };
 
 //	== Function definitions ==================================================
@@ -185,4 +196,15 @@ function _MinchinWeb_Station_::BuildStreetcarStation(Tile, Loop = true) {
 		return false;
 	}
 }
+
+
+function _MinchinWeb_Station_::GetName(Tile, StationType = AIStation.STATION_ANY) {
+	local station_list = AIStationList(StationType);
+	station_list.Valuate(AIStation.GetDistanceManhattanToTile, Tile);
+	station_list.KeepValue(0);
+	local station_name = AIBaseStation.GetName(station_list.Begin());
+
+	return station_name;
+}
+
 // EOF
