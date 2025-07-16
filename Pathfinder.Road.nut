@@ -98,12 +98,11 @@ class _MinchinWeb_RoadPathfinder_ {
 	_cost_only_existing_roads = null;	///< Choose whether to only search through existing connected roads
 	_distance_penalty = null;		///< Penalty to use to speed up pathfinder, 1 is no penalty
 	_road_type = null;
-	_ignore_tiles = null;			///< Tiles not to be used in the generated path.
 	cost = null;					///< Used to change the costs.
 	_my_path = null;				///< Used to store the path after it's been found for Building functions
 	_running = null;
 	info = null;
-//	presets = null;
+	// presets = null;
 
 	constructor() {
 		this._max_cost = 10000000;
@@ -122,12 +121,11 @@ class _MinchinWeb_RoadPathfinder_ {
 		this._pathfinder = this._aystar_class(this, this._Cost, this._Estimate, this._Neighbours, this._CheckDirection);
 		this._distance_penalty = 1;
 		this._road_type = AIRoad.ROADTYPE_ROAD;
-		this._ignore_tiles = array(0);
 		this._my_path = null;
 
 		this.cost = this.Cost(this);
 		this.info = this.Info(this);
-//		this.presets = this.Presets(this);
+		// this.presets = this.Presets(this);
 		this._running = false;
 	}
 
@@ -136,11 +134,12 @@ class _MinchinWeb_RoadPathfinder_ {
 	 * \brief	Initialize a path search between sources and goals.
 	 * @param sources The source tiles.
 	 * @param goals The target tiles.
-	 * @param ignore_tiles Tiles not to use in generating the path.
+	 * @param ignored_tiles Tiles not to use in generating the path. "An array
+	 *  					of tiles that cannot occur in the final path."
 	 * @see AyStar::InitializePath()
 	 *	\see	InitializePathOnTowns()
 	 */
-	function InitializePath(sources, goals, ignore_tiles = array(0)) {
+	function InitializePath(sources, goals, ignored_tiles = []) {
 		local n_sources = [];
 
 		foreach (node in sources) {
@@ -150,9 +149,8 @@ class _MinchinWeb_RoadPathfinder_ {
 		_MinchinWeb_Log_.Note("Sources: " + Array.ToStringTiles2D(n_sources), 8);
 		_MinchinWeb_Log_.Note("Goals: " + Array.ToStringTiles1D(goals), 8);
 
-		this._pathfinder.InitializePath(n_sources, goals);
+		this._pathfinder.InitializePath(n_sources, goals, ignored_tiles);
 		this._my_path = null;
-		this._ignore_tiles = ignore_tiles;
 	}
 
 	/**
@@ -431,16 +429,6 @@ function _MinchinWeb_RoadPathfinder_::_Cost(self, path, new_tile, new_direction)
 	/* Add a penalty for existing drive thru road stations  */
 	if(AIRoad.IsDriveThroughRoadStationTile(new_tile)) {
 		cost += self._cost_drivethru_station;
-	}
-
-	/* If a disallowed tile (on the "Ignore Tile" list), add the maximum path
-	 * cost (to effectively invalidate this path).	*/
-	if((self._ignore_tiles != null) && (self._ignore_tiles.len() > 0)) {
-		for (local i = 0; i < self._ignore_tiles.len(); i++ ) {
-			if (self._ignore_tiles[i] = new_tile) {
-				cost += self._max_cost;
-			}
-		}
 	}
 
 	return path.GetCost() + cost;
