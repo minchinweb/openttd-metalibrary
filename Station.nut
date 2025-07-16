@@ -1,6 +1,6 @@
-﻿/*	Station functions v.3 r.253 [2011-07-21],
- *		part of Minchinweb's MetaLibrary v.6,
- *	Copyright © 2011-14 by W. Minchin. For more info,
+﻿/*	Station functions v.4 [2025-07-16],
+ *		part of Minchinweb's MetaLibrary v.10.1,
+ *	Copyright © 2011-14, 2025 by W. Minchin. For more info,
  *		please visit https://github.com/MinchinWeb/openttd-metalibrary
  *
  *	Permission is granted to you to use, copy, modify, merge, publish,
@@ -28,7 +28,7 @@
  */
 
 /**	\brief		Station
- *	\version	v.3 (2011-07-21)
+ *	\version	v.4 (2025-07-16)
  *	\author		W. Minchin (%MinchinWeb)
  *	\since		MetaLibrary v.2
  *

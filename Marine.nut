@@ -30,7 +30,7 @@
  *					   .GetPossibleDockTiles(IndustryID)
  *							- Given an industry (by IndustryID), searches for
  *								possible tiles to build a dock and retruns the
- *								list as an array of TileIndexs
+ *								list as an array of TileIndexes
  *							- Tiles given should be checked to ensure that the
  *								desired cargo is still accepted
  *					   .GetDockFrontTiles(Tile)

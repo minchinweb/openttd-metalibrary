@@ -1,7 +1,7 @@
-﻿/*	SpiralWalker class v.3 r.223 [2012-01-28],
+﻿/*	SpiralWalker class v.3.1 r.223 [2025-07-16],
  *		part of Minchinweb's MetaLibrary v.4,
  *		originally part of WmDOT v.5
- *	Copyright © 2011-12 by W. Minchin. For more info,
+ *	Copyright © 2011-12, 2025 by W. Minchin. For more info,
  *		please visit https://github.com/MinchinWeb/openttd-metalibrary
  *
  *	Permission is granted to you to use, copy, modify, merge, publish,
@@ -16,7 +16,7 @@
  */
 
 /**	\brief		Spiral Walker
- *	\version	v.3 (2012-01-28)
+ *	\version	v.3.1 (2025-07-16)
  *	\author		W. Minchin (%MinchinWeb)
  *	\since		MetaLibrary v.4
  *
@@ -28,6 +28,7 @@
  *	\note	`SpiralWalker` is designed to be a persistent class.
  *	\see	\_MinchinWeb\_LW\_
  *	\todo	add image showing the walk out pattern
+ *	\todo	cap at map bounds
  */
 
 /*	Functions provided:
@@ -131,7 +132,6 @@ function _MinchinWeb_SW_::Start(Tile) {
 	this._dx = -1;
 	this._dy =  0;
 	this._Steps = 0;
-//	this._Stage = 1;
 	this._Stage = 1;
 	this._StageMax = 1;
 	this._StageSteps = 0;
@@ -202,7 +202,12 @@ function _MinchinWeb_SW_::Walk() {
 			}
 		}
 	}
-	_MinchinWeb_Log_.Note("     SpiralWalker.Walk: " + this._dx + " " + this._dy + " : " + this._Steps + " " + this._Stage + " " + this._StageSteps + " " + this._StageMax + " :: " + this._x + ", " + this._y, 7);
+	_MinchinWeb_Log_.Note(
+		"SpiralWalker.Walk: " + this._dx + " " + this._dy + " : "
+		+ this._Steps + " // " + this._Stage + " / " + this._StageSteps + " / "
+		+ this._StageMax + " :: " + this._x + ", " + this._y,
+		8
+	);
 	this._current_tile = AIMap.GetTileIndex(this._x, this._y);
 //	AISign.BuildSign(this._current_tile, "" + this._Steps);
 	return this._current_tile;
