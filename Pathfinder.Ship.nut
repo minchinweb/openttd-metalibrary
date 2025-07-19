@@ -452,7 +452,7 @@ function _MinchinWeb_ShipPathfinder_::FindPath(iterations) {
 			if (this._FinishedPaths.Count() !=0) {
 				this._running = false;
 				this._my_path = _PathToTilesArray(this._FinishedPaths.Peek());
-				_MinchinWeb_Log_.Note("My Path is " + _MinchinWeb_Array_.ToString1D(this._my_path), 5);
+				_MinchinWeb_Log_.Note("My Path is " + _MinchinWeb_Array_.ToStringTiles1D(this._my_path), 5);
 				return this._my_path;
 			} else {
 				//	If the UnfinishedPath heap is empty, fail the pathfinder
@@ -471,7 +471,7 @@ function _MinchinWeb_ShipPathfinder_::FindPath(iterations) {
 				if ((finished * 100) < (unfinished * 110)) {
 					this._running = false;
 					this._my_path = _PathToTilesArray(this._FinishedPaths.Peek());
-					_MinchinWeb_Log_.Note("My Path is " + _MinchinWeb_Array_.ToString1D(this._my_path), 5);
+					_MinchinWeb_Log_.Note("My Path is " + _MinchinWeb_Array_.ToStringTiles1D(this._my_path), 5);
 					return this._my_path;
 				}
 				_MinchinWeb_Log_.Note("          Finished =" + finished + " ; Unfinished = " + unfinished, 5);
@@ -601,7 +601,7 @@ function _MinchinWeb_ShipPathfinder_::_InsertPoint(TileIndex) {
 function _MinchinWeb_ShipPathfinder_::CountPathBuoys() {
 	//	returns the number of potential buoys that may need to be built
 
-	_MinchinWeb_Log_.Note("My Path is " + _MinchinWeb_Array_.ToString1D(this._my_path), 7);
+	_MinchinWeb_Log_.Note("My Path is " + _MinchinWeb_Array_.ToStringTiles1D(this._my_path), 7);
 
 	if (this._my_path == null) {
 		AILog.Warning("MinchinWeb.ShipPathfinder.CountBuoys() must be supplied with a valid path.");

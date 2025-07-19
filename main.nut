@@ -26,6 +26,7 @@ require("Pathfinder.Road.nut");
 // require("AyStar.WM.nut");
 require("Array.nut");
 // require("Fibonacci.Heap.WM.nut");
+require("Engine.nut");
 require("Extras.nut");
 require("Constants.nut");
 require("Waterbody.Check.nut");
@@ -36,7 +37,7 @@ require("Spiral.Walker.nut");
 require("Atlas.nut");
 require("Marine.nut");
 require("Log.nut");
-require("Dominion.Roads.nut")
+require("Dominion.Roads.nut");
 require("Industry.nut");
 require("Station.nut");
 
@@ -59,6 +60,7 @@ require("Station.nut");
  *	-	`%MinchinWeb.Constants` <- \_MinchinWeb\_C\_
  *	-	`%MinchinWeb.DLS` <- \_MinchinWeb\_DLS\_
  *	-	`%MinchinWeb.Extras` <- \_MinchinWeb\_Extras\_
+ *	-	`%MinchinWeb.Engine` <- \_MinchinWeb\_Engine\_
  *	-	`%MinchinWeb.Lakes` <- \_MinchinWeb\_Lakes\_
  *	-	`%MinchinWeb.LineWalker` <- \_MinchinWeb\_LW\_
  *	-	`%MinchinWeb.Log` <- \_MinchinWeb\_Log\_
@@ -86,6 +88,9 @@ class MinchinWeb {
 
 	static Array = _MinchinWeb_Array_;
 	///<	\see	\_MinchinWeb\_Array\_
+
+	static Engine = _MinchinWeb_Engine_;
+	///<	\see	\_MinchinWeb\_Engine\_
 
 	static Extras = _MinchinWeb_Extras_;
 	///<	\see	\_MinchinWeb\_Extras\_

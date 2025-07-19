@@ -61,11 +61,18 @@
  *							- This will fail if the DockTile given is a dock (or
  *								any tile that is not a water tile)
  *						.RateShips(EngineID, Life, Cargo)
- *							- Designed to Run as a validator
+ *							- Note: Deprecated
+ *							- Designed to run as a validator
  *							- Given the EngineID, it will score them; higher is better
  *							- Life is assumed to be in years
  *							- Note: Cargo doesn't work yet. Capacity is measured in
  *								the default cargo.
+ *						.RateShips2(EngineID, Cargo, TargetCapacity, MaxSpend = 0)
+ *							- Designed to run as a validator
+ *							- higher scores are better
+ *						.RateShips3(EngineID, Cargo, MonthlyProduction, Distance, MaxSpend = 0)
+ *							- Designed to run as a validator
+ *							- higher scores are better
  *						.NearestDepot(TileID)
  *							- Returns the tile of the Ship Depot nearest to the
  *								given TileID
@@ -146,18 +153,67 @@ class _MinchinWeb_Marine_ {
 	 */
 	function BuildDepot(DockTile, Front, NotNextToDock=true);
 
-	/**	\brief	Ship Scoring
+	/**	\brief	Ship Scoring. Deprecated in favour of `RateShips2()`.
 	 *
 	 *	Given an EngineID, the function will score them; higher is better.
 	 *	\param	Life	Desired lifespan of route, assumed to be in years.
 	 *	\param	Cargo	Doesn't work yet. Capacity is measured in the default
 	 *					cargo.
 	 *	\note	Designed to run as a valuator on a AIList of EngineID's.
-	 *	\todo	Add example of validator code.
 	 *	\todo	Implement ship capacity in given cargo.
+	 *	\see	RateShips2()
 	 *	\static
 	 */
 	function RateShips(EngineID, Life, Cargo);
+
+	/**	\brief	Ship Scoring v2. Deprecated in favour of `RateShips3()`.
+	 *
+	 *	Given an EngineID, the function will score them; higher is better.
+	 *  \param  Cargo   Cargo you want to carry. Ensure that the ship can
+	 *					retrofit to the desired cargo.
+	 *  \param  TargetCapacity  (Approximate) amount of cargo you want to
+	 *							carry. Often the industry's monthly production.
+	 *  \param  MaxSpend    Hard upper limit on (upfront) Engine cost. Set to
+	 *						zero (the default) to ignore. Does not include
+	 *						retrofit costs.
+	 *	\note	Designed to run as a valuator on a AIList of EngineID's.
+	 *	\note	Capacity is measured in the default cargo.
+	 *  \note   Assumes this vehicle will be continuously replaced, rather than
+	 *			over a pre-defined "lifetime".
+	 *	\todo	Add example of validator code.
+	 *	\todo	Implement ship capacity in given cargo.
+	 *	\since	MetaLibrary v10.1
+	 *	\see	\_MinchinWeb\_Engine\_.Rate2()
+	 *	\see	RateShips3()
+	 *	\static
+	 */
+	function RateShips2(EngineID, Cargo, TargetCapacity, MaxSpend = 0);
+
+	/**	\brief	Ship Scoring v3.
+	 *
+	 *	Given an EngineID, the function will score them; higher is better.
+	 *  \param  Cargo   Cargo you want to carry. Ensure that the ship can
+	 *					retrofit to the desired cargo.
+	 *  \param  MonthlyProduction  (Approximate) amount of cargo you want to
+	 *							carry. Often the industry's monthly production.
+	 *	\param	Distance	The distance (in map tiles) that the engine is
+	 *						expected to travel between pickup and drop off.
+	 *						Assumes that the return distance is the same.
+	 *  \param  MaxSpend    Hard upper limit on (upfront) Engine cost. Set to
+	 *						zero (the default) to ignore. Does not include
+	 *						retrofit costs.
+	 *	\note	Designed to run as a valuator on a AIList of EngineID's.
+	 *	\note	Capacity is measured in the default cargo.
+	 *  \note   Assumes this vehicle will be continuously replaced, rather than
+	 *			over a pre-defined "lifetime".
+	 *	\todo	Add example of validator code.
+	 *	\todo	Implement ship capacity in given cargo.
+	 *	\since	MetaLibrary v10.1
+	 *	\see	\_MinchinWeb\_Engine\_.Rate3()
+	 *	\static
+	 */
+	function RateShips3(EngineID, Cargo, MonthlyProduction, Distance, MaxSpend = 0);
+
 
 	/**	\brief	Nearest ship depot.
 	 *	\return	The tile of the Ship Depot nearest to the given TileID
@@ -441,7 +497,6 @@ function _MinchinWeb_Marine_::RateShips(EngineID, Life, Cargo) {
 	//
 	//	Life is assumed to be in years
 	//  Note: Cargo doesn't work yet. Capacity is measured in the default cargo.
-	//	TODO: Downrate excessively large vassals (compared to monthly production)
 
 	local Score = 0;
 	local Age = AIEngine.GetMaxAge(EngineID);
@@ -458,6 +513,26 @@ function _MinchinWeb_Marine_::RateShips(EngineID, Life, Cargo) {
 	_MinchinWeb_Log_.Note("Rate Ship : " + Score + " : " + AIEngine.GetName(EngineID) + " : " + AIEngine.GetCapacity(EngineID) + " * " + AIEngine.GetReliability(EngineID) + " * " + AIEngine.GetMaxSpeed(EngineID) + " / " + BuyTimes + " * " + AIEngine.GetPrice(EngineID) + " + " + Life + " * " + AIEngine.GetRunningCost(EngineID), 7);
 	return Score;
 }
+
+function _MinchinWeb_Marine_::RateShips2(EngineID, Cargo, TargetCapacity, MaxSpend = 0) {
+	// only water vehicles (i.e. ships)
+	if (AIEngine.GetVehicleType(EngineID) != AIVehicle.VT_WATER) {
+		return 0;
+	}
+
+	return _MinchinWeb_Engine_.Rate2(EngineID, Cargo, TargetCapacity, MaxSpend);
+}
+
+
+function _MinchinWeb_Marine_::RateShips3(EngineID, Cargo, MonthlyProduction, TravelDistance, PayDistance = 0, MaxSpend = 0) {
+	// only water vehicles (i.e. ships)
+	if (AIEngine.GetVehicleType(EngineID) != AIVehicle.VT_WATER) {
+		return 0;
+	}
+
+	return _MinchinWeb_Engine_.Rate3(EngineID, Cargo, MonthlyProduction, TravelDistance, PayDistance, MaxSpend);
+}
+
 
 function _MinchinWeb_Marine_::NearestDepot(TileID) {
 //	Returns the tile of the Ship Depot nearest to the given TileID

@@ -169,11 +169,10 @@ function _MinchinWeb_Station_::BuildStreetcarStation(Tile, Loop = true) {
 	if (Loop) {
 		Pathfinder.InitializePath([FrontTile], [BackTile], [Tile]);
 		Pathfinder.PresetStreetcar();
-		if (Pathfinder.FindPath(50000) != null) {
+		local pf_return = Pathfinder.FindPath(50000);
+		if ((pf_return == null) || (pf_return == false)) {
 			// the Pathfinder will return `false` if it is still looking, and
 			// `null` if it can't find a valid path
-			// pass
-		} else {
 			Log.Note("No loop path." + _MinchinWeb_Array_.ToStringTiles1D([Tile]), 7);
 			return false;
 		}
