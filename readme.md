@@ -25,6 +25,8 @@ Sub-Libraries Available                                         {#sublibraries}
 - `%MinchinWeb.DLS` ← \_MinchinWeb\_DLS\_
     - **Dominion Land System** -- a wrapper on the road pathfinder to encourage
       roads to be built on a grid.
+- `%Minchinweb.Engine` ← \_MinchinWeb\_Engine\_
+    - functions related to Engine (i.e. vehicle) selection
 - `%MinchinWeb.Extras` ← \_MinchinWeb\_Extras\_
     - Extra functions, for things like math, map geometry, ship support, etc.
 - `%MinchinWeb.Lakes` ← \_MinchinWeb\_Lakes\_
@@ -63,9 +65,16 @@ Sub-Libraries Available                                         {#sublibraries}
 
 Changelog
 ===============================================================================
+### Version 11
+
+Released 2025-09-30
+
+- better ship selection features
+- introductory functions for streetcar support
+
 ### Version 10
 
-Released 2025-07-14
+Prepared 2025-07-14
 
 - allow option to replace null values (rather than crash) when converting
   Arrays (and Arrays of Tiles) to strings
@@ -86,7 +95,7 @@ If you want to manually install it, download the folder and place it in your
 For you to use the library in your AI's you'll need to import it. Somewhere
 outside of any other class or function, add an import statement like:
 
-    Import("util.MinchinWeb", "MinchinWeb", 10);
+    Import("util.MinchinWeb", "MinchinWeb", 11);
 
 Requirements                                                    {#requirements}
 ===============================================================================
@@ -114,7 +123,7 @@ FAQ                                                                      {#faq}
         sub-libaries you want to use. Eg:
 
 ~~~
-        Import("util.MinchinWeb", "MinchinWeb", 9);
+        Import("util.MinchinWeb", "MinchinWeb", 11);
         Arrays <- MinchinWeb.Arrays;
 ~~~
 
@@ -154,7 +163,7 @@ A grand 'Thank You' to Zuu for his SuperLib that provided a very useful
 License                                                              {#license}
 ===============================================================================
 
-**Minchinweb's MetaLibrary** v.10 [2025-07-14]
+**Minchinweb's MetaLibrary** v.11 [2025-09-30]
 
 Copyright © 2011-15, 2025 by Wm. Minchin.
 For more info,

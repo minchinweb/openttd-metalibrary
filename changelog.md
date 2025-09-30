@@ -1,9 +1,16 @@
 Changelog
 ===============================================================================
 
+Version 11                                                               {#v11}
+===============================================================================
+Released 2025-09-30
+
+- better ship selection features
+- introductory functions for streetcar support
+
 Version 10                                                               {#v10}
 ===============================================================================
-Released 2025-07-14
+Prepared 2025-07-14
 
 - allow option to replace null values (rather than crash) when converting
   Arrays (and Arrays of Tiles) to strings (see [WmDOT Issue

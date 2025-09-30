@@ -1,4 +1,4 @@
-/*	Minchinweb's MetaLibrary v.10 [2015-07-14],
+/*	Minchinweb's MetaLibrary v.11 [2015-09-30],
  *		originally part of WmDOT v.10
  *	Copyright © 2011-15, 2025 by W. Minchin. For more info,
  *		please visit https://github.com/MinchinWeb/openttd-metalibrary
@@ -23,8 +23,8 @@ class MinchinWeb extends AILibrary {
 	function GetName()        { return "MinchinWeb"; }
 	function GetShortName()   { return "LMmW"; }	//	William's MetaLibrary
 	function GetDescription() { return "Minchinweb's MetaLibrary for AI development. See the minchin.ca/openttd-metalibrary/ for included functions. (v.10, 2025-07-11)"; }
-	function GetVersion()     { return 10; }
-	function GetDate()        { return "2025-07-14"; }
+	function GetVersion()     { return 11; }
+	function GetDate()        { return "2025-09-30"; }
 	function CreateInstance() { return "MinchinWeb"; }
 	function GetCategory()    { return "Util"; }
 //	function GetURL()		  { return "http://www.tt-forums.net/viewtopic.php?f=65&t=57903"; }

@@ -1,5 +1,5 @@
 ﻿/*	Station functions v.4 [2025-07-16],
- *		part of Minchinweb's MetaLibrary v.10.1,
+ *		part of Minchinweb's MetaLibrary v.11,
  *	Copyright © 2011-14, 2025 by W. Minchin. For more info,
  *		please visit https://github.com/MinchinWeb/openttd-metalibrary
  *

@@ -1,4 +1,4 @@
-/*	Minchinweb's MetaLibrary v.10.1 [2025-07-14],
+/*	Minchinweb's MetaLibrary v.11 [2025-09-30],
  *		originally part of, WmDOT v.10
  *	Copyright © 2011-14, 2025 by W. Minchin. For more info,
  *		please visit https://github.com/MinchinWeb/openttd-metalibrary
@@ -47,7 +47,7 @@ require("Station.nut");
  *	This is the main class of the Library. It will be renamed on importing the
  *	library into your AI.
  *
- *		Import("util.MinchinWeb", "[your_access_name]", 10);
+ *		Import("util.MinchinWeb", "[your_access_name]", 11);
  *
  *	(Don't really use `[your_access_name]`, use something that is easy enough
  *	to type and will remind you of where the functions are coming from. I like
@@ -75,9 +75,9 @@ require("Station.nut");
 
 
 class MinchinWeb {
-	function GetVersion()       { return 10.1; }
-	function GetRevision()		{ return 250715; }
-	function GetDate()          { return "2025-07-14"; }
+	function GetVersion()       { return 11; }
+	function GetRevision()		{ return 250930; }
+	function GetDate()          { return "2025-09-30"; }
 	function GetName()          { return "MinchinWeb's MetaLibrary"; }
 
 	static RoadPathfinder = _MinchinWeb_RoadPathfinder_;

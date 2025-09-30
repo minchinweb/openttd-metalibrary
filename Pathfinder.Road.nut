@@ -1,5 +1,5 @@
 ﻿/*	RoadPathfinder v.10 [2025-07-15],
- *		part of Minchinweb's MetaLibrary v.10.1,
+ *		part of Minchinweb's MetaLibrary v.11,
  *		originally part of WmDOT v.4  r.50 [2011-04-06]
  *	Copyright © 2011-14 by W. Minchin. For more info,
  *		please visit https://github.com/MinchinWeb/openttd-metalibrary

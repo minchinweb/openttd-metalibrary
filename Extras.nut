@@ -1,5 +1,5 @@
 /*	Extra functions v.7 [2025-07-14],
- *		part of Minchinweb's MetaLibrary v.10
+ *		part of Minchinweb's MetaLibrary v.11
  *	Copyright © 2011-14, 2025 by W. Minchin. For more info,
  *		please visit https://github.com/MinchinWeb/openttd-metalibrary
  *

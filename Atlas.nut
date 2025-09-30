@@ -1,6 +1,6 @@
-﻿/*	Atlas v.1 r.221 [2012-01-28],
- *		part of Minchinweb's MetaLibrary v.4,
- *	Copyright © 2011-14 by W. Minchin. For more info,
+﻿/*	Atlas v.1.1 [2025-09-30],
+ *		part of Minchinweb's MetaLibrary v.11,
+ *	Copyright © 2011-14, 2025 by W. Minchin. For more info,
  *		please visit https://github.com/MinchinWeb/openttd-metalibrary
  *
  *	Permission is granted to you to use, copy, modify, merge, publish,
@@ -101,7 +101,7 @@ class _MinchinWeb_Atlas_ {
 	 */
 	function GetVersion()       { return 1; }
 	function GetRevision()      { return 187; }
-	function GetDate()          { return "2012-01-04"; }
+	function GetDate()          { return "2025-09-30"; }
 	function GetName()          { return "Atlas Library"; }
 
 	/**	\privatesection

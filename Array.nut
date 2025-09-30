@@ -1,5 +1,5 @@
 ﻿/*	Array SubLibrary, v.7.1 [2025-07-15],
- *		part of Minchinweb's MetaLibrary v.10,
+ *		part of Minchinweb's MetaLibrary v.11,
  *		originally part of WmDOT v.5  r.53d	[2011-04-09]
  *			and WmArray library v.1  r.1 [2011-02-13].
  *	Copyright © 2011-14, 2025 by W. Minchin. For more info,

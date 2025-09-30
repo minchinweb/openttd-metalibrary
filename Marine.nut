@@ -1,5 +1,5 @@
-﻿/*	Ship and Marine functions v.3 r.242 [2012-06-23],
- *		part of Minchinweb's MetaLibrary v.5,
+﻿/*	Ship and Marine functions v.4 [2025-09-30],
+ *		part of Minchinweb's MetaLibrary v.11,
  *		originally part of WmDOT v.10
  *	Copyright © 2011-12 by W. Minchin. For more info,
  *		please visit https://github.com/MinchinWeb/openttd-metalibrary
@@ -16,7 +16,7 @@
  */
 
 /**	\brief		Water and Ship related functions.
- *	\version	v.3 (2012-06-23)
+ *	\version	v.4 (2025-09-30)
  *	\author		W. Minchin (%MinchinWeb)
  *	\since		MetaLibrary v.2
  *	\see		\_MinchinWeb\_ShipPathfinder\_

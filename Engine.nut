@@ -1,5 +1,5 @@
 /*	Engine functions v.1 [2025-07-19],
- *		part of Minchinweb's MetaLibrary v.10.1
+ *		part of Minchinweb's MetaLibrary v.11
  *	Copyright © 2025 by W. Minchin. For more info,
  *		please visit https://github.com/MinchinWeb/openttd-metalibrary
  *
@@ -17,7 +17,7 @@
 /**	\brief		Engine functions
  *	\version	v.1 (2025-07-19)
  *	\author		W. Minchin (%MinchinWeb)
- *	\since		MetaLibrary v.10.1
+ *	\since		MetaLibrary v.11
  *
  *	These functions related to Engines.
  */
@@ -177,7 +177,7 @@ function _MinchinWeb_Engine_::Rate3(EngineID, Cargo, MonthlyProduction, TravelDi
 	//	Given the EngineID, it will score them; higher is better
 	//  Note: Cargo doesn't fully work yet. Capacity is measured in the default
 	//	cargo.
-	
+
 	//	payout = Capacity * Payout(Distance, time)
 	//	payout{$} = Capacity{ton} * Payout(Distance, time){$/ton}
 	//
