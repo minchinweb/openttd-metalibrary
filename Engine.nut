@@ -1,4 +1,4 @@
-/*	Engine functions v.1 [2025-07-19],
+﻿/*	Engine functions v.1 [2025-07-19],
  *		part of Minchinweb's MetaLibrary v.11
  *	Copyright © 2025 by W. Minchin. For more info,
  *		please visit https://github.com/MinchinWeb/openttd-metalibrary

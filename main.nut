@@ -1,4 +1,4 @@
-/*	Minchinweb's MetaLibrary v.11 [2025-09-30],
+﻿/*	Minchinweb's MetaLibrary v.11 [2025-09-30],
  *		originally part of, WmDOT v.10
  *	Copyright © 2011-14, 2025 by W. Minchin. For more info,
  *		please visit https://github.com/MinchinWeb/openttd-metalibrary
