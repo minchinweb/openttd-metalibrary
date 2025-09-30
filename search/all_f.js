@@ -1,16 +1,10 @@
 var searchData=
 [
-  ['setdatum',['SetDatum',['../class___minchin_web___d_l_s__.html#ab05075afb4435840c95c219f8925040c',1,'_MinchinWeb_DLS_']]],
-  ['setmaxdistance',['SetMaxDistance',['../class___minchin_web___atlas__.html#a56971f15b6569e76a0ed5d4156eff409',1,'_MinchinWeb_Atlas_']]],
-  ['setmaxdistancemodel',['SetMaxDistanceModel',['../class___minchin_web___atlas__.html#aa8b2aca181a9717bc280300734cf006e',1,'_MinchinWeb_Atlas_']]],
-  ['setmodel',['SetModel',['../class___minchin_web___atlas__.html#aadb190267ce7e1ec3fdfe02cd0ccee46',1,'_MinchinWeb_Atlas_']]],
-  ['shippathfinder',['ShipPathfinder',['../class_minchin_web.html#a928ebe83702458edb8381ccbf8a79071',1,'MinchinWeb']]],
-  ['sign',['Sign',['../class___minchin_web___extras__.html#a6a75ef13cfb6dab9affbb0858642b106',1,'_MinchinWeb_Extras_::Sign()'],['../class___minchin_web___log__.html#ac2cd9872cad247ed7b92dca59c6ba6a0',1,'_MinchinWeb_Log_::Sign()']]],
-  ['signlocation',['SignLocation',['../class___minchin_web___extras__.html#af09336ed6029303bb17c2fd77ee986ff',1,'_MinchinWeb_Extras_']]],
-  ['slope',['Slope',['../class___minchin_web___extras__.html#a9c3e755a28f99720ffdc5db536023621',1,'_MinchinWeb_Extras_::Slope()'],['../class___minchin_web___l_w__.html#a59d46ecd5b415c9398bdf014efd5271d',1,'_MinchinWeb_LW_::Slope()']]],
-  ['spiral_2ewalker_2enut',['Spiral.Walker.nut',['../_spiral_8_walker_8nut.html',1,'']]],
-  ['spiralwalker',['SpiralWalker',['../class_minchin_web.html#a6cbd9cc6d0862ef09471266e3c9eaa02',1,'MinchinWeb']]],
-  ['start',['Start',['../class___minchin_web___l_w__.html#acf58c2f88d4da33597b2322d21a6bd21',1,'_MinchinWeb_LW_::Start()'],['../class___minchin_web___s_w__.html#a70721b75d69e240532e885d3e6f4eddd',1,'_MinchinWeb_SW_::Start()']]],
-  ['station',['Station',['../class_minchin_web.html#a9ddc9b8081b30f2deceae6653684d8a9',1,'MinchinWeb']]],
-  ['station_2enut',['Station.nut',['../_station_8nut.html',1,'']]]
+  ['faq_0',['FAQ',['../index.html#faq',1,'']]],
+  ['find1d_1',['Find1D',['../class___minchin_web___array__.html#aa14fdf8d9d47a4a018246dfa7f6a8e3f',1,'_MinchinWeb_Array_']]],
+  ['find2d_2',['Find2D',['../class___minchin_web___array__.html#a71d8f488b68d46c35b6cf83c9e7035ec',1,'_MinchinWeb_Array_']]],
+  ['find3d_3',['Find3D',['../class___minchin_web___array__.html#a5b83c9a105e82a77a3a7e0844c7d57ab',1,'_MinchinWeb_Array_']]],
+  ['findpairs_4',['FindPairs',['../class___minchin_web___array__.html#a4ab51da2e10454c396fef1bd30011b34',1,'_MinchinWeb_Array_']]],
+  ['findpath_5',['FindPath',['../class___minchin_web___d_l_s__.html#a52e4dcae5961f823c9987a2c683fe3cf',1,'_MinchinWeb_DLS_::FindPath()'],['../class___minchin_web___lakes__.html#a500ea501bb710f5aafd3b2aa945f25b1',1,'_MinchinWeb_Lakes_::FindPath()'],['../class___minchin_web___road_pathfinder__.html#ac5dc1156bcc163fd694e9be7e2be61ed',1,'_MinchinWeb_RoadPathfinder_::FindPath()'],['../class___minchin_web___ship_pathfinder__.html#a05945059b6fef3ebf52848c0e0c832dd',1,'_MinchinWeb_ShipPathfinder_::FindPath()'],['../class___minchin_web___w_b_c__.html#afa48245c59f983cf76cdec40833e7925',1,'_MinchinWeb_WBC_::FindPath()']]],
+  ['floatoffset_6',['FloatOffset',['../class___minchin_web___c__.html#a30668a565b70eb66c50f71be8010ff7f',1,'_MinchinWeb_C_']]]
 ];

@@ -15,7 +15,7 @@ var class___minchin_web___w_b_c__ =
     [ "_cost_per_tile", "class___minchin_web___w_b_c__.html#ab2557d9753f731eb818c74db832c0bf5", null ],
     [ "_distance_penalty", "class___minchin_web___w_b_c__.html#af8f1ece062a8a4aa788f2c42ac441316", null ],
     [ "_max_cost", "class___minchin_web___w_b_c__.html#a1718be893b10646e8d67b202aac77016", null ],
-    [ "_mypath", "class___minchin_web___w_b_c__.html#afd2700e74141c595ea1748328d422809", null ],
+    [ "_my_path", "class___minchin_web___w_b_c__.html#a996638dc83a369c6bbf9eecf62d41fb1", null ],
     [ "_pathfinder", "class___minchin_web___w_b_c__.html#ab4b53801e8c853ba3cfe3800e6afd788", null ],
     [ "_running", "class___minchin_web___w_b_c__.html#aaa88dc2c1ecd272e9a4a02526c067052", null ],
     [ "cost", "class___minchin_web___w_b_c__.html#a3c3a8762208ac5481731d18c78de6e57", null ]

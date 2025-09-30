@@ -16,8 +16,8 @@ var class___minchin_web___s_w__ =
     [ "_StageMax", "class___minchin_web___s_w__.html#aba3ade93514e46d9a768c60fc449ae9e", null ],
     [ "_StageSteps", "class___minchin_web___s_w__.html#a1dea30b09669f17649cffa0b6ccf6c36", null ],
     [ "_start", "class___minchin_web___s_w__.html#ab3f1ef891d3a69bdf27958004c0fb446", null ],
-    [ "_startx", "class___minchin_web___s_w__.html#a1517efb83731591ec56965f352fb185a", null ],
-    [ "_starty", "class___minchin_web___s_w__.html#a018c43777ff6ea19a08170bec26e219c", null ],
+    [ "_start_x", "class___minchin_web___s_w__.html#a72d3cf4cd9fcaf680cb616d44e700e2e", null ],
+    [ "_start_y", "class___minchin_web___s_w__.html#a6c33d809d6f698dab2e34f183eb75b4a", null ],
     [ "_Steps", "class___minchin_web___s_w__.html#ae3e91ecdc86ba3f92a6c62a0ebf55106", null ],
     [ "_x", "class___minchin_web___s_w__.html#a518b06f36f37882decc71ff5d59b8d0b", null ],
     [ "_y", "class___minchin_web___s_w__.html#ab74eb799cc1ed1c18d520b09427a8634", null ]

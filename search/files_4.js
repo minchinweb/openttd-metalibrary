@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['industry_2enut',['Industry.nut',['../_industry_8nut.html',1,'']]]
+  ['industry_2enut_0',['Industry.nut',['../_industry_8nut.html',1,'']]]
 ];

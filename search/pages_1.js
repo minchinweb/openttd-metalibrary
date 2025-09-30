@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['changelog',['Changelog',['../md__s_1__documents__git_hub_openttd-metalibrary_changelog.html',1,'']]]
+  ['2_0',['Version 2',['../md_metalibrary_2changelog.html#v2',1,'']]]
 ];

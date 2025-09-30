@@ -23,14 +23,14 @@ var class___minchin_web___d_l_s__ =
     [ "PresetQuickAndDirty", "class___minchin_web___d_l_s__.html#ac8b17f2b4d366133b13e978780e96bd6", null ],
     [ "SetDatum", "class___minchin_web___d_l_s__.html#ab05075afb4435840c95c219f8925040c", null ],
     [ "TilePairsToBuild", "class___minchin_web___d_l_s__.html#a70d16acd5076ede96d7f43e923ec6633", null ],
-    [ "_basedatum", "class___minchin_web___d_l_s__.html#a51b4af2ea1c3f1cc8518135e689db6dc", null ],
+    [ "_base_datum", "class___minchin_web___d_l_s__.html#ae6d9fbb4abd61c392cb8930610db294e", null ],
     [ "_datum", "class___minchin_web___d_l_s__.html#a5e327331ec4bc538ceaf98a899df1442", null ],
-    [ "_endtile", "class___minchin_web___d_l_s__.html#a100669c23188b935fba205c3d2b06cfa", null ],
-    [ "_gridx", "class___minchin_web___d_l_s__.html#a19c4032f4fb6ee8dab1fa2f1cd740bcd", null ],
-    [ "_gridy", "class___minchin_web___d_l_s__.html#a093d7a19cf570dc8c7d9a0e6a7811204", null ],
+    [ "_end_tile", "class___minchin_web___d_l_s__.html#aa40193eca4078967aa8c48133affbd17", null ],
+    [ "_grid_x", "class___minchin_web___d_l_s__.html#a9f704144bab6312850e8db520f39caa6", null ],
+    [ "_grid_y", "class___minchin_web___d_l_s__.html#af453b66061005f4d7f1596da2e9d5136", null ],
     [ "_path", "class___minchin_web___d_l_s__.html#a324f3d053f0103c57208b8f512f2cc59", null ],
     [ "_pathfinder", "class___minchin_web___d_l_s__.html#a92b8f94779c11203c9202cb406fb2a68", null ],
     [ "_road_type", "class___minchin_web___d_l_s__.html#af871fe2cca9e83a4dd750f2912caffdd", null ],
     [ "_running", "class___minchin_web___d_l_s__.html#ac4bdd37fd04beae31245d83104593a07", null ],
-    [ "_starttile", "class___minchin_web___d_l_s__.html#ad3837d0f319eca2da5f39b64ce7e64aa", null ]
+    [ "_start_tile", "class___minchin_web___d_l_s__.html#a5dc1a60da7f67c3266af141928a48630", null ]
 ];

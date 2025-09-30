@@ -24,7 +24,7 @@ var class___minchin_web___ship_pathfinder__ =
     [ "_heap_class", "class___minchin_web___ship_pathfinder__.html#aa5a19dca80132101e6636ac51caf97f1", null ],
     [ "_max_buoy_spacing", "class___minchin_web___ship_pathfinder__.html#a76ca0cc0d247670c6ec0019519acf8e7", null ],
     [ "_max_cost", "class___minchin_web___ship_pathfinder__.html#a8e2165d7b80d48ed338c72be0a267b74", null ],
-    [ "_mypath", "class___minchin_web___ship_pathfinder__.html#aabaf537ba884378c46659aca123fac95", null ],
+    [ "_my_path", "class___minchin_web___ship_pathfinder__.html#a506640a80b38f23d33846fe44ad34463", null ],
     [ "_paths", "class___minchin_web___ship_pathfinder__.html#a6ace900602756f99f5f0301f92fa0ff6", null ],
     [ "_points", "class___minchin_web___ship_pathfinder__.html#a5734856dd51908d2b7930df1d7f1c332", null ],
     [ "_running", "class___minchin_web___ship_pathfinder__.html#a9c27139d36707bbe43dd8d7feb9ac075", null ],

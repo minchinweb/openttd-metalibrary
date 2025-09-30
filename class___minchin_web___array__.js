@@ -19,8 +19,8 @@ var class___minchin_web___array__ =
     [ "RemoveValueAt", "class___minchin_web___array__.html#a9c3e8f46b227d576ab4bf91b846c5aff", null ],
     [ "ToAIList", "class___minchin_web___array__.html#a9a2522d9da87a991f7f31bb51ef7babe", null ],
     [ "ToString1D", "class___minchin_web___array__.html#aa3d8c0323a7fbecd8c73d29fade7fe46", null ],
-    [ "ToString2D", "class___minchin_web___array__.html#ad79fe445393dbc66de2f4a2f4f95754d", null ],
-    [ "ToStringTiles1D", "class___minchin_web___array__.html#ab95c88952b6911f0b0d8b7910897c005", null ],
-    [ "ToStringTiles2D", "class___minchin_web___array__.html#a1d18a6554e49bab31ba343a12f1f78b6", null ],
+    [ "ToString2D", "class___minchin_web___array__.html#ab0812f47936fe9fc4832bd96ce0b2e7f", null ],
+    [ "ToStringTiles1D", "class___minchin_web___array__.html#a1aeb19531a28bfd9878ac9f5cf6c799c", null ],
+    [ "ToStringTiles2D", "class___minchin_web___array__.html#a663cd346a4af2c8cb9fb6af5c66008d4", null ],
     [ "main", "class___minchin_web___array__.html#a764ce165637fb57ea088305b906977ec", null ]
 ];

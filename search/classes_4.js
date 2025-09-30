@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['minchinweb',['MinchinWeb',['../class_minchin_web.html',1,'']]]
+  ['minchinweb_0',['MinchinWeb',['../class_minchin_web.html',1,'']]]
 ];

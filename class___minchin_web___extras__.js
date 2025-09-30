@@ -1,5 +1,6 @@
 var class___minchin_web___extras__ =
 [
+    [ "Info", "class___minchin_web___extras___1_1_info.html", "class___minchin_web___extras___1_1_info" ],
     [ "AbsFloat", "class___minchin_web___extras__.html#a846f2c790aa7b20cb27751e1d8f6d401", null ],
     [ "constructor", "class___minchin_web___extras__.html#a6522665feb09e4837cab4b931dfe84f3", null ],
     [ "GetOpenTTDRevision", "class___minchin_web___extras__.html#acfebc1a0d1330e858f861ab15371b09c", null ],
@@ -11,6 +12,10 @@ var class___minchin_web___extras__ =
     [ "MinAbsFloatKeepSign", "class___minchin_web___extras__.html#a80ae0133ef0581cd8babf8a398dca75e", null ],
     [ "MinDistance", "class___minchin_web___extras__.html#a5ce4235358749f5ca3150067c1592e64", null ],
     [ "MinFloat", "class___minchin_web___extras__.html#a64eba7534a82630d881ef800f75e4d28", null ],
+    [ "MultiMax", "class___minchin_web___extras__.html#a6e0ef7e351002a5b3dce287d0c2d32d8", null ],
+    [ "MultiMax", "class___minchin_web___extras__.html#ac9ed624462af045aef2a302758ce0367", null ],
+    [ "MultiMax", "class___minchin_web___extras__.html#acfaa8828fd0efe815c3042db640a2e2e", null ],
+    [ "MultiMax", "class___minchin_web___extras__.html#aae87a9fdaf4370b8933a900f2a9a4978", null ],
     [ "NextCardinalTile", "class___minchin_web___extras__.html#a0636476d9a4aeeadedb7af3346562b51", null ],
     [ "Perpendicular", "class___minchin_web___extras__.html#a3ae97abd78666e493ceea2af7ed06581", null ],
     [ "Sign", "class___minchin_web___extras__.html#a6a75ef13cfb6dab9affbb0858642b106", null ],
