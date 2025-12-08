@@ -39,7 +39,7 @@
 				pair from the model
 		.Count()
 			- Returns the amount of items currently in the list.
-		.Exists
+		.Exists()
 			- Check if an item exists in the list. Returns true/false.
 		.SetModel(newmodel)
 			- Sets the model type to the provided type
@@ -308,8 +308,17 @@ function _MinchinWeb_Atlas_::RunModel() {
 			if ((_MinchinWeb_Array_.ContainedIn1D([this._sources[i][0], this._attractions[j][0]], this._ignorepairs) == false)
 					&& ((_MinchinWeb_Atlas_.ApplyTrafficModel(this._sources[i][0], 1, this._attractions[j][0], 0, this._maxdistancemodel) < this._maxdistance)
 					|| (this._maxdistance < 0))) {
-				this._pairs.Insert([this._sources[i][0], this._attractions[j][0]],
-						_MinchinWeb_Atlas_.ApplyTrafficModel(this._sources[i][0], this._sources[i][1], this._attractions[j][0], this._attractions[j][1], this._model));
+				this._pairs.Insert([
+						this._sources[i][0],
+						this._attractions[j][0]
+					],
+					_MinchinWeb_Atlas_.ApplyTrafficModel(
+						this._sources[i][0],
+						this._sources[i][1],
+						this._attractions[j][0],
+						this._attractions[j][1],
+						this._model)
+				);
 			}
 		}
 	}

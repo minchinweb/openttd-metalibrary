@@ -1,11 +1,11 @@
 ﻿/*	Constants for MetaLibrary v.1 r.206 [2012-01-12],
  *		part of Minchinweb's MetaLibrary v.6,
  *		originally part of MetaLibrary v.2
- *	Copyright © 2011-14 by W. Minchin. For more info,
+ *	Copyright © 2011-14, 2025 by W. Minchin. For more info,
  *		please visit https://github.com/MinchinWeb/openttd-metalibrary
  *
- *	Permission is granted to you to use, copy, modify, merge, publish, 
- *	distribute, sublicense, and/or sell this software, and provide these 
+ *	Permission is granted to you to use, copy, modify, merge, publish,
+ *	distribute, sublicense, and/or sell this software, and provide these
  *	rights to others, provided:
  *
  *	+ The above copyright notice and this permission notice shall be included
@@ -26,7 +26,7 @@
  *							.MaxStationSpread() - returns the maximum station spread
  *							.BuoyOffset() - returns 3
  *							.WaterDepotOffset() - return 4
- *						
+ *
  */
 
 /**	\class		_MinchinWeb_C_
@@ -41,17 +41,18 @@
 
 class _MinchinWeb_C_ {
 	//	These are constants called by the various sublibraries
-	
+
 	/**	\publicsection
 	 *	\brief	A number close enough to infinity to work for our purposes here.
 	 *	\return	10,000
 	 *	\note	Slopes are capped at 10,000 and 1/10,000
 	 *	\note	A tile that is a Manhattan Distance of 'infinity' tiles away
-	 *			will always be outside of the defined map. 
+	 *          will always be outside of the defined map (valid up to
+	 *          4,096x4,096 maps).
 	 *	\static
 	 */
 	function Infinity() 	{ return 10000; }
-	
+
 	/**	\brief	Used to compare floating point numbers to determine if they are
 	 *			"equal".
 	 *
@@ -69,7 +70,7 @@ class _MinchinWeb_C_ {
 	 *	\static
 	 */
 	function FloatOffset()	{ return 0.0005; }	//	= 1/2000
-	
+
 	/**	\brief	Pi (π = 3.14...) to 31 decimal places
 	 *	\static
 	 */
@@ -79,7 +80,7 @@ class _MinchinWeb_C_ {
 	 *	\static
 	 */
 	function e() { return 2.7182818284590452353602874713527; }
-	
+
 	/**	\brief	Industries are assumed to fit within a 4x4 box
 	 *	\return	4
 	 *	\static
@@ -98,7 +99,7 @@ class _MinchinWeb_C_ {
 	 *	\return	0xFFFFFF
 	 *	\todo	Check that this is still valid on 4096x4096 maps.
 	 *	\static
-	 */	
+	 */
 	function InvalidTile() { return 0xFFFFFF; }
 
 	/**	\brief	This is the assumed minimum desired spacing between buoys.
@@ -110,7 +111,7 @@ class _MinchinWeb_C_ {
 	/**	\brief	This is the maximum desired spacing between docks and depots.
 	 *	\return	4
 	 *	\static
-	 */	
+	 */
 	function WaterDepotOffset() { return 4; }
 
 	/**	\brief	Returns the OpenTTD setting for maximum station spread
